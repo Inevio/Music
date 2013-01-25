@@ -64,7 +64,7 @@ wz.app.addScript( 5, 'common', function( win, params ){
             
         })
         
-        .key('whitespace', function(){
+        .key('space', function(){
         
             if( win.hasClass('play') ){
                 audio[0].pause();
