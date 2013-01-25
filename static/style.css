@@ -1,0 +1,473 @@
+
+.wz-app-5 .weemusic-bar{
+
+    height: 5px;
+	border-radius: 1px;
+		
+}
+
+.wz-app-5 .weemusic-controls{
+	
+	height: 37px;
+	width: 215px;
+	float: left;
+	margin-left: 8px;
+	padding-top: 12px;
+	
+	background: url('https://static.weezeel.com/app/5/light.png') 41px -1px no-repeat;
+
+}
+
+.wz-app-5 .weemusic-controls-forward{
+	
+	height: 16px;
+	width: 25px;
+	float: left;
+	margin: 6px 34px;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -80px 0;
+	
+}
+
+.wz-app-5 .weemusic-controls-play{
+	
+	height: 32px;
+	width: 28px;
+	float: left;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') 0 0;
+	
+}
+
+.wz-app-5.play .weemusic-controls-play{
+	background-position: -27px 0;
+}
+
+.wz-app-5 .weemusic-controls-rewind{
+	
+	height: 16px;
+	width: 25px;
+	float: left;
+	margin: 6px 34px;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -55px 0;
+	
+}
+
+.wz-app-5 .weemusic-info{
+
+    height: 414px;
+	width: 100%;
+	float: left;
+	
+	background-image: -moz-linear-gradient(50% 0% -90deg,
+		rgb(14,14,15) 0%,
+		rgb(35,35,36) 34%,
+		rgb(35,35,36) 75%,
+		rgb(26,26,27) 85%,
+		rgb(18,18,19) 90%,
+		rgb(14,14,15) 100%
+	); 
+    background-image: -webkit-gradient(linear,50% 0%,50% 100%,
+		color-stop(0, rgb(14,14,15)),
+		color-stop(0.34, rgb(35,35,36)),
+		color-stop(0.75, rgb(35,35,36)),
+		color-stop(0.85, rgb(26,26,27)),
+		color-stop(0.9, rgb(18,18,19)),
+		color-stop(1, rgb(14,14,15))
+	);
+    background-image: -webkit-linear-gradient(-90deg,
+		rgb(14,14,15) 0%,
+		rgb(35,35,36) 34%,
+		rgb(35,35,36) 75%,
+		rgb(26,26,27) 85%,
+		rgb(18,18,19) 90%,
+		rgb(14,14,15) 100%
+	);
+    background-image: -o-linear-gradient(-90deg,
+		rgb(14,14,15) 0%,
+		rgb(35,35,36) 34%,
+		rgb(35,35,36) 75%,
+		rgb(26,26,27) 85%,
+		rgb(18,18,19) 90%,
+		rgb(14,14,15) 100%
+	);
+    background-image: linear-gradient(0deg,
+		rgb(14,14,15) 0%,
+		rgb(18,18,19) 10%,
+		rgb(26,26,27) 15%,
+		rgb(35,35,36) 25%,
+		rgb(35,35,36) 66%,
+		rgb(14,14,15) 100%		
+	);
+
+}
+
+.wz-app-5 .weemusic-info-backprogress{
+
+	width: 370px;
+	float: left;
+	margin-top:4px;
+	opacity: 0;
+	
+    background-color: rgba(217,217,217,0.3);
+
+}
+
+.wz-app-5 .weemusic-info-buffer{
+	
+	width: 235px;
+    background-color: #F00;	
+
+}
+
+.wz-app-5 .weemusic-info-data{
+
+    font-size: 13px;
+	color: #FFF;
+	
+	height: 13px;
+	width: 53px;
+	float: left;
+	margin: 0 11px;
+	opacity:0;
+
+}
+
+.wz-app-5 .weemusic-info-data.currentTime{
+	text-align: right;
+}
+
+.wz-app-5 .weemusic-info-progress{
+	
+	position: relative;
+	top: -5px;
+	width: 0px;
+
+    background-color: #FFF;
+
+}
+
+.wz-app-5 .weemusic-info-shadow{
+	
+	height: 57px;
+	width: 244px;
+	margin-left: 148px;
+	margin-right: 132px;
+	float: left;
+
+	background: url('https://static.weezeel.com/app/5/shadow.png');
+	
+}
+
+.wz-app-5 .weemusic-info-seeker{
+
+	height: 22px;
+	width: 18px;
+    position: relative;
+    top: -18px;
+	left: -9px;
+	
+    background: url('https://static.weezeel.com/app/5/sprite.png') 0 -32px;
+
+}
+
+.wz-app-5 .weemusic-info-title{
+	
+	text-align: center;
+	margin-top: 19px;
+	height: 14px;
+	line-height: 14px;
+	
+}
+
+.wz-app-5 .weemusic-info-title i{
+	
+	height: 14px;
+	width: 9px;
+	display: inline-block;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -96px -16px;
+	
+}
+
+.wz-app-5 .weemusic-info-title span{
+	
+	font-size: 14px;
+	color: #cfcfcf;
+	
+	margin-left: 10px;
+	
+}
+
+.wz-app-5 .weemusic-info-artist{
+	
+	text-align: center;
+	margin-top: 7px;
+	height: 14px;
+	line-height: 14px;
+	
+}
+
+.wz-app-5 .weemusic-info-artist i{
+	
+	height: 11px;
+	width: 11px;
+	display: inline-block;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -105px -18px;
+	
+}
+
+.wz-app-5 .weemusic-info-artist span{
+	
+	font-size: 14px;
+	color: #cfcfcf;
+	
+	margin-left: 10px;
+	
+}
+
+.wz-app-5 .weemusic-info-album{
+	
+	text-align: center;
+	margin-top: 7px;
+	height: 12px;
+	line-height: 12px;
+	
+}
+
+.wz-app-5 .weemusic-info-album i{
+	
+	height: 10px;
+	width: 9px;
+	display: inline-block;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -118px -18px;
+	
+}
+
+.wz-app-5 .weemusic-info-album span{
+	
+	font-size: 12px;
+	color: #5d5d5d;
+	
+	margin-left: 5px;
+	
+}
+
+.wz-app-5 .weemusic-info-cover{
+	
+	height: 244px;
+	width: 244px;
+	margin-top: 15px;
+	margin-left: 148px;
+	float: left;
+
+	background: url('https://static.weezeel.com/app/5/default.png');
+	
+}
+
+.wz-app-5 .weemusic-info-options{
+	
+	width: 19px;
+	float: left;
+	margin-left: 27px;
+	padding-top: 181px;
+	
+}
+
+.wz-app-5 .weemusic-info-random{
+	
+	height: 18px;
+	width: 19px;
+	display: inline-block;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
+	
+}
+
+.wz-app-5 .weemusic-info-repeat{
+	
+	height: 23px;
+	width: 18px;
+	margin-top: 20px;
+	margin-left: -1px;
+	display: inline-block;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -101px -32px;
+	
+}
+
+.wz-app-5 .weemusic-playlist{
+	
+	height: 30px;
+	width: 100%;
+	float: left;
+	border-top: 1px solid #383838;
+	padding-top: 17px;
+	
+	background-image: -moz-linear-gradient(50% 0% -90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%); 
+    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, rgb(32,32,32)),color-stop(1, rgb(16,16,16)));
+    background-image: -webkit-linear-gradient(-90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%);
+    background-image: -o-linear-gradient(-90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%);
+    background-image: linear-gradient(0deg,rgb(16,16,16) 0%,rgb(32,32,32) 100%);
+	
+}
+
+.wz-app-5 .weemusic-playlist-icon{
+	
+	height: 14px;
+	width: 17px;
+	float: left;
+	margin-left: 19px;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -105px 0;
+	
+}
+
+.wz-app-5 .weemusic-playlist-text{
+	
+	font-size: 14px;
+	color: #d1d1d1;
+	float: left;
+	margin-left: 14px;
+	
+}
+
+.wz-app-5 .weemusic-playlist-title{
+	
+	font-size: 14px;
+	color: #d18a0e;
+	float: left;
+	margin-left: 6px;
+	
+}
+
+.wz-app-5 .weemusic-playlist-display{
+	
+	height: 6px;
+	width: 7px;
+	float: left;
+	margin-top: 3px;
+	margin-left: 8px;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -119px -30px;
+	
+}
+
+.wz-app-5 .weemusic-playlist-find{
+	
+	height: 16px;
+	width: 15px;
+	float: right;
+	margin-right: 18px;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -68px -16px;
+	
+}
+
+.wz-app-5 .weemusic-list{
+	
+	height: 262px;
+	width: 501px;
+	float: left;
+	padding-left: 23px;
+	background: #0e0e0f;	
+	
+}
+
+.wz-app-5 .weemusic-list-song{
+	
+	height: 40px;
+	width: 100%;
+	
+}
+
+.wz-app-5 .weemusic-list-number{
+
+	height: 24px;
+	width: 24px;
+	color: #cfcfcf;
+	float: left;
+	margin-top: 10px;
+	
+}
+
+.wz-app-5 .weemusic-list-cover{
+	
+	height: 30px;
+	width: 30px;
+	float: left;
+	margin-left: 15 px;
+	
+	background: url('https://static.weezeel.com/app/5/default_mini.png');
+	
+}
+
+.wz-app-5 .weemusic-list-title{
+	
+	font-size: 14px;
+	color: #cfcfcf;
+	
+	float: left;		
+	margin-top: 10px;	
+	margin-left: 14px;
+	
+}
+
+.wz-app-5 .weemusic-list-artist{
+	
+	font-size: 14px;
+	color: #575757;
+	
+	float: left;	
+	margin-top: 10px;	
+	margin-left: 14px;
+	
+}	
+
+.wz-app-5 .weemusic-volume-icon{
+	
+	height: 22px;
+	width: 25px;
+	float: left;
+	
+	background: url('https://static.weezeel.com/app/5/sprite.png') -50px -33px;
+	
+}
+
+.wz-app-5.muted .weemusic-volume-icon{
+	background-position: -18px -33px;
+}
+
+.wz-app-5 .weemusic-volume-current{
+	
+	width: 44px;
+	
+	background-color: #d9d9d9;
+	
+}
+
+.wz-app-5 .weemusic-volume-max{
+	
+	width: 74px;
+	float: left;
+	margin-top: 6px;
+	margin-left: 9px;
+	
+	background-color: rgba(217,217,217,0.2);
+	
+}
+
+.wz-app-5 .weemusic-volume-seeker{
+
+	height: 17px;
+	width: 12px;
+    position: relative;
+    top: -11px;
+	left: 37px;
+	
+    background: url('https://static.weezeel.com/app/5/sprite.png') -83px -16px;
+
+}
