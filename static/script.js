@@ -62,7 +62,23 @@ wz.app.addScript( 5, 'common', function( win, params ){
 			
 			audio[0].currentTime += 10;
 			
-		});
+		})
+		
+		.key('whitespace',
+		
+			if( win.hasClass('play') ){
+                audio[0].pause();
+            }else{
+                audio[0].play();
+            }
+			
+		)
+		
+		.key('right', audio[0].currentTime += 10;, audio[0].currentTime += 10; )
+		.key('left', audio[0].currentTime -= 10;, audio[0].currentTime -= 10; )
+		.key('up', audio[0].volume += 0.1;, audio[0].volume += 0.1; )
+		.key('down', audio[0].volume -= 0.1;, audio[0].volume -= 0.1; )
+		.key('backspace', audio[0].currentTime = 0; );
 	
 	audio
 	
