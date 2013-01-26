@@ -88,14 +88,38 @@ wz.app.addScript( 5, 'common', function( win, params ){
 		
 		.key(
 			'up',
-			function(){ audio[0].volume += 0.1; },
-			function(){ audio[0].volume += 0.1; }
+			function(){ 
+				if((music[0].volume + 0.1) < 1){
+					music[0].volume += 0.1;
+				}else{
+					music[0].volume = 1;
+				}
+			},
+			function(){ 
+				if((music[0].volume + 0.1) < 1){
+					music[0].volume += 0.1;
+				}else{
+					music[0].volume = 1;
+				}
+			}
 		)
 		
 		.key(
 			'down',
-			function(){ audio[0].volume -= 0.1; },
-			function(){ audio[0].volume -= 0.1; }
+			function(){ 
+				if((music[0].volume - 0.1) > 0){
+					music[0].volume -= 0.1;
+				}else{
+					music[0].volume = 0;
+				}
+			},
+			function(){ 
+				if((music[0].volume - 0.1) > 0){
+					music[0].volume -= 0.1;
+				}else{
+					music[0].volume = 0;
+				}
+			}
 		)
 		
 		.key(
