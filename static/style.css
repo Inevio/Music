@@ -235,6 +235,12 @@
     
 }
 
+.wz-app-5 .weemusic-info-random.active{
+    
+    background: #f00;
+    
+}
+
 .wz-app-5 .weemusic-info-repeat{
     
 	width: 18px;
@@ -244,6 +250,12 @@
     display: inline-block;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') -101px -32px;
+    
+}
+
+.wz-app-5 .weemusic-info-repeat.active{
+    
+    background: #f00;
     
 }
 
