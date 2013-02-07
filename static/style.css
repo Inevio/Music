@@ -190,8 +190,6 @@
     float: left;
     margin-top: 15px;
     margin-left: 148px;
-
-    background: url('https://static.weezeel.com/app/5/default.png');
     
 }
 
@@ -451,7 +449,7 @@
 
 .wz-app-5 .weemusic-volume-current{
     
-    width: 44px;
+    width: 0px;
     
     background-color: #d9d9d9;
     
@@ -488,7 +486,7 @@
     height: 17px;
     position: relative;
     top: -11px;
-    left: 37px;
+    left: -6px;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') -83px -16px;
 

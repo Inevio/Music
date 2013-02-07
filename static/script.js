@@ -1,23 +1,25 @@
 
 wz.app.addScript( 5, 'common', function( win, params ){
     
-    var audio = $('audio',win);
-    var weemusicTitle = $('.weemusic-info-title',win);
-    var weemusicArtist = $('.weemusic-info-artist',win);
-    var weemusicAlbum = $('.weemusic-info-album',win);
-    var weemusicCover = $('.weemusic-info-cover',win);
-    var weemusicCurrentTime = $('.currentTime',win);
-    var weemusicTotalTime = $('.totalTime',win);
-    var weemusicProgress = $('.weemusic-info-progress',win);
-    var weemusicBackprogress = $('.weemusic-info-backprogress',win);
-    var weemusicBufferprogress = $('.weemusic-info-buffer',win);
-    var weemusicSeeker = $('.weemusic-info-seeker',win);
-    var weemusicSeekerWidth = weemusicSeeker.width()/2;
-	var list = [];
-	var pointers = [];
-	var pointer = 0;
-	var loop = $('.weemusic-info-repeat',win);
-	var randomize = $('.weemusic-info-random',win);
+    var audio 					= $('audio',win);
+    var weemusicTitle 			= $('.weemusic-info-title span',win);
+    var weemusicArtist 			= $('.weemusic-info-artist span',win);
+    var weemusicAlbum 			= $('.weemusic-info-album span',win);
+    var weemusicCover 			= $('.weemusic-info-cover',win);
+    var weemusicCurrentTime 	= $('.currentTime',win);
+    var weemusicTotalTime 		= $('.totalTime',win);
+    var weemusicProgress 		= $('.weemusic-info-progress',win);
+    var weemusicBackprogress 	= $('.weemusic-info-backprogress',win);
+    var weemusicBufferprogress 	= $('.weemusic-info-buffer',win);
+    var weemusicSeeker 			= $('.weemusic-info-seeker',win);
+	var weemusicVolume 			= $('.weemusic-volume-current',win);
+	var weemusicMaxVolume 		= $('.weemusic-volume-max',win);
+	var weemusicVolumeSeeker	= $('.weemusic-volume-seeker',win);
+	var list 					= [];
+	var pointers 				= [];
+	var pointer 				= 0;
+	var loop 					= $('.weemusic-info-repeat',win);
+	var randomize 				= $('.weemusic-info-random',win);	
 	
 	var randomly = function(){
 		
@@ -30,14 +32,14 @@ wz.app.addScript( 5, 'common', function( win, params ){
 		wz.structure( list[pointers[pointer]], function( error, structure ){
 			
 			audio.empty();
-            
-            audio.append( $('<source></source>').attr('type','audio/mp3').attr('src', structure.formats.mp3.url) );
+			            
+            audio.append( $('<source></source>').attr('type','audio/mp3').attr('src', structure.formats.mpeg.url) );
             audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
-            
-            weemusicTitle.text(structure.meta3.id3.title);
-            weemusicArtist.text(structure.meta3.id3.artist);
-            weemusicAlbum.text(structure.meta3.id3.album);
-            weemusicCover.attr('src',structure.meta3.id3.cover);
+			
+            weemusicTitle.text( ( structure.metadata.id3.title )? structure.metadata.id3.title : 'Unknown' );
+            weemusicArtist.text( ( structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : 'Unknown' );
+            weemusicAlbum.text( ( structure.metadata.id3.album )? structure.metadata.id3.album : 'Unknown' );
+            weemusicCover.attr('src',structure.thumbnails.big);
             
         });
 		
@@ -80,10 +82,38 @@ wz.app.addScript( 5, 'common', function( win, params ){
 			weemusicCurrentTime.transition({'opacity':'1'},250).text('0:00');
 			weemusicTotalTime.transition({'opacity':'1'},250).text(min+':'+sec);
 		}        
+		
+		var volumePosition = this.volume*weemusicMaxVolume.width();
+		weemusicVolume.css('width',volumePosition);
+		weemusicVolumeSeeker.css({x:volumePosition});
+		weemusicVolumeSeeker.addClass('wz-dragger-x');
+		weemusicSeeker.addClass('wz-dragger-x');
     	
 		audio[0].play();
 		
 		$( win )
+		
+			.on('wz-dragmove', '.weemusic-volume-seeker', function(e,posX,posY){
+				
+				if( win.hasClass('muted') ){
+					audio[0].muted = false;
+				}
+				
+				weemusicVolume.css('width',posX * weemusicMaxVolume.width());
+				
+				audio[0].volume = 1*posX;
+				
+			})
+			
+			.on('wz-dragmove', '.weemusic-info-seeker', function(e,posX,posY){
+				
+				audio[0].pause();
+				
+				weemusicProgress.css('width',posX * weemusicBackprogress.width());
+				
+				audio[0].currentTime = audio[0].duration*posX;
+				
+			})
 		
 			.on('click', '.weemusic-controls-play', function(){
 				
@@ -102,6 +132,12 @@ wz.app.addScript( 5, 'common', function( win, params ){
 				}else{
 					audio[0].muted = true;
 				}
+				
+			})
+			
+			.on('wz-dragend', '.weemusic-info-seeker', function(){
+				
+				audio[0].play();
 				
 			})
 			
@@ -177,17 +213,17 @@ wz.app.addScript( 5, 'common', function( win, params ){
 			.key(
 				'up',
 				function(){ 
-					if((music[0].volume + 0.1) < 1){
-						music[0].volume += 0.1;
+					if((audio[0].volume + 0.1) < 1){
+						audio[0].volume += 0.1;
 					}else{
-						music[0].volume = 1;
+						audio[0].volume = 1;
 					}
 				},
 				function(){ 
-					if((music[0].volume + 0.1) < 1){
-						music[0].volume += 0.1;
+					if((audio[0].volume + 0.1) < 1){
+						audio[0].volume += 0.1;
 					}else{
-						music[0].volume = 1;
+						audio[0].volume = 1;
 					}
 				}
 			)
@@ -195,17 +231,17 @@ wz.app.addScript( 5, 'common', function( win, params ){
 			.key(
 				'down',
 				function(){ 
-					if((music[0].volume - 0.1) > 0){
-						music[0].volume -= 0.1;
+					if((audio[0].volume - 0.1) > 0){
+						audio[0].volume -= 0.1;
 					}else{
-						music[0].volume = 0;
+						audio[0].volume = 0;
 					}
 				},
 				function(){ 
-					if((music[0].volume - 0.1) > 0){
-						music[0].volume -= 0.1;
+					if((audio[0].volume - 0.1) > 0){
+						audio[0].volume -= 0.1;
 					}else{
-						music[0].volume = 0;
+						audio[0].volume = 0;
 					}
 				}
 			)
@@ -238,6 +274,11 @@ wz.app.addScript( 5, 'common', function( win, params ){
 					win.removeClass('muted');
 				}
 				
+				
+				var volumePosition = this.volume*weemusicMaxVolume.width();
+				weemusicVolume.css('width',volumePosition);
+				weemusicVolumeSeeker.css({x:volumePosition});
+				
 			})
 			
 			.on('timeupdate', function(e){
@@ -269,7 +310,9 @@ wz.app.addScript( 5, 'common', function( win, params ){
 	
 				weemusicProgress.width(pos);
 	
-				weemusicSeeker.css('left',pos-weemusicSeekerWidth);
+				if( !weemusicSeeker.hasClass('wz-drag-active') ){
+					weemusicSeeker.css({x:pos});
+				}
 				
 			})
 			
@@ -288,38 +331,42 @@ wz.app.addScript( 5, 'common', function( win, params ){
 			})
 			
 			.on('ended', function(){
-							
-				var time = this.duration;
-				var hour = parseInt(time/3600);
-				weemusicProgress.width(0);
-				weemusicSeeker.css('left',9);
 				
-				if(parseInt(hour)){
-					weemusicCurrentTime.text('00:00:00');
-				}else{
-					weemusicCurrentTime.text('00:00');
-				}
-				
-				this.currentTime = 0;
-				this.pause();
-				
-				if( pointer === list.length ){
+				if( !weemusicSeeker.hasClass('wz-drag-active') ){
 					
-					pointer = 0;
+					var time = this.duration;
+					var hour = parseInt(time/3600);
+					weemusicProgress.width(0);
+					weemusicSeeker.css('left',-6);
 					
-					if( loop.hasClass('active') ){
-						
-						if( randomize.hasClass('active') ){
-							pointers.sort(randomly);
-						}
-						
-						loadItem();
-						
+					if(parseInt(hour)){
+						weemusicCurrentTime.text('00:00:00');
+					}else{
+						weemusicCurrentTime.text('00:00');
 					}
-				
-				}else{
-					loadItem();
-				}
+					
+					this.currentTime = 0;
+					this.pause();
+					
+					if( pointer === list.length ){
+						
+						pointer = 0;
+						
+						if( loop.hasClass('active') ){
+							
+							if( randomize.hasClass('active') ){
+								pointers.sort(randomly);
+							}
+							
+							loadItem();
+							
+						}
+					
+					}else{
+						loadItem();
+					}
+					
+				}					
 							
 			});
 			
