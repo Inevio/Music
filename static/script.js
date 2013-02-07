@@ -65,20 +65,20 @@ wz.app.addScript( 5, 'common', function( win, params ){
 		if(hour > 0 && min < 10){ min  = '0' + min }
 		if(sec < 10){ sec  = '0' + sec }
 		
-		weemusicBackprogress.animate({'opacity':'1'},250);
+		weemusicBackprogress.transition({'opacity':'1'},250);
 
 		if(9 < hour){
-			weemusicCurrentTime.animate({'opacity':'1'},250).text('00:00:00');
-			weemusicTotalTime.animate({'opacity':'1'},250).text(hour+':'+min+':'+sec);
+			weemusicCurrentTime.transition({'opacity':'1'},250).text('00:00:00');
+			weemusicTotalTime.transition({'opacity':'1'},250).text(hour+':'+min+':'+sec);
 		}else if(0 < hour && hour < 10){
-			weemusicCurrentTime.animate({'opacity':'1'},250).text('0:00:00');
-			weemusicTotalTime.animate({'opacity':'1'},250).text(hour+':'+min+':'+sec);
+			weemusicCurrentTime.transition({'opacity':'1'},250).text('0:00:00');
+			weemusicTotalTime.transition({'opacity':'1'},250).text(hour+':'+min+':'+sec);
 		}else if(9 < min){
-			weemusicCurrentTime.animate({'opacity':'1'},250).text('00:00');
-			weemusicTotalTime.animate({'opacity':'1'},250).text(min+':'+sec);
+			weemusicCurrentTime.transition({'opacity':'1'},250).text('00:00');
+			weemusicTotalTime.transition({'opacity':'1'},250).text(min+':'+sec);
 		}else{
-			weemusicCurrentTime.animate({'opacity':'1'},250).text('0:00');
-			weemusicTotalTime.animate({'opacity':'1'},250).text(min+':'+sec);
+			weemusicCurrentTime.transition({'opacity':'1'},250).text('0:00');
+			weemusicTotalTime.transition({'opacity':'1'},250).text(min+':'+sec);
 		}        
     	
 		audio[0].play();
@@ -282,7 +282,7 @@ wz.app.addScript( 5, 'common', function( win, params ){
 				var width = (weemusicBackprogress.width()*(buffer/this.duration));
 				
 				if(width > 0){
-					weemusicBufferprogress.animate({width:width},100);
+					weemusicBufferprogress.transition({width:width},100);
 				}
 						
 			})
