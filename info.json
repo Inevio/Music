@@ -23,6 +23,7 @@
     },
 
     "primary" : "main",
+    "unique"  : true,
 
     "window" : {
 

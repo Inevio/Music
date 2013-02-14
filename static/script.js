@@ -45,14 +45,18 @@ wz.app.addScript( 5, 'common', function( win, params ){
         
     };
     
-    if( params && params.length ){
-        
-        list.push( params[ 0 ] );
-        pointers.push( pointers.length );
-        
-        loadItem();
-        
-    }
+    win.on( 'app-param', function( e, params ){
+
+        if( params && params.length ){
+            
+            list.push( params[ 0 ] );
+            pointers.push( pointers.length );
+            
+            loadItem();
+            
+        }
+
+    });
     
     audio.on('durationchange', function(){
                                                 
