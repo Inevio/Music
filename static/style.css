@@ -132,8 +132,11 @@
     
     font-size: 12px;
     color: #5d5d5d;
-    
     margin-left: 5px;
+	max-width: 350px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
 }
 
@@ -160,8 +163,11 @@
     
     font-size: 14px;
     color: #cfcfcf;
-    
     margin-left: 10px;
+	max-width: 350px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
 }
 
@@ -172,14 +178,14 @@
     margin-top:4px;
     opacity: 0;
     
-    background-color: rgba(217,217,217,0.3);
+    background-color: rgba(217,217,217,0.2);
 
 }
 
 .wz-app-5 .weemusic-info-buffer{
     
     width: 235px;
-    background-color: #F00;    
+    background-color: rgba(217,217,217,0.3);    
 
 }
 
@@ -235,13 +241,13 @@
     height: 18px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
+    background: url('https://static.weezeel.com/app/5/toggle.png') 0 0;
     
 }
 
 .wz-app-5 .weemusic-info-random.active{
     
-    background: #f00;
+	background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
     
 }
 
@@ -259,7 +265,7 @@
 
 .wz-app-5 .weemusic-info-repeat.active{
     
-    background: #f00;
+    background: url('https://static.weezeel.com/app/5/toggle.png') -19px 0;
     
 }
 
@@ -310,8 +316,11 @@
     
     font-size: 14px;
     color: #cfcfcf;
-    
     margin-left: 10px;
+	max-width: 350px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
 }
 

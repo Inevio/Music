@@ -117,7 +117,7 @@ wz.app.addScript( 5, 'common', function( win, params ){
                 
             })
         
-            .on('click', '.weemusic-controls-play', function(){
+            .on('mousedown', '.weemusic-controls-play', function(){
                 
                 if( win.hasClass('play') ){
                     audio[0].pause();
@@ -127,7 +127,7 @@ wz.app.addScript( 5, 'common', function( win, params ){
                 
             })
             
-            .on('click', '.weemusic-volume-icon', function(){
+            .on('mousedown', '.weemusic-volume-icon', function(){
                 
                 if( win.hasClass('muted') ){
                     audio[0].muted = false;
@@ -143,19 +143,19 @@ wz.app.addScript( 5, 'common', function( win, params ){
                 
             })
             
-            .on('click', '.weemusic-controls-rewind', function(){
+            .on('mousedown', '.weemusic-controls-rewind', function(){
                 
                 audio[0].currentTime -= 10;
                 
             })
             
-            .on('click', '.weemusic-controls-forward', function(){
+            .on('mousedown', '.weemusic-controls-forward', function(){
                 
                 audio[0].currentTime += 10;
                 
             })
             
-            .on('click', '.weemusic-info-random', function(){
+            .on('mousedown', '.weemusic-info-random', function(){
                 
                 if( randomize.hasClass('active') ){
                     
@@ -180,7 +180,7 @@ wz.app.addScript( 5, 'common', function( win, params ){
                 
             })
             
-            .on('click', '.weemusic-info-repeat', function(){
+            .on('mousedown', '.weemusic-info-repeat', function(){
                 
                 if( loop.hasClass('active') ){
                     loop.removeClass('active');
