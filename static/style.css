@@ -1,7 +1,7 @@
 
 .wz-app-5{
-	
-	background: #000;
+    
+    background: #000;
         
 }
 
@@ -111,7 +111,7 @@
 
 .wz-app-5 .weemusic-info-album{
     
-	height: 12px;
+    height: 12px;
     line-height: 12px;
     text-align: center;
     margin-top: 7px;
@@ -133,8 +133,8 @@
     font-size: 12px;
     color: #5d5d5d;
     margin-left: 5px;
-	max-width: 350px;
-	overflow: hidden;
+    max-width: 350px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     
@@ -145,7 +145,7 @@
     height: 14px;
     line-height: 14px;
     margin-top: 7px;
-	text-align: center;
+    text-align: center;
     
 }
 
@@ -164,8 +164,8 @@
     font-size: 14px;
     color: #cfcfcf;
     margin-left: 10px;
-	max-width: 350px;
-	overflow: hidden;
+    max-width: 350px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     
@@ -247,13 +247,13 @@
 
 .wz-app-5 .weemusic-info-random.active{
     
-	background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
     
 }
 
 .wz-app-5 .weemusic-info-repeat{
     
-	width: 18px;
+    width: 18px;
     height: 23px;
     margin-top: 20px;
     margin-left: -1px;
@@ -286,7 +286,7 @@
     width: 244px;
     height: 57px;
     float: left;
-	margin-left: 148px;
+    margin-left: 148px;
     margin-right: 132px;
 
     background: url('https://static.weezeel.com/app/5/shadow.png');
@@ -297,7 +297,7 @@
     
     height: 14px;
     line-height: 14px;
-	margin-top: 19px;
+    margin-top: 19px;
     text-align: center;    
     
 }
@@ -317,8 +317,8 @@
     font-size: 14px;
     color: #cfcfcf;
     margin-left: 10px;
-	max-width: 350px;
-	overflow: hidden;
+    max-width: 350px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     
@@ -330,7 +330,7 @@
     height: 262px;
     float: left;
     padding-left: 23px;
-	
+    
     background: #0e0e0f;    
     
 }
@@ -360,7 +360,7 @@
 .wz-app-5 .weemusic-list-number{
 
     color: #cfcfcf;
-	
+    
     width: 24px;
     height: 24px;
     float: left;
@@ -404,7 +404,7 @@
 
 .wz-app-5 .weemusic-playlist-display{
     
-	width: 7px;
+    width: 7px;
     height: 6px;
     float: left;
     margin-top: 3px;
@@ -416,7 +416,7 @@
 
 .wz-app-5 .weemusic-playlist-find{
     
-	width: 15px;
+    width: 15px;
     height: 16px;
     float: right;
     margin-right: 18px;
@@ -427,7 +427,7 @@
 
 .wz-app-5 .weemusic-playlist-icon{
     
-	width: 17px;
+    width: 17px;
     height: 14px;
     float: left;
     margin-left: 19px;
@@ -440,7 +440,7 @@
     
     font-size: 14px;
     color: #d1d1d1;
-	
+    
     float: left;
     margin-left: 14px;
     
@@ -450,7 +450,7 @@
     
     font-size: 14px;
     color: #d18a0e;
-	
+    
     float: left;
     margin-left: 6px;
     
