@@ -1,5 +1,5 @@
 
-wz.app.addScript( 5, 'common', function( win, params ){
+wz.app.addScript( 5, 'common', function( win, app, lang, params ){
     
     var audio                   = $('audio',win);
     var weemusicTitle           = $('.weemusic-info-title span',win);
