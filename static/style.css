@@ -24,7 +24,8 @@
     margin-left: 8px;
     padding-top: 12px;
     
-    background: url('https://static.weezeel.com/app/5/light.png') 41px -1px no-repeat;
+    background: url('https://staticbeta.weezeel.com/app/5/light.png') 41px -1px no-repeat;
+    background-size: 128px 51px;
 
 }
 
@@ -35,7 +36,8 @@
     float: left;
     margin: 6px 34px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -80px 0;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -80px 0;
+    background-size: 127px 55px;
     
 }
 
@@ -45,7 +47,8 @@
     height: 32px;
     float: left;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') 0 0;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') 0 0;
+    background-size: 127px 55px;
     
 }
 
@@ -60,7 +63,8 @@
     float: left;
     margin: 6px 34px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -55px 0;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -55px 0;
+    background-size: 127px 55px;
     
 }
 
@@ -78,14 +82,6 @@
         rgb(18,18,19) 90%,
         rgb(14,14,15) 100%
     ); 
-    background-image: -webkit-gradient(linear,50% 0%,50% 100%,
-        color-stop(0, rgb(14,14,15)),
-        color-stop(0.34, rgb(35,35,36)),
-        color-stop(0.75, rgb(35,35,36)),
-        color-stop(0.85, rgb(26,26,27)),
-        color-stop(0.9, rgb(18,18,19)),
-        color-stop(1, rgb(14,14,15))
-    );
     background-image: -webkit-linear-gradient(-90deg,
         rgb(14,14,15) 0%,
         rgb(35,35,36) 34%,
@@ -128,7 +124,8 @@
     height: 10px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -118px -18px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -118px -18px;
+    background-size: 127px 55px;
     
 }
 
@@ -159,7 +156,8 @@
     height: 11px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -105px -18px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -105px -18px;
+    background-size: 127px 55px;
     
 }
 
@@ -245,13 +243,15 @@
     height: 18px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/toggle.png') 0 0;
+    background: url('https://staticbeta.weezeel.com/app/5/toggle.png') 0 0;
+    background-size: 37px 23px;
     
 }
 
 .wz-app-5 .weemusic-info-random.active{
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -79px -34px;
+    background-size: 127px 55px;
     
 }
 
@@ -263,13 +263,15 @@
     margin-left: -1px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -101px -32px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -101px -32px;
+    background-size: 127px 55px;
     
 }
 
 .wz-app-5 .weemusic-info-repeat.active{
     
-    background: url('https://static.weezeel.com/app/5/toggle.png') -19px 0;
+    background: url('https://staticbeta.weezeel.com/app/5/toggle.png') -19px 0;
+    background-size: 37px 23px;
     
 }
 
@@ -281,7 +283,8 @@
     top: -18px;
     left: -9px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') 0 -32px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') 0 -32px;
+    background-size: 127px 55px;
 
 }
 
@@ -293,7 +296,8 @@
     margin-left: 148px;
     margin-right: 132px;
 
-    background: url('https://static.weezeel.com/app/5/shadow.png');
+    background: url('https://staticbeta.weezeel.com/app/5/shadow.png');
+    background-size: 244px 57px;
     
 }
 
@@ -312,7 +316,8 @@
     height: 14px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -96px -16px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -96px -16px;
+    background-size: 127px 55px;
     
 }
 
@@ -357,7 +362,8 @@
     float: left;
     margin-left: 15 px;
     
-    background: url('https://static.weezeel.com/app/5/default_mini.png');
+    background: url('https://staticbeta.weezeel.com/app/5/default_mini.png');
+    background-size: 30px 30px;
     
 }
 
@@ -414,7 +420,8 @@
     margin-top: 3px;
     margin-left: 8px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -119px -30px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -119px -30px;
+    background-size: 127px 55px;
     
 }
 
@@ -425,7 +432,8 @@
     float: right;
     margin-right: 18px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -68px -16px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -68px -16px;
+    background-size: 127px 55px;
     
 }
 
@@ -436,7 +444,8 @@
     float: left;
     margin-left: 19px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -105px 0;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -105px 0;
+    background-size: 127px 55px;
     
 }
 
@@ -474,7 +483,8 @@
     height: 22px;
     float: left;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -50px -33px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -50px -33px;
+    background-size: 127px 55px;
     
 }
 
@@ -501,6 +511,7 @@
     top: -11px;
     left: -6px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -83px -16px;
+    background: url('https://staticbeta.weezeel.com/app/5/sprite.png') -83px -16px;
+    background-size: 127px 55px;
 
 }
