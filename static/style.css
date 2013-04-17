@@ -31,24 +31,25 @@
 
 .wz-app-5 .weemusic-controls-forward{
    
-    width: 25px; 
-    height: 16px;
+    width: 24px; 
+    height: 15px;
     float: left;
-    margin: 6px 34px;
+    margin: 7px 35px 6px 34px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -80px 0;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -77px 0;
+    background-size: 118px 53px;
     
 }
 
 .wz-app-5 .weemusic-controls-play{
     
-    width: 28px;
-    height: 32px;
+    width: 26px;
+    height: 29px;
     float: left;
+    margin-left: 1px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') 0 0;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat 0 0;
+    background-size: 118px 53px;
     
 }
 
@@ -58,13 +59,13 @@
 
 .wz-app-5 .weemusic-controls-rewind{
     
-    width: 25px;
-    height: 16px;
+    width: 24px;
+    height: 15px;
     float: left;
-    margin: 6px 34px;
+    margin: 7px 34px 6px 35px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -55px 0;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -53px 0;
+    background-size: 118px 53px;
     
 }
 
@@ -121,11 +122,11 @@
 .wz-app-5 .weemusic-info-album i{
     
     width: 9px;
-    height: 10px;
+    height: 9px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -118px -18px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -102px -24px;
+    background-size: 118px 53px;
     
 }
 
@@ -156,8 +157,8 @@
     height: 11px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -105px -18px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -102px -13px;
+    background-size: 118px 53px;
     
 }
 
@@ -243,15 +244,15 @@
     height: 18px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/toggle.png') 0 0;
+    background: url('https://static.weezeel.com/app/5/toggle.png') no-repeat 0 0;
     background-size: 37px 23px;
     
 }
 
 .wz-app-5 .weemusic-info-random.active{
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -79px -34px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -62px -30px;
+    background-size: 118px 53px;
     
 }
 
@@ -263,28 +264,28 @@
     margin-left: -1px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -101px -32px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -81px -31px;
+    background-size: 118px 53px;
     
 }
 
 .wz-app-5 .weemusic-info-repeat.active{
     
-    background: url('https://static.weezeel.com/app/5/toggle.png') -19px 0;
+    background: url('https://static.weezeel.com/app/5/toggle.png') no-repeat -19px 0;
     background-size: 37px 23px;
     
 }
 
 .wz-app-5 .weemusic-info-seeker{
 
-    width: 18px;
-    height: 22px;
+    width: 17px;
+    height: 21px;
     position: relative;
     top: -18px;
     left: -9px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') 0 -32px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat 0 -29px;
+    background-size: 118px 53px;
 
 }
 
@@ -296,7 +297,7 @@
     margin-left: 148px;
     margin-right: 132px;
 
-    background: url('https://static.weezeel.com/app/5/shadow.png');
+    background: url('https://static.weezeel.com/app/5/shadow.png') no-repeat;
     background-size: 244px 57px;
     
 }
@@ -316,8 +317,8 @@
     height: 14px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -96px -16px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -93px -15px;
+    background-size: 118px 53px;
     
 }
 
@@ -362,7 +363,7 @@
     float: left;
     margin-left: 15 px;
     
-    background: url('https://static.weezeel.com/app/5/default_mini.png');
+    background: url('https://static.weezeel.com/app/5/default_mini.png') no-repeat;
     background-size: 30px 30px;
     
 }
@@ -415,37 +416,37 @@
 .wz-app-5 .weemusic-playlist-display{
     
     width: 7px;
-    height: 6px;
+    height: 5px;
     float: left;
     margin-top: 3px;
     margin-left: 8px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -119px -30px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -99px -33px;
+    background-size: 118px 53px;
     
 }
 
 .wz-app-5 .weemusic-playlist-find{
     
     width: 15px;
-    height: 16px;
+    height: 15px;
     float: right;
     margin-right: 18px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -68px -16px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -65px -15px;
+    background-size: 118px 53px;
     
 }
 
 .wz-app-5 .weemusic-playlist-icon{
     
     width: 17px;
-    height: 14px;
+    height: 13px;
     float: left;
     margin-left: 19px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -105px 0;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -101px 0;
+    background-size: 118px 53px;
     
 }
 
@@ -479,17 +480,23 @@
 
 .wz-app-5 .weemusic-volume-icon{
     
-    width: 25px;
-    height: 22px;
+    width: 21px;
+    height: 15px;
     float: left;
+    margin-top: 2px;
+    margin-left: 3px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -50px -33px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -41px -31px;
+    background-size: 118px 53px;
     
 }
 
 .wz-app-5.muted .weemusic-volume-icon{
-    background-position: -18px -33px;
+
+    width: 24px;
+    height: 21px;
+    margin: 0px;
+    background-position: -17px -31px;
 }
 
 .wz-app-5 .weemusic-volume-max{
@@ -505,13 +512,13 @@
 
 .wz-app-5 .weemusic-volume-seeker{
 
-    width: 12px;
-    height: 17px;
+    width: 13px;
+    height: 16px;
     position: relative;
     top: -11px;
     left: -6px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -83px -16px;
-    background-size: 127px 55px;
+    background: url('https://static.weezeel.com/app/5/sprite.png') -80px -15px;
+    background-size: 118px 53px;
 
 }
