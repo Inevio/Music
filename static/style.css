@@ -361,7 +361,7 @@
     width: 30px;
     height: 30px;
     float: left;
-    margin-left: 15 px;
+    margin-left: 15px;
     
     background: url('https://static.weezeel.com/app/5/default_mini.png') no-repeat;
     background-size: 30px 30px;
@@ -406,7 +406,6 @@
     padding-top: 17px;
     
     background-image: -moz-linear-gradient(50% 0% -90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%); 
-    background-image: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0, rgb(32,32,32)),color-stop(1, rgb(16,16,16)));
     background-image: -webkit-linear-gradient(-90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%);
     background-image: -o-linear-gradient(-90deg,rgb(32,32,32) 0%,rgb(16,16,16) 100%);
     background-image: linear-gradient(0deg,rgb(16,16,16) 0%,rgb(32,32,32) 100%);
@@ -497,6 +496,7 @@
     height: 21px;
     margin: 0px;
     background-position: -17px -31px;
+    
 }
 
 .wz-app-5 .weemusic-volume-max{
