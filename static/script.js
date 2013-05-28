@@ -34,9 +34,9 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
             audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
             audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
             
-            weemusicTitle.text( ( structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
-            weemusicArtist.text( ( structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
-            weemusicAlbum.text( ( structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
+            weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
+            weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+            weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
             weemusicCover.attr('src',structure.thumbnails.big);
             
         });
