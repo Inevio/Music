@@ -38,6 +38,8 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
             weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
             weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
             weemusicCover.attr('src',structure.thumbnails.big);
+
+            audio.load();
             
         });
         
