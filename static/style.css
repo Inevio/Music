@@ -5,8 +5,18 @@
         
 }
 
+.wz-app-5 .wz-win-menu-group{
+    padding-bottom: 8px;
+}
+
 .wz-app-5 .wz-win-minimize{
-    margin-right: 23px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+}
+
+.wz-app-5 .wz-win-close{
+    padding-top: 5px;
+    padding-bottom: 7px;
 }
 
 .wz-app-5 .weemusic-bar{
@@ -19,22 +29,26 @@
 .wz-app-5 .weemusic-controls{
 
     width: 215px;
-    height: 37px;
+    height: 45px;
     float: left;
     margin-left: 8px;
-    padding-top: 12px;
+    padding-top: 4px;
     
-    background: url('https://static.weezeel.com/app/5/light.png') 41px -1px no-repeat;
+    background: url('https://static.weezeel.com/app/5/light.png') 41px -2px no-repeat;
     background-size: 128px 51px;
 
 }
 
 .wz-app-5 .weemusic-controls-forward{
+    margin-left: 18px;
+    margin-top: 7px;
+}
+
+.wz-app-5 .weemusic-controls-forward i{
    
     width: 24px; 
     height: 15px;
     float: left;
-    margin: 7px 35px 6px 34px;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -77px 0;
     background-size: 118px 53px;
@@ -42,27 +56,36 @@
 }
 
 .wz-app-5 .weemusic-controls-play{
+    height: 30px;
+    margin-left: 20px;
+    padding-bottom: 4px;
+}
+
+.wz-app-5 .weemusic-controls-play i{
     
     width: 26px;
     height: 29px;
     float: left;
-    margin-left: 1px;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat 0 0;
     background-size: 118px 53px;
     
 }
 
-.wz-app-5.play .weemusic-controls-play{
+.wz-app-5.play .weemusic-controls-play i{
     background-position: -27px 0;
 }
 
 .wz-app-5 .weemusic-controls-rewind{
+    margin-left: 29px;
+    margin-top: 7px;
+}
+
+.wz-app-5 .weemusic-controls-rewind i{
     
     width: 24px;
     height: 15px;
     float: left;
-    margin: 7px 34px 6px 35px;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -53px 0;
     background-size: 118px 53px;
@@ -477,7 +500,17 @@
     
 }
 
+.wz-app-5 .weemusic-volume{
+    height: 30px;
+    padding: 10px 23px 9px 17px;
+}
+
 .wz-app-5 .weemusic-volume-icon{
+    height: 18px;
+    padding: 5px 5px 5px 4px;
+}
+
+.wz-app-5 .weemusic-volume-icon i{
     
     width: 21px;
     height: 15px;
@@ -490,7 +523,7 @@
     
 }
 
-.wz-app-5.muted .weemusic-volume-icon{
+.wz-app-5.muted .weemusic-volume-icon i{
 
     width: 24px;
     height: 21px;
@@ -503,8 +536,8 @@
     
     width: 74px;
     float: left;
-    margin-top: 6px;
-    margin-left: 9px;
+    margin-top: 13px;
+    margin-left: 3px;
     
     background-color: rgba(217,217,217,0.2);
     
