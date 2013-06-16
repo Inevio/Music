@@ -1,32 +1,32 @@
 
-.wz-app-5{
+.wz-win{
     
     background: #000;
         
 }
 
-.wz-app-5 .wz-win-menu-group{
+.wz-win-menu-group{
     padding-bottom: 8px;
 }
 
-.wz-app-5 .wz-win-minimize{
+.wz-win-minimize{
     padding-top: 4px;
     padding-bottom: 8px;
 }
 
-.wz-app-5 .wz-win-close{
+.wz-win-close{
     padding-top: 5px;
     padding-bottom: 7px;
 }
 
-.wz-app-5 .weemusic-bar{
+.weemusic-bar{
 
     height: 5px;
     border-radius: 1px;
         
 }
 
-.wz-app-5 .weemusic-controls{
+.weemusic-controls{
 
     width: 215px;
     height: 45px;
@@ -39,12 +39,12 @@
 
 }
 
-.wz-app-5 .weemusic-controls-forward{
+.weemusic-controls-forward{
     margin-left: 18px;
     margin-top: 7px;
 }
 
-.wz-app-5 .weemusic-controls-forward i{
+.weemusic-controls-forward i{
    
     width: 24px; 
     height: 15px;
@@ -55,13 +55,13 @@
     
 }
 
-.wz-app-5 .weemusic-controls-play{
+.weemusic-controls-play{
     height: 30px;
     margin-left: 20px;
     padding-bottom: 4px;
 }
 
-.wz-app-5 .weemusic-controls-play i{
+.weemusic-controls-play i{
     
     width: 26px;
     height: 29px;
@@ -76,12 +76,12 @@
     background-position: -27px 0;
 }
 
-.wz-app-5 .weemusic-controls-rewind{
+.weemusic-controls-rewind{
     margin-left: 29px;
     margin-top: 7px;
 }
 
-.wz-app-5 .weemusic-controls-rewind i{
+.weemusic-controls-rewind i{
     
     width: 24px;
     height: 15px;
@@ -92,7 +92,7 @@
     
 }
 
-.wz-app-5 .weemusic-info{
+.weemusic-info{
 
     width: 100%;
     height: 414px;
@@ -133,7 +133,7 @@
 
 }
 
-.wz-app-5 .weemusic-info-album{
+.weemusic-info-album{
     
     height: 12px;
     line-height: 12px;
@@ -142,7 +142,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-album i{
+.weemusic-info-album i{
     
     width: 9px;
     height: 9px;
@@ -153,7 +153,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-album span{
+.weemusic-info-album span{
     
     font-size: 12px;
     color: #5d5d5d;
@@ -165,7 +165,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-artist{
+.weemusic-info-artist{
     
     height: 14px;
     line-height: 14px;
@@ -174,7 +174,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-artist i{
+.weemusic-info-artist i{
     
     width: 11px;
     height: 11px;
@@ -185,7 +185,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-artist span{
+.weemusic-info-artist span{
     
     font-size: 14px;
     color: #cfcfcf;
@@ -197,7 +197,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-backprogress{
+.weemusic-info-backprogress{
 
     width: 370px;
     float: left;
@@ -208,14 +208,14 @@
 
 }
 
-.wz-app-5 .weemusic-info-buffer{
+.weemusic-info-buffer{
     
     width: 235px;
     background-color: rgba(217,217,217,0.3);    
 
 }
 
-.wz-app-5 .weemusic-info-cover{
+.weemusic-info-cover{
     
     width: 244px;
     height: 244px;
@@ -225,7 +225,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-data{
+.weemusic-info-data{
 
     font-size: 13px;
     color: #FFF;
@@ -238,11 +238,11 @@
 
 }
 
-.wz-app-5 .weemusic-info-data.currentTime{
+.weemusic-info-data.currentTime{
     text-align: right;
 }
 
-.wz-app-5 .weemusic-info-options{
+.weemusic-info-options{
     
     width: 32px;
     float: left;
@@ -251,7 +251,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-progress{
+.weemusic-info-progress{
     
     width: 0px;
     position: relative;
@@ -304,7 +304,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-seeker{
+.weemusic-info-seeker{
 
     width: 17px;
     height: 21px;
@@ -317,7 +317,7 @@
 
 }
 
-.wz-app-5 .weemusic-info-shadow{
+.weemusic-info-shadow{
     
     width: 244px;
     height: 57px;
@@ -330,7 +330,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-title{
+.weemusic-info-title{
     
     height: 14px;
     line-height: 14px;
@@ -339,7 +339,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-title i{
+.weemusic-info-title i{
     
     width: 9px;
     height: 14px;
@@ -350,7 +350,7 @@
     
 }
 
-.wz-app-5 .weemusic-info-title span{
+.weemusic-info-title span{
     
     font-size: 14px;
     color: #cfcfcf;
@@ -362,7 +362,7 @@
     
 }
 
-.wz-app-5 .weemusic-list{
+.weemusic-list{
     
     width: 501px;
     height: 262px;
@@ -373,7 +373,7 @@
     
 }
 
-.wz-app-5 .weemusic-list-artist{
+.weemusic-list-artist{
     
     font-size: 14px;
     color: #575757;
@@ -384,7 +384,7 @@
     
 }
 
-.wz-app-5 .weemusic-list-cover{
+.weemusic-list-cover{
     
     width: 30px;
     height: 30px;
@@ -396,7 +396,7 @@
     
 }
 
-.wz-app-5 .weemusic-list-number{
+.weemusic-list-number{
 
     color: #cfcfcf;
     
@@ -407,14 +407,14 @@
     
 }
 
-.wz-app-5 .weemusic-list-song{
+.weemusic-list-song{
     
     width: 100%;
     height: 40px;
     
 }
 
-.wz-app-5 .weemusic-list-title{
+.weemusic-list-title{
     
     font-size: 14px;
     color: #cfcfcf;
@@ -425,7 +425,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist{
+.weemusic-playlist{
     
     width: 100%;
     height: 30px;
@@ -440,7 +440,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist-display{
+.weemusic-playlist-display{
     
     width: 7px;
     height: 5px;
@@ -453,7 +453,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist-find{
+.weemusic-playlist-find{
     
     width: 15px;
     height: 15px;
@@ -465,7 +465,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist-icon{
+.weemusic-playlist-icon{
     
     width: 17px;
     height: 13px;
@@ -477,7 +477,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist-text{
+.weemusic-playlist-text{
     
     font-size: 14px;
     color: #d1d1d1;
@@ -487,7 +487,7 @@
     
 }
 
-.wz-app-5 .weemusic-playlist-title{
+.weemusic-playlist-title{
     
     font-size: 14px;
     color: #d18a0e;
@@ -497,7 +497,7 @@
     
 }  
 
-.wz-app-5 .weemusic-volume-current{
+.weemusic-volume-current{
     
     width: 0px;
     
@@ -505,17 +505,17 @@
     
 }
 
-.wz-app-5 .weemusic-volume{
+.weemusic-volume{
     height: 30px;
     padding: 10px 23px 9px 17px;
 }
 
-.wz-app-5 .weemusic-volume-icon{
+.weemusic-volume-icon{
     height: 18px;
     padding: 5px 5px 5px 4px;
 }
 
-.wz-app-5 .weemusic-volume-icon i{
+.weemusic-volume-icon i{
     
     width: 21px;
     height: 15px;
@@ -537,7 +537,7 @@
     
 }
 
-.wz-app-5 .weemusic-volume-max{
+.weemusic-volume-max{
     
     width: 74px;
     float: left;
@@ -548,7 +548,7 @@
     
 }
 
-.wz-app-5 .weemusic-volume-seeker{
+.weemusic-volume-seeker{
 
     width: 13px;
     height: 16px;
