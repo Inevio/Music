@@ -72,7 +72,7 @@
     
 }
 
-.wz-app-5.play .weemusic-controls-play i{
+.wz-win.play .weemusic-controls-play i{
     background-position: -27px 0;
 }
 
@@ -528,7 +528,7 @@
     
 }
 
-.wz-app-5.muted .weemusic-volume-icon i{
+.wz-win.muted .weemusic-volume-icon i{
 
     width: 24px;
     height: 21px;
