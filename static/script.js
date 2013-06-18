@@ -25,19 +25,20 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
         return ( Math.round( Math.random() ) - 0.5 );
     };
     
-    var loadItem = function(){
-    
-        wz.structure( list[pointers[pointer]], function( error, structure ){
+    var loadItem = function( id ){
+
+        //wz.structure( list[ pointers[ pointer ] ], function( error, structure ){
+        wz.structure( id, function( error, structure ){
             
             audio.empty();
-                        
+
             audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
             audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
             
             weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
             weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
             weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
-            weemusicCover.attr('src',structure.thumbnails.big);
+            weemusicCover.attr( 'src', ( structure.thumbnails.big )? structure.thumbnails.big : 'https://static.weezeel.com/app/5/default.png' );
 
             audio.load();
             
@@ -49,14 +50,16 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
     
     win.on( 'app-param', function( e, params ){
 
-        if( params && params.length ){
+        loadItem( params[ 0 ] );
+
+        /*if( params && params.length ){
             
             list.push( params[ 0 ] );
             pointers.push( pointers.length );
             
             loadItem();
             
-        }
+        }*/
 
     });
     
@@ -159,7 +162,7 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
             
             .on('mousedown', '.weemusic-info-random', function(){
                 
-                if( randomize.hasClass('active') ){
+                /*if( randomize.hasClass('active') ){
                     
                     randomize.removeClass('active');
                     
@@ -178,7 +181,7 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
                     b.sort(randomly);
                     pointers = a.concat(b);
                     
-                }
+                }*/
                 
             })
             
@@ -353,9 +356,12 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
                     }
                     
                     this.currentTime = 0;
-                    this.pause();
+
+                    if( loop.hasClass( 'active' ) ){
+                        this.play();
+                    }
                     
-                    if( pointer === list.length ){
+                    /*if( pointer === list.length ){
                         
                         pointer = 0;
                         
@@ -371,7 +377,7 @@ wz.app.addScript( 5, 'common', function( win, app, lang, params ){
                     
                     }else{
                         loadItem();
-                    }
+                    }*/
                     
                 }
                             
