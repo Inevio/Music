@@ -1,0 +1,8 @@
+
+HOW DATABASE WORKS
+
+- Table config:
+
+	user: user's ID (PK)
+	mute: 0 if unmuted <-> 1 if muted
+	volume: value from 0 to 1
