@@ -249,7 +249,6 @@
 
 .weemusic-info-random{
     display: inline-block;
-    cursor: pointer;
     padding-right: 5px;
 }
 
@@ -257,7 +256,6 @@
     width: 19px;
     height: 18px;
     display: block;
-    cursor: pointer;
     
     background: url('https://static.weezeel.com/app/5/toggle.png') no-repeat 0 0;    
 }
@@ -270,8 +268,7 @@
 
 .weemusic-info-repeat{
     display: inline-block;
-    margin-top: 6px;
-    cursor: pointer;
+    margin-top: 46px;
     padding: 4px 6px;
 }
 
@@ -279,7 +276,6 @@
     width: 18px;
     height: 23px;
     display: block;
-    cursor: pointer;
     
     background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -81px -31px;
 }
@@ -545,4 +541,10 @@
     background: url('https://static.weezeel.com/app/5/sprite.png') -80px -15px;
     background-size: 118px 53px;
 
+}
+
+.weemusic-bottom{
+    width: 100%;
+    position: absolute;
+    bottom: 32px;
 }
