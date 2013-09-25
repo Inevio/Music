@@ -5,7 +5,7 @@ wql.getConfig( function( error, result ){
 
         if( result[0].mute ){
 
-            win.addClass('muted');
+            win.addClass( 'muted' );
 
         }
 
@@ -16,6 +16,10 @@ wql.getConfig( function( error, result ){
     }else{
 
         wql.insertConfig();
+
+        var volumePosition = $( '.weemusic-volume-max', win ).width();
+        $( '.weemusic-volume-current', win ).css( 'width', volumePosition );
+        $( '.weemusic-volume-seeker', win ).css({ x : volumePosition });
 
     }
 

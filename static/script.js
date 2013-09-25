@@ -382,19 +382,11 @@
 
         wql.getConfig( function( error, result ){
 
-            if( result.length ){
-
-                if( result[0].mute ){
-                    audio[0].muted = true;
-                }
-
-                audio[0].volume = result[0].volume;
-
-            }else{
-
-                wql.insertConfig();
-
+            if( result[0].mute ){
+                audio[0].muted = true;
             }
+
+            audio[0].volume = result[0].volume;
 
         });
             
