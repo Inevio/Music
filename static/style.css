@@ -9,7 +9,7 @@
 
     height: 5px;
     border-radius: 1px;
-        
+
 }
 
 .weemusic-controls{
@@ -39,8 +39,12 @@
     
     background: url('https://staticbeta.weezeel.com/app/5/sprite.png') no-repeat -76px 0;
     background-size: 186px 34px;
-    opacity: 0.8;
+    opacity: 0.7;
     
+}
+
+.weemusic-controls-forward:hover i{
+    opacity: 1;
 }
 
 .weemusic-controls-play{
@@ -78,8 +82,12 @@
     
     background: url('https://staticbeta.weezeel.com/app/5/sprite.png') no-repeat -50px 0;
     background-size: 186px 34px;
-    opacity: 0.8;
+    opacity: 0.7;
     
+}
+
+.weemusic-controls-rewind:hover i{
+    opacity: 1;
 }
 
 .weemusic-info{
