@@ -20,7 +20,7 @@
     margin-left: 8px;
     padding-top: 6px;
     
-    background: url('https://static.weezeel.com/app/5/light.png') 43px -2px no-repeat;
+    background: url('@static/light.png') 43px -2px no-repeat;
     background-size: 128px 51px;
 
 }
@@ -37,7 +37,7 @@
     height: 16px;
     float: left;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -76px 0;
+    background: url('@static/sprite.png') no-repeat -76px 0;
     background-size: 186px 34px;
     opacity: 0.7;
     
@@ -59,7 +59,7 @@
     height: 28px;
     float: left;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat 0 0;
+    background: url('@static/sprite.png') no-repeat 0 0;
     background-size: 186px 34px;
     
 }
@@ -80,7 +80,7 @@
     height: 16px;
     float: left;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -50px 0;
+    background: url('@static/sprite.png') no-repeat -50px 0;
     background-size: 186px 34px;
     opacity: 0.7;
     
@@ -146,7 +146,7 @@
     height: 9px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -101px -21px;
+    background: url('@static/sprite.png') no-repeat -101px -21px;
     background-size: 186px 34px;
     
 }
@@ -178,7 +178,7 @@
     height: 11px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -120px -14px;
+    background: url('@static/sprite.png') no-repeat -120px -14px;
     background-size: 186px 34px;
     
 }
@@ -269,7 +269,7 @@
     height: 17px;
     display: block;
 
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -131px 0;
+    background: url('@static/sprite.png') no-repeat -131px 0;
     background-size: 186px 34px;
 }
 
@@ -288,7 +288,7 @@
     height: 23px;
     display: block;
 
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -150px 0;
+    background: url('@static/sprite.png') no-repeat -150px 0;
     background-size: 186px 34px;
 }
 
@@ -304,7 +304,7 @@
     top: -18px;
     left: -9px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -102px 0;
+    background: url('@static/sprite.png') no-repeat -102px 0;
     background-size: 186px 34px;
 
 }
@@ -324,7 +324,7 @@
     height: 14px;
     display: inline-block;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -120px 0;
+    background: url('@static/sprite.png') no-repeat -120px 0;
     background-size: 186px 34px;
     
 }
@@ -370,7 +370,7 @@
     float: left;
     margin-left: 15px;
     
-    background: url('https://static.weezeel.com/app/5/default_mini.png') no-repeat;
+    background: url('@static/default_mini.png') no-repeat;
     background-size: 30px 30px;
     
 }
@@ -427,7 +427,7 @@
     margin-top: 3px;
     margin-left: 8px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -99px -33px;
+    background: url('@static/sprite.png') no-repeat -99px -33px;
     background-size: 118px 53px;
     
 }
@@ -439,7 +439,7 @@
     float: right;
     margin-right: 18px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -65px -15px;
+    background: url('@static/sprite.png') no-repeat -65px -15px;
     background-size: 118px 53px;
     
 }
@@ -451,7 +451,7 @@
     float: left;
     margin-left: 19px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -101px 0;
+    background: url('@static/sprite.png') no-repeat -101px 0;
     background-size: 118px 53px;
     
 }
@@ -502,7 +502,7 @@
     margin-top: 2px;
     margin-left: 3px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') no-repeat -50px -16px;
+    background: url('@static/sprite.png') no-repeat -50px -16px;
     background-size: 186px 34px;
     
 }
@@ -530,7 +530,7 @@
     top: -11px;
     left: -6px;
     
-    background: url('https://static.weezeel.com/app/5/sprite.png') -88px -16px;
+    background: url('@static/sprite.png') -88px -16px;
     background-size: 186px 34px;
 
 }
