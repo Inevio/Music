@@ -1,4 +1,5 @@
-    
+
+    var win                     = $( this );
     var audio                   = $('audio',win);
     var weemusicTitle           = $('.weemusic-info-title span',win);
     var weemusicArtist          = $('.weemusic-info-artist span',win);
