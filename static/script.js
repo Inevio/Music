@@ -24,32 +24,29 @@
         return ( Math.round( Math.random() ) - 0.5 );
     };
     
-    var loadItem = function( id ){
+    var loadItem = function( structure ){
 
-        //wz.structure( list[ pointers[ pointer ] ], function( error, structure ){
-        wz.structure( id, function( error, structure ){
-            
-            audio.empty();
+        audio.empty();
 
-            audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-            audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
-            
-            weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
-            weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
-            weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
-            weemusicCover.attr( 'src', ( structure.thumbnails.big )? structure.thumbnails.big : 'https://static.weezeel.com/app/5/default.png' );
-
-            audio.load();
-            
-        });
+        audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
+        audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
         
+        weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
+        weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+        weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
+        weemusicCover.attr( 'src', ( structure.thumbnails.big )? structure.thumbnails.big : 'https://static.weezeel.com/app/5/default.png' );
+
+        audio.load();
+                
         pointer++;
         
     };
     
     win.on( 'app-param', function( e, params ){
 
-        loadItem( params[ 0 ] );
+        if( params && params.command === 'openFile' ){
+            loadItem( params.data );
+        }
 
         /*if( params && params.length ){
             
