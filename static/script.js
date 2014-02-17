@@ -326,27 +326,17 @@
         })
         
         .on( 'volumechange', function(){
-
-            var volume = 0;
             
             if( this.muted ){
-
-                volume = 0;
-
                 win.addClass('muted');
-
             }else{
-
-                volume = this.volume;
-
                 win.removeClass('muted');
-
             }
 
             if( !weemusicVolumeSeeker.hasClass('wz-drag-active') ){
-
-                weemusicVolume.css( 'width', volume * weemusicMaxVolume.width() );
-                weemusicVolumeSeeker.css( 'x', volume * ( weemusicMaxVolume.width() - weemusicVolumeSeeker.width() ) );
+                
+                weemusicVolume.css( 'width', this.volume * weemusicMaxVolume.width() );
+                weemusicVolumeSeeker.css( 'x', this.volume * ( weemusicMaxVolume.width() - weemusicVolumeSeeker.width() ) );
 
             }
             
