@@ -138,7 +138,7 @@
 
                 emulatedSeekerTimer = setInterval( function(){
                     audio[ 0 ].currentTime = emulatedSeekerTime;
-                }, 250 );
+                }, 100 );
 
             }
             
@@ -251,65 +251,83 @@
         .key('space', function(){
         
             if( win.hasClass('play') ){
-                audio[0].pause();
+                audio[ 0 ].pause();
             }else{
-                audio[0].play();
+                audio[ 0 ].play();
             }
             
         })
         
         .key(
+
             'right',
-            function(){ audio[0].currentTime += 10; },
-            function(){ audio[0].currentTime += 10; }
+            function(){ audio[ 0 ].currentTime += 10; }, // To Do -> Comprobar exceso
+            function(){ audio[ 0 ].currentTime += 10; }  // To Do -> Comprobar exceso
+
         )
         
         .key(
+
             'left',
-            function(){ audio[0].currentTime -= 10; },
-            function(){ audio[0].currentTime -= 10; }
+            function(){ audio[ 0 ].currentTime -= 10; },
+            function(){ audio[ 0 ].currentTime -= 10; }
+
         )
         
         .key(
+
             'up',
             function(){
-                if((audio[0].volume + 0.1) < 1){
-                    audio[0].volume += 0.1;
+
+                if( ( audio[ 0 ].volume + 0.1 ) < 1){
+                    audio[ 0 ].volume += 0.1;
                 }else{
-                    audio[0].volume = 1;
+                    audio[ 0 ].volume = 1;
                 }
+
             },
             function(){
-                if((audio[0].volume + 0.1) < 1){
-                    audio[0].volume += 0.1;
+
+                if( ( audio[ 0 ].volume + 0.1 ) < 1){
+                    audio[ 0 ].volume += 0.1;
                 }else{
-                    audio[0].volume = 1;
+                    audio[ 0 ].volume = 1;
                 }
+
             }
+
         )
         
         .key(
+
             'down',
             function(){
-                if((audio[0].volume - 0.1) > 0){
-                    audio[0].volume -= 0.1;
+
+                if( ( audio[ 0 ].volume - 0.1 ) > 0){
+                    audio[ 0 ].volume -= 0.1;
                 }else{
-                    audio[0].volume = 0;
+                    audio[ 0 ].volume = 0;
                 }
+
             },
             function(){
-                if((audio[0].volume - 0.1) > 0){
-                    audio[0].volume -= 0.1;
+
+                if( ( audio[ 0 ].volume - 0.1 ) > 0){
+                    audio[ 0 ].volume -= 0.1;
                 }else{
-                    audio[0].volume = 0;
+                    audio[ 0 ].volume = 0;
                 }
+
             }
+
         )
         
         .key(
+
             'backspace',
-            function(){ audio[0].currentTime = 0; },
-            function(){ audio[0].currentTime = 0; }
+            function(){ audio[ 0 ].currentTime = 0; },
+            function(){ audio[ 0 ].currentTime = 0; }
+
         );
         
         audio
@@ -336,7 +354,7 @@
             if( !weemusicVolumeSeeker.hasClass('wz-drag-active') ){
                 
                 weemusicVolume.css( 'width', this.volume * weemusicMaxVolume.width() );
-                weemusicVolumeSeeker.css( 'x', this.volume * ( weemusicMaxVolume.width() - weemusicVolumeSeeker.width() ) );
+                weemusicVolumeSeeker.css( 'x', Math.floor( this.volume * ( weemusicMaxVolume.width() - weemusicVolumeSeeker.width() ) ) );
 
             }
             
@@ -345,35 +363,35 @@
         .on( 'timeupdate', function( e ){
 
             var time      = this.duration;
-            var totalHour = parseInt(time/3600, 10);
-            var rem       = (time%3600);
-            var totalMin  = parseInt(rem/60, 10);
+            var totalHour = parseInt( time / 3600, 10 );
+            var rem       = time % 3600;
+            var totalMin  = parseInt( rem / 60, 10 );
                         
             time     = this.currentTime;
-            var hour = parseInt(time/3600, 10);
+            var hour = parseInt( time / 3600, 10 );
 
-            rem      = (time%3600);
-            var min  = parseInt(rem/60, 10);
-            var sec  = parseInt(rem%60, 10);
+            rem      = time % 3600;
+            var min  = parseInt( rem / 60, 10 );
+            var sec  = parseInt( rem % 60, 10 );
             
-            if(totalHour > 9 && hour < 10){ hour = '0' + hour; }
-            if(totalHour > 0 || (totalMin > 10 && min < 10)){ min  = '0' + min; }
-            if(sec < 10){ sec  = '0' + sec; }
+            if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+            if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min  = '0' + min; }
+            if (sec < 10 ){ sec  = '0' + sec; }
                         
-            if(totalHour){
-                weemusicCurrentTime.text(hour+':'+min+':'+sec);
-            }else if(totalMin){
-                weemusicCurrentTime.text(min+':'+sec);
+            if( totalHour ){
+                weemusicCurrentTime.text( hour + ':' + min + ':' + sec );
+            }else if( totalMin ){
+                weemusicCurrentTime.text( min + ':' + sec );
             }else{
-                weemusicCurrentTime.text('0:'+sec);
+                weemusicCurrentTime.text( '0:' + sec );
             }
             
-            var pos = weemusicBackprogress.width()*(this.currentTime/this.duration);
+            var backWidth = weemusicBackprogress.width();
 
-            weemusicProgress.width(pos);
+            weemusicProgress.width( backWidth * ( this.currentTime / this.duration ) );
 
             if( !weemusicSeeker.hasClass('wz-drag-active') ){
-                weemusicSeeker.css( 'x', pos );
+                weemusicSeeker.css( 'x', ( backWidth - weemusicSeeker.width() ) * ( this.currentTime / this.duration ) );
             }
             
         })
