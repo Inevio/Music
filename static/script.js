@@ -50,7 +50,6 @@
         weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
         weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
         
-        console.log( win, 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.weezeel.com/app/40/cover.jpg' ) + ')' )
         win.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.weezeel.com/app/40/cover.jpg' ) + ')' );
 
         audio.load();
