@@ -36,7 +36,7 @@
             weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : lang.unknown );
             weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
             weemusicAlbum.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.album )? structure.metadata.id3.album : lang.unknown );
-            weemusicCover.attr( 'src', ( structure.thumbnails.big )? structure.thumbnails.big : 'https://static.weezeel.com/app/5/default.png' );
+            weemusicCover.attr( 'src', ( structure.thumbnails.big )? structure.thumbnails.big : 'https://static.inevio.com/app/5/default.png' );
 
             audio.load();
             
