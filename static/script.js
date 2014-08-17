@@ -43,7 +43,6 @@
         console.log( structure );
             
         audio.empty();
-
         audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
         audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
         
