@@ -1,9 +1,12 @@
 
 .wz-view{
-    background: url('@static/cover.jpg') no-repeat;
+    background: #2e2f2f;
+    background-image: -webkit-linear-gradient(bottom, #242424, #484d4c);
+    background-image: -moz-linear-gradient(bottom, #242424, #484d4c);
+    background-image: -o-linear-gradient(bottom, #242424, #484d4c);
+    background-image: linear-gradient(to top, #242424, #484d4c);
     background-size: cover;
 }
-
 
 .wz-ui-header{
     box-shadow: inset 0 1px rgba( 255, 255, 255, 0.1 );
