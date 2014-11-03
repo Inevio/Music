@@ -37,11 +37,7 @@
     };
     
     var loadItem = function( structure ){
-
-        //wz.structure( list[ pointers[ pointer ] ], function( error, structure ){
-
-        console.log( structure );
-            
+                
         audio.empty();
         audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
         audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
@@ -85,27 +81,27 @@
         if( hour > 0 && min < 10 ){ min = '0' + min; }
         if( sec < 10 ){ sec  = '0' + sec; }
         
-        weemusicBackprogress.transition({'opacity':'1'},250);
+        //weemusicBackprogress.transition({'opacity':'1'},250);
 
         if( 9 < hour ){
 
-            weemusicCurrentTime.transition({'opacity':'1'},250).text('00:00:00');
-            weemusicTotalTime.transition({'opacity':'1'},250).text(hour+':'+min+':'+sec);
+            weemusicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00:00');
+            weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
         
         }else if( 0 < hour && hour < 10 ){
 
-            weemusicCurrentTime.transition({'opacity':'1'},250).text('0:00:00');
-            weemusicTotalTime.transition({'opacity':'1'},250).text(hour+':'+min+':'+sec);
+            weemusicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00:00');
+            weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
         
         }else if( 9 < min ){
 
-            weemusicCurrentTime.transition({'opacity':'1'},250).text('00:00');
-            weemusicTotalTime.transition({'opacity':'1'},250).text(min+':'+sec);
+            weemusicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00');
+            weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
             
         }else{
 
-            weemusicCurrentTime.transition({'opacity':'1'},250).text('0:00');
-            weemusicTotalTime.transition({'opacity':'1'},250).text(min+':'+sec);
+            weemusicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
+            weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
 
         }
         
@@ -405,7 +401,7 @@
             var width = ( weemusicBackprogress.width() * ( buffer/this.duration ) );
             
             if( width > 0 ){
-                weemusicBufferprogress.transition( { width : width }, 100 );
+                weemusicBufferprogress.stop().clearQueue().transition( { width : width }, 100 );
             }
                     
         })
