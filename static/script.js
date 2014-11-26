@@ -36,20 +36,24 @@
         return ( Math.round( Math.random() ) - 0.5 );
     };
     
-    var loadItem = function( structure ){
-                
-        audio.empty();
-        audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-        audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
-        
-        weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
-        weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
-        
-        win.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
+    var loadItem = function( structureId ){
 
-        audio.load();
+        wz.fs( structureId, function( error, structure ){
                 
-        pointer++;
+            audio.empty();
+            audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
+            audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+            
+            weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
+            weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+            
+            win.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
+
+            audio.load();
+                    
+            pointer++;
+
+        });
         
     };
     
