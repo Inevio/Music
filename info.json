@@ -31,7 +31,7 @@
             "view" : {
 
                 "main" : {
-                    
+
                     "template" : "main.html",
 
                     "maxizable" : false,
@@ -39,7 +39,7 @@
 
                     "width"  : {
 
-                        "default" : 400,
+                        "default" : 710,
                         "min"     : 0,
                         "max"     : 0
 
@@ -71,7 +71,7 @@
             "read" : true
 
         }
-        
+
     }
 
 }
