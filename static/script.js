@@ -16,6 +16,8 @@ var musicVolumeSeeker      = $( '.music-volume-seeker', win );
 var songThumbnail          = $( '.song-thumbnail', win );
 var playListDom            = $( '.playlist', win );
 var songPrototype          = $( '.playlist .song.wz-prototype', win );
+var longClick              = false;
+var clickInterval;
 var playlist               = [];
 var indexPlaying           = -1;
 var list                   = [];
@@ -258,25 +260,51 @@ $( win )
 
 })
 
-.on( 'click', '.play-button.rewind', function(e){
+.on( 'mousedown', '.play-button.rewind', function(e){
 
-    //audio[0].currentTime -= 10;
-    console.log('rewind');
-    if( indexPlaying !== 0 ){
-      loadItem( indexPlaying - 1 )
-    }
-    e.stopPropagation();
+    clickInterval = setInterval( function(){
+      audio[0].currentTime -= 10;
+      longClick = true;
+    } ,600)
 
 })
 
-.on( 'click', '.play-button.forward', function(e){
+.on( 'mouseup', '.play-button.rewind', function(e){
 
-    //audio[0].currentTime += 10;
-    console.log('forward');
-    if( indexPlaying !== playlist.length - 1 ){
-      loadItem( indexPlaying + 1 )
+    if( !longClick ){
+
+      if( indexPlaying !== 0 ){
+        loadItem( indexPlaying - 1 )
+      }
+
     }
-    e.stopPropagation();
+    longClick = false;
+    clearInterval( clickInterval );
+
+
+})
+
+.on( 'mousedown', '.play-button.forward', function(e){
+
+    clickInterval = setInterval( function(){
+      audio[0].currentTime += 10;
+      longClick = true;
+    } ,600)
+
+})
+
+.on( 'mouseup', '.play-button.forward', function(e){
+
+    if( !longClick ){
+
+      if( indexPlaying !== playlist.length - 1 ){
+        loadItem( indexPlaying + 1 )
+      }
+
+    }
+    longClick = false;
+    clearInterval( clickInterval );
+
 
 })
 
