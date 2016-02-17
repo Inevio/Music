@@ -43,6 +43,10 @@ var randomly = function(){
     return ( Math.round( Math.random() ) - 0.5 );
 };
 
+var generateRandom = function(){
+  return Math.round( Math.random() * ( playlist.length - 1 ) );
+}
+
 var startApp = function( list ){
 
   if( params && params.command === 'openFile' ){
@@ -249,6 +253,10 @@ $( win )
 
 })
 
+.on( 'click', '.more-options .random', function(){
+    win.toggleClass('random');
+})
+
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
     clearInterval( emulatedSeekerTimer );
@@ -273,8 +281,10 @@ $( win )
 
     if( !longClick ){
 
-      if( indexPlaying !== 0 ){
-        loadItem( indexPlaying - 1 )
+      if( win.hasClass('random') ){
+        loadItem( generateRandom() );
+      }else if( indexPlaying !== 0 && !win.hasClass('random') ){
+        loadItem( indexPlaying - 1 );
       }
 
     }
@@ -297,14 +307,15 @@ $( win )
 
     if( !longClick ){
 
-      if( indexPlaying !== playlist.length - 1 ){
-        loadItem( indexPlaying + 1 )
+      if( win.hasClass('random') ){
+        loadItem( generateRandom() )
+      }else if( indexPlaying !== playlist.length - 1 && !win.hasClass('random') ){
+        loadItem( indexPlaying + 1 );
       }
 
     }
     longClick = false;
     clearInterval( clickInterval );
-
 
 })
 

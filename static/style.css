@@ -430,6 +430,10 @@
   background-position-x: -124px;
 }
 
+.wz-view.random .more-options .random i{
+  background-position-x: -139px;
+}
+
 .more-options .repeat{
   width: 14px;
   height: 16px;
