@@ -564,6 +564,10 @@ audio.on('durationchange', function(){
                 this.play();
             }
 
+            if( indexPlaying !== playlist.length -1 ){
+              loadItem( indexPlaying + 1 );
+            }
+
             /*if( pointer === list.length ){
 
                 pointer = 0;
