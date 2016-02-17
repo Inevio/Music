@@ -1,37 +1,17 @@
 
 .wz-view{
-    background: #2e2f2f;
-    background-image: -webkit-linear-gradient(bottom, #242424, #484d4c);
-    background-image: -moz-linear-gradient(bottom, #242424, #484d4c);
-    background-image: -o-linear-gradient(bottom, #242424, #484d4c);
-    background-image: linear-gradient(to top, #242424, #484d4c);
-    background-size: cover;
+    background: #3f4750;
 }
 
-.wz-ui-header{
-    box-shadow: inset 0 1px rgba( 255, 255, 255, 0.1 );
-    background-color: transparent;
-    background-image: -webkit-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: -moz-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: -o-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: linear-gradient( to top, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    border: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 49px;
-}
+.ui-header{
+  height: 51px;
+  background: none;
+  border-bottom: none;
 
-.wz-view-menu-group{
-    padding-top: 15px;
-    padding-bottom: 10px;
-    border: none !important;
-    box-shadow: none !important;
-}
+  figure{
+    margin-top: 13px !important;
+  }
 
-.wz-view-menu-group.right{
-    padding-left: 54px;
-    padding-right: 11px;
 }
 
 .weemusic-title{
@@ -140,7 +120,85 @@
   float: left;
   height: 350px;
   width: 360px;
-  background-color: green;
+
+  .song{
+    float: left;
+    width: 360px;
+    height: 63px;
+    margin-bottom: 1px;
+
+    figure{
+      float: left;
+      width: 45px;
+      height: 45px;
+      border-radius: 3px;
+      background-color: #f78534;
+      margin: 9px 12px 9px 15px;
+    }
+
+    figcaption{
+      float: left;
+      width: 221px;
+      height: 45px;
+      margin: 9px 0;
+    }
+
+    .title{
+      margin: 6px 0 5px;
+      font-family: Lato;
+      font-size: 15px;
+      font-weight: bold;
+      color: #d2dce2;
+      display: block;
+    }
+
+    .artist{
+      font-family: Lato;
+      font-size: 13px;
+      color: #98a2a5;
+    }
+
+    .time{
+      float: left;
+      width: 40px;
+      margin: 25px 15px 25px 12px;
+      font-family: Lato;
+      font-size: 13px;
+      color: #d2dce2;
+      height: 12px;
+      text-align: right;
+    }
+
+  }
+
+  .song.active{
+    background-color: #60b25e;
+
+    .title{
+      color: #fff;
+    }
+
+    .artist{
+      color: #fff;
+    }
+
+    .time{
+      color: #fff;
+    }
+
+  }
+
+  .song:after{
+    content: '';
+    margin: 0 10px;
+    width: 340px;
+    height: 1px;
+    background-color: #6a7178;
+    display: inline-block;
+    position: relative;
+    bottom: 12px;
+  }
+
 }
 
 .control-panel{
