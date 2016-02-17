@@ -1,28 +1,146 @@
 
-var win                    = $( this );
-var audio                  = $( 'audio', win );
-var weemusicTitle          = $( '.weemusic-name', win);
-var weemusicArtist         = $( '.weemusic-artist', win);
-var weemusicCover          = $( '.weemusic-info-cover', win );
-var musicCurrentTime       = $( '.currentTime', win );
-var weemusicTotalTime      = $( '.totalTime', win );
-var musicProgress          = $( '.music-progress', win );
-var musicBackprogress      = $( '.music-backprogress', win );
-var musicBufferprogress    = $( '.music-buffer', win );
-var musicSeeker            = $( '.music-time-seeker', win );
-var musicVolume            = $( '.music-volume-current', win );
-var musicMaxVolume         = $( '.music-volume-max', win );
-var musicVolumeSeeker      = $( '.music-volume-seeker', win );
-var songThumbnail          = $( '.song-thumbnail', win );
-var playListDom            = $( '.playlist', win );
-var songPrototype          = $( '.playlist .song.wz-prototype', win );
-var longClick              = false;
+// Objects
+var Playlist = function(){
+
+  this._list          = [];
+  this._toPlay        = [];
+  this._lastId        = -1;
+  this._repeatEnabled = false;
+  this._randomEnabled = false;
+
+};
+
+Playlist.prototype._shuffle = function(){
+
+  var input = this._toPlay;
+
+  for( var i = input.length - 1; i >= 0; i-- ){
+
+    var randomIndex = Math.floor( Math.random()*(i+1) );
+    var itemAtIndex = input[randomIndex];
+
+    input[randomIndex] = input[i];
+    input[i] = itemAtIndex;
+
+  }
+
+  this._toPlay = input.filter( function( item ){ return item !== this._lastId; }.bind( this ) );
+
+};
+
+Playlist.prototype._rebuild = function( index ){
+
+  index        = index || 0;
+  this._toPlay = [];
+
+  for( var i = index; i < this._list.length; i++ ){
+    this._toPlay.push( i );
+  }
+
+  if( this._randomEnabled ){
+    this._shuffle();
+  }
+
+};
+
+Playlist.prototype.push = function( list ){
+
+  if( !( list instanceof Array ) ){
+    list = [ list ];
+  }
+
+  for( var i = 0; i < list.length; i++ ){
+    this._toPlay.push( this._list.push( list[ i ] ) - 1 );
+  }
+
+  if( this._randomEnabled ){
+    this._shuffle();
+  }
+
+};
+
+Playlist.prototype.repeat = function( opt ){
+
+  if( typeof opt === 'undefined' ){
+    return this._repeatEnabled;
+  }
+
+  this._repeatEnabled = !!opt;
+
+};
+
+Playlist.prototype.random = function( opt ){
+
+  if( typeof opt === 'undefined' ){
+    return this._randomEnabled;
+  }
+
+  if( !this._randomEnabled && opt ){
+
+    this._randomEnabled = !!opt;
+    this._rebuild();
+
+  }else if( this._randomEnabled && !opt ){
+
+    this._randomEnabled = !!opt;
+    this._rebuild( this._lastId + 1 );
+
+  }
+
+};
+
+Playlist.prototype.get = function( index ){
+
+  if( !this._list[ index ] ){
+    return null;
+  }
+
+  this._rebuild( this._randomEnabled ? 0 : index + 1 );
+
+  this._lastId = index;
+
+  return this._list[ index ];
+
+};
+
+Playlist.prototype.next = function(){
+
+  if( this._toPlay.length === 0 && !this._repeatEnabled ){
+    return null;
+  }else if( this._toPlay.length === 0 ){
+    this._rebuild();
+  }
+
+  this._lastId = this._toPlay.shift();
+
+  return this._list[ this._lastId ];
+
+};
+
+// Variables
+var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg' ];
+var win                 = $( this );
+var audio               = $('audio');
+var weemusicTitle       = $('.weemusic-name');
+var weemusicArtist      = $('.weemusic-artist');
+var weemusicCover       = $('.weemusic-info-cover');
+var musicCurrentTime    = $('.currentTime');
+var weemusicTotalTime   = $('.totalTime');
+var musicProgress       = $('.music-progress');
+var musicBackprogress   = $('.music-backprogress');
+var musicBufferprogress = $('.music-buffer');
+var musicSeeker         = $('.music-time-seeker');
+var musicVolume         = $('.music-volume-current');
+var musicMaxVolume      = $('.music-volume-max');
+var musicVolumeSeeker   = $('.music-volume-seeker');
+var songThumbnail       = $('.song-thumbnail');
+var playListDom         = $('.playlist');
+var songPrototype       = $('.playlist .song.wz-prototype');
+var longClick           = false;
+var playlist            = new Playlist();
+var indexPlaying        = -1;
+var list                = [];
 var clickInterval;
-var playlist               = [];
-var indexPlaying           = -1;
-var list                   = [];
-var pointers               = [];
-var pointer                = 0;
 //var loop                   = $( '.weemusic-info-repeat', win );
 //var randomize              = $( '.weemusic-info-random', win );
 
@@ -32,45 +150,51 @@ var pointer                = 0;
  * Las variables que declaramos a continuación están pensadas para ello.
  * Ponemos un timer para de vez en cuando forzar que pueda cachear
  */
-var emulatedSeekerTimer = 0;
-var emulatedSeekerTime  = 0;
+ var emulatedSeekerTimer = 0;
+ var emulatedSeekerTime  = 0;
 
-win.addClass( 'wz-dragger' );
-musicVolume.width( musicMaxVolume.width() );
-musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
+ win.addClass( 'wz-dragger' );
+ musicVolume.width( musicMaxVolume.width() );
+ musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
 
+/*
 var randomly = function(){
     return ( Math.round( Math.random() ) - 0.5 );
 };
+*/
 
+/*
 var generateRandom = function(){
-  return Math.round( Math.random() * ( playlist.length - 1 ) );
+  return Math.round( Math.random() * ( playlist._list.length - 1 ) );
 }
+*/
 
-var startApp = function( list ){
+var startApp = function(){
 
   if( params && params.command === 'openFile' ){
 
-    params.list.forEach( function(item, index){
+    params.list.forEach( function( item, index ){
 
       wz.fs( item, function( error, structure ){
 
-        if( !error ){
-          if( structure.mime.indexOf('audio/mp4"') !== -1 || structure.mime.indexOf('audio/mpeg') !== -1
-              || structure.mime.indexOf('audio/x-wav') !== -1 || structure.mime.indexOf('audio/x-vorbis+ogg') !== -1 ){
+        if( error ){
+          return;
+        }
 
-            if( structure.id === params.data ){
-              indexPlaying = playlist.length;
-            }
+        if( VALID_MIMES.indexOf( structure.mime ) !== -1 ){
 
-            playlist.push(structure);
-
+          if( structure.id === params.data ){
+            indexPlaying = playlist._list.length;
           }
 
-          if( index === params.list.length - 1 ){
-            loadPlaylist();
-            loadItem( indexPlaying );
-          }
+          playlist.push( structure );
+
+        }
+
+        if( index === params.list.length - 1 ){
+
+          displayPlaylist();
+          loadItem();
 
         }
 
@@ -82,42 +206,40 @@ var startApp = function( list ){
 
 }
 
-var loadPlaylist = function(){
+var displayPlaylist = function(){
 
   var toInsert = [];
 
-  playlist.forEach( function(item, index){
+  playlist._list.forEach( function( song, index ){
 
     var songItem = songPrototype.clone().removeClass('wz-prototype');
-		songItem.addClass('song-id-' + playlist[index].id);
-		songItem.find('.title')
-      .text( ( playlist[index].metadata && playlist[index].metadata.id3 && playlist[index].metadata.id3.title )? playlist[index].metadata.id3.title : playlist[index].name );
-    songItem.find('.artist')
-      .text( ( playlist[index].metadata && playlist[index].metadata.id3 && playlist[index].metadata.id3.artist && playlist[index].metadata.id3.artist[0] )? playlist[index].metadata.id3.artist[0] : lang.unknown );
-    songItem.children('figure')
-      .css( 'background-image', 'url(' + ( playlist[index].thumbnails['64'] ? playlist[index].thumbnails['64'] : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
+
+    songItem.addClass('song-id-' + song.id);
+    songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
+    songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
+    songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
     songItem.data( 'index' , index );
 
-    var time  = playlist[index].metadata.media.duration.seconds;
-    var hour  = parseInt(time/3600, 10);
-    var rem   = (time%3600);
-    var min   = parseInt(rem/60, 10);
-    var sec   = parseInt(rem%60, 10);
+    var time = song.metadata.media.duration.seconds;
+    var hour = parseInt(time / 3600, 10);
+    var rem  = time % 3600;
+    var min  = parseInt(rem / 60, 10);
+    var sec  = parseInt(rem % 60, 10);
 
     if( hour > 0 && min < 10 ){ min = '0' + min; }
     if( sec < 10 ){ sec  = '0' + sec; }
 
     if( 9 < hour ){
-        songItem.find('.time').text(hour+':'+min+':'+sec);
+      songItem.find('.time').text( hour + ':' + min + ':' + sec );
     }else if( 0 < hour && hour < 10 ){
-        songItem.find('.time').text(hour+':'+min+':'+sec);
+      songItem.find('.time').text( hour + ':' + min + ':' + sec );
     }else if( 9 < min ){
-        songItem.find('.time').text(min+':'+sec);
+      songItem.find('.time').text( min + ':' + sec );
     }else{
-        songItem.find('.time').text(min+':'+sec);
+      songItem.find('.time').text( min + ':' + sec );
     }
 
-		toInsert.push( songItem );
+    toInsert.push( songItem );
 
   });
 
@@ -127,8 +249,18 @@ var loadPlaylist = function(){
 
 var loadItem = function( index ){
 
-  var structure = playlist[index];
-  console.log(structure);
+  var structure;
+
+  if( typeof index === 'undefined' ){
+    structure = playlist.next();
+  }else{
+    structure = playlist.get( index );
+  }
+
+  if( !structure ){
+    playlist._rebuild();
+    return;
+  }
 
   audio.empty();
   audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
@@ -142,180 +274,175 @@ var loadItem = function( index ){
   audio.load();
 
   $('.song.active').removeClass('active');
-  $('.song-id-' + structure.id).addClass('active');
+
+  var song = $('.song-id-' + structure.id).addClass('active');
+  var pos  = [ 0 ].offsetTop;
+
+  if( song[ 0 ].offsetTop + song.outerHeight( true ) > playListDom.height() ){
+    playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
+  }
 
   indexPlaying = index;
-  console.log(playlist);
-  console.log(structure);
-  console.log(indexPlaying);
-  pointer++;
 
 };
 
-win.on( 'app-param', function( e, params ){
-
-  startApp();
-
-  /*if( params && params.length ){
-
-      list.push( params[ 0 ] );
-      pointers.push( pointers.length );
-
-      loadItem();
-
-  }*/
-
-});
-
-$( win )
-
+// Events
+win
 .on( 'click', '.song', function(){
-
   loadItem( $(this).data('index') );
-
 })
 
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
 
-    if( win.hasClass('muted') ){
-        audio[ 0 ].muted = false;
-    }
+  if( win.hasClass('muted') ){
+    audio[ 0 ].muted = false;
+  }
 
-    musicVolume.css( 'width', posX * musicMaxVolume.width() );
+  musicVolume.css( 'width', posX * musicMaxVolume.width() );
 
-    audio[ 0 ].volume = 1 * posX;
+  audio[ 0 ].volume = 1 * posX;
 
 })
 
 .on( 'wz-dragmove', '.music-time-seeker', function( e, posX, posY ){
 
-    audio[ 0 ].pause();
+  audio[ 0 ].pause();
 
-    if( !emulatedSeekerTimer ){
+  if( !emulatedSeekerTimer ){
 
-        emulatedSeekerTimer = setInterval( function(){
-            audio[ 0 ].currentTime = emulatedSeekerTime;
-        }, 100 );
+    emulatedSeekerTimer = setInterval( function(){
+      audio[ 0 ].currentTime = emulatedSeekerTime;
+    }, 100 );
 
-    }
+  }
 
-    musicProgress.css( 'width', posX * musicBackprogress.width() );
+  musicProgress.css( 'width', posX * musicBackprogress.width() );
 
     /*
      * Como cambiar el currentTime de un elemento es un proceso costoso
      * para el procesador, emulamos ese proceso
      */
-    emulatedSeekerTime = audio[ 0 ].duration * posX;
+     emulatedSeekerTime = audio[ 0 ].duration * posX;
 
-    var time      = audio[ 0 ].duration;
-    var totalHour = parseInt( time / 3600, 10 );
-    var rem       = time % 3600;
-    var totalMin  = parseInt( rem / 60, 10 );
+     var time      = audio[ 0 ].duration;
+     var totalHour = parseInt( time / 3600, 10 );
+     var rem       = time % 3600;
+     var totalMin  = parseInt( rem / 60, 10 );
 
-    time     = emulatedSeekerTime;
-    var hour = parseInt( time / 3600, 10 );
+     time     = emulatedSeekerTime;
+     var hour = parseInt( time / 3600, 10 );
 
-    rem     = ( time % 3600 );
-    var min = parseInt( rem / 60, 10 );
-    var sec = parseInt( rem % 60, 10 );
+     rem     = ( time % 3600 );
+     var min = parseInt( rem / 60, 10 );
+     var sec = parseInt( rem % 60, 10 );
 
-    if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-    if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min = '0' + min; }
-    if( sec < 10 ){ sec  = '0' + sec; }
+     if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+     if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min = '0' + min; }
+     if( sec < 10 ){ sec  = '0' + sec; }
 
-    if( totalHour ){
-        musicCurrentTime.text( hour + ':' + min + ':' + sec );
+     if( totalHour ){
+      musicCurrentTime.text( hour + ':' + min + ':' + sec );
     }else if( totalMin ){
-        musicCurrentTime.text( min + ':' + sec );
+      musicCurrentTime.text( min + ':' + sec );
     }else{
-        musicCurrentTime.text( '0:' + sec );
+      musicCurrentTime.text( '0:' + sec );
     }
 
-})
+  })
 
 .on( 'mousedown', '.play-button.play', function(){
 
-    if( win.hasClass('playing') ){
-        audio[0].pause();
-    }else{
-        audio[0].play();
-    }
+  if( win.hasClass('playing') ){
+    audio[0].pause();
+  }else{
+    audio[0].play();
+  }
 
 })
 
 .on( 'mousedown', '.volume-icon', function(){
 
-    if( win.hasClass('muted') ){
-        audio[ 0 ].muted = false;
-    }else{
-        audio[ 0 ].muted = true;
-    }
+  if( win.hasClass('muted') ){
+    audio[ 0 ].muted = false;
+  }else{
+    audio[ 0 ].muted = true;
+  }
 
 })
 
 .on( 'click', '.more-options .random', function(){
-    win.toggleClass('random');
+
+  if( win.hasClass('random') ){
+
+    win.removeClass('random');
+    playlist.random( false );
+
+  }else{
+
+    win.addClass('random');
+    playlist.random( true );
+
+  }
+
 })
 
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
-    clearInterval( emulatedSeekerTimer );
+  clearInterval( emulatedSeekerTimer );
 
-    emulatedSeekerTimer    = 0;
-    audio[ 0 ].currentTime = emulatedSeekerTime;
+  emulatedSeekerTimer    = 0;
+  audio[ 0 ].currentTime = emulatedSeekerTime;
 
-    audio[ 0 ].play();
+  audio[ 0 ].play();
 
 })
 
 .on( 'mousedown', '.play-button.rewind', function(e){
 
-    clickInterval = setInterval( function(){
-      audio[0].currentTime -= 10;
-      longClick = true;
-    } ,600)
+  clickInterval = setInterval( function(){
+    audio[0].currentTime -= 10;
+    longClick = true;
+  } ,600)
 
 })
 
 .on( 'mouseup', '.play-button.rewind', function(e){
 
-    if( !longClick ){
+  if( !longClick ){
 
-      if( win.hasClass('random') ){
-        loadItem( generateRandom() );
-      }else if( indexPlaying !== 0 && !win.hasClass('random') ){
-        loadItem( indexPlaying - 1 );
-      }
-
+    /*
+    if( win.hasClass('random') ){
+      loadItem( generateRandom() );
+    }else if( indexPlaying !== 0 && !win.hasClass('random') ){
+      loadItem( indexPlaying - 1 );
     }
-    longClick = false;
-    clearInterval( clickInterval );
+    */
+
+  }
+  longClick = false;
+  clearInterval( clickInterval );
 
 
 })
 
 .on( 'mousedown', '.play-button.forward', function(e){
 
-    clickInterval = setInterval( function(){
-      audio[0].currentTime += 10;
-      longClick = true;
-    } ,600)
+  clickInterval = setInterval( function(){
+    audio[0].currentTime += 10;
+    longClick = true;
+  } ,600)
 
 })
 
 .on( 'mouseup', '.play-button.forward', function(e){
 
-    if( !longClick ){
+  if( !longClick ){
+    loadItem();
+  }
 
-      if( win.hasClass('random') ){
-        loadItem( generateRandom() )
-      }else if( indexPlaying !== playlist.length - 1 && !win.hasClass('random') ){
-        loadItem( indexPlaying + 1 );
-      }
+  longClick = false;
 
-    }
-    longClick = false;
-    clearInterval( clickInterval );
+  clearInterval( clickInterval );
 
 })
 
@@ -345,123 +472,136 @@ $( win )
 */
 
 .on( 'mousedown', '.weemusic-controls-repeat', function(){
-    win.toggleClass('repeat');
+
+  if( win.hasClass('repeat') ){
+
+    win.removeClass('repeat');
+    playlist.repeat( false );
+
+  }else{
+
+    win.addClass('repeat');
+    playlist.repeat( true );
+
+  }
+
 })
 
 .key('space', function(){
 
-    if( win.hasClass('playing') ){
-        audio[ 0 ].pause();
-    }else{
-        audio[ 0 ].play();
-    }
+  if( win.hasClass('playing') ){
+    audio[ 0 ].pause();
+  }else{
+    audio[ 0 ].play();
+  }
 
 })
 
 .key(
 
-    'right',
+  'right',
     function(){ audio[ 0 ].currentTime += 10; }, // To Do -> Comprobar exceso
     function(){ audio[ 0 ].currentTime += 10; }  // To Do -> Comprobar exceso
 
-)
+    )
 
 .key(
 
-    'left',
-    function(){ audio[ 0 ].currentTime -= 10; },
-    function(){ audio[ 0 ].currentTime -= 10; }
+  'left',
+  function(){ audio[ 0 ].currentTime -= 10; },
+  function(){ audio[ 0 ].currentTime -= 10; }
 
-)
+  )
 
 .key(
 
-    'up',
-    function(){
+  'up',
+  function(){
 
-        if( ( audio[ 0 ].volume + 0.1 ) < 1){
-            audio[ 0 ].volume += 0.1;
-        }else{
-            audio[ 0 ].volume = 1;
-        }
-
-    },
-    function(){
-
-        if( ( audio[ 0 ].volume + 0.1 ) < 1){
-            audio[ 0 ].volume += 0.1;
-        }else{
-            audio[ 0 ].volume = 1;
-        }
-
+    if( ( audio[ 0 ].volume + 0.1 ) < 1){
+      audio[ 0 ].volume += 0.1;
+    }else{
+      audio[ 0 ].volume = 1;
     }
 
-)
+  },
+  function(){
 
-.key(
-
-    'down',
-    function(){
-
-        if( ( audio[ 0 ].volume - 0.1 ) > 0){
-            audio[ 0 ].volume -= 0.1;
-        }else{
-            audio[ 0 ].volume = 0;
-        }
-
-    },
-    function(){
-
-        if( ( audio[ 0 ].volume - 0.1 ) > 0){
-            audio[ 0 ].volume -= 0.1;
-        }else{
-            audio[ 0 ].volume = 0;
-        }
-
+    if( ( audio[ 0 ].volume + 0.1 ) < 1){
+      audio[ 0 ].volume += 0.1;
+    }else{
+      audio[ 0 ].volume = 1;
     }
 
-)
+  }
+
+  )
 
 .key(
 
-    'backspace',
-    function(){ audio[ 0 ].currentTime = 0; },
-    function(){ audio[ 0 ].currentTime = 0; }
+  'down',
+  function(){
 
-);
+    if( ( audio[ 0 ].volume - 0.1 ) > 0){
+      audio[ 0 ].volume -= 0.1;
+    }else{
+      audio[ 0 ].volume = 0;
+    }
 
-audio.on('durationchange', function(){
+  },
+  function(){
 
-    var time  = this.duration;
-    var hour  = parseInt(time/3600, 10);
-    var rem   = (time%3600);
-    var min   = parseInt(rem/60, 10);
-    var sec   = parseInt(rem%60, 10);
+    if( ( audio[ 0 ].volume - 0.1 ) > 0){
+      audio[ 0 ].volume -= 0.1;
+    }else{
+      audio[ 0 ].volume = 0;
+    }
 
-    if( hour > 0 && min < 10 ){ min = '0' + min; }
-    if( sec < 10 ){ sec  = '0' + sec; }
+  }
+
+  )
+
+.key(
+
+  'backspace',
+  function(){ audio[ 0 ].currentTime = 0; },
+  function(){ audio[ 0 ].currentTime = 0; }
+
+  );
+
+audio
+.on('durationchange', function(){
+
+  var time  = this.duration;
+  var hour  = parseInt(time/3600, 10);
+  var rem   = (time%3600);
+  var min   = parseInt(rem/60, 10);
+  var sec   = parseInt(rem%60, 10);
+
+  if( hour > 0 && min < 10 ){ min = '0' + min; }
+  if( sec < 10 ){ sec  = '0' + sec; }
 
     //musicBackprogress.transition({'opacity':'1'},250);
 
     if( 9 < hour ){
 
-        musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00:00');
-        weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00:00');
+      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
 
     }else if( 0 < hour && hour < 10 ){
 
-        musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00:00');
-        weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00:00');
+      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
 
     }else if( 9 < min ){
 
-        musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00');
-        weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00');
+      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
 
     }else{
 
-        musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
-        weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
+      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
 
     }
 
@@ -470,135 +610,112 @@ audio.on('durationchange', function(){
 
     audio[ 0 ].play();
 
+  })
 
+.on('play',function(){
+  win.addClass('playing');
+})
 
-    audio
-    .on('play',function(){
-        win.addClass('playing');
-    })
+.on('pause',function(){
+  win.removeClass('playing');
+})
 
-    .on('pause',function(){
-        win.removeClass('playing');
-    })
+.on('loop',function(){
+  win.addClass('playing');
+})
 
-    .on('loop',function(){
-        win.addClass('playing');
-    })
+.on( 'volumechange', function(){
 
-    .on( 'volumechange', function(){
+  if( this.muted ){
+    win.addClass('muted');
+  }else{
+    win.removeClass('muted');
+  }
 
-        if( this.muted ){
-            win.addClass('muted');
-        }else{
-            win.removeClass('muted');
-        }
+  if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
 
-        if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
+    musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
+    musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
 
-            musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
-            musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
+  }
 
-        }
+})
 
-    })
+.on( 'timeupdate', function( e ){
 
-    .on( 'timeupdate', function( e ){
+  var time      = this.duration;
+  var totalHour = parseInt( time / 3600, 10 );
+  var rem       = time % 3600;
+  var totalMin  = parseInt( rem / 60, 10 );
 
-        var time      = this.duration;
-        var totalHour = parseInt( time / 3600, 10 );
-        var rem       = time % 3600;
-        var totalMin  = parseInt( rem / 60, 10 );
+  time     = this.currentTime;
+  var hour = parseInt( time / 3600, 10 );
 
-        time     = this.currentTime;
-        var hour = parseInt( time / 3600, 10 );
+  rem      = time % 3600;
+  var min  = parseInt( rem / 60, 10 );
+  var sec  = parseInt( rem % 60, 10 );
 
-        rem      = time % 3600;
-        var min  = parseInt( rem / 60, 10 );
-        var sec  = parseInt( rem % 60, 10 );
+  if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+  if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min  = '0' + min; }
+  if (sec < 10 ){ sec  = '0' + sec; }
 
-        if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-        if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min  = '0' + min; }
-        if (sec < 10 ){ sec  = '0' + sec; }
+  if( totalHour ){
+    musicCurrentTime.text( hour + ':' + min + ':' + sec );
+  }else if( totalMin ){
+    musicCurrentTime.text( min + ':' + sec );
+  }else{
+    musicCurrentTime.text( '0:' + sec );
+  }
 
-        if( totalHour ){
-            musicCurrentTime.text( hour + ':' + min + ':' + sec );
-        }else if( totalMin ){
-            musicCurrentTime.text( min + ':' + sec );
-        }else{
-            musicCurrentTime.text( '0:' + sec );
-        }
+  var backWidth = musicBackprogress.width();
 
-        var backWidth = musicBackprogress.width();
+  musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
 
-        musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
+  if( !musicSeeker.hasClass('wz-drag-active') ){
+    musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
+  }
 
-        if( !musicSeeker.hasClass('wz-drag-active') ){
-            musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
-        }
+})
 
-    })
+.on('progress',function(){
 
-    .on('progress',function(){
+  var buffer = 0;
 
-        var buffer = 0;
+  try{
+    buffer = this.buffered.end( 0 );
+  }catch(e){}
 
-        try{
-            buffer = this.buffered.end( 0 );
-        }catch(e){}
+  var width = ( musicBackprogress.width() * ( buffer/this.duration ) );
 
-        var width = ( musicBackprogress.width() * ( buffer/this.duration ) );
+  if( width > 0 ){
+    musicBufferprogress.stop().clearQueue().transition( { width : width }, 100 );
+  }
 
-        if( width > 0 ){
-            musicBufferprogress.stop().clearQueue().transition( { width : width }, 100 );
-        }
+})
 
-    })
+.on('ended', function(){
 
-    .on('ended', function(){
+  if( !musicSeeker.hasClass('wz-drag-active') ){
 
-        if( !musicSeeker.hasClass('wz-drag-active') ){
+    var time = this.duration;
+    var hour = parseInt(time/3600, 10);
+    musicProgress.width(0);
+    musicSeeker.css('left',-6);
 
-            var time = this.duration;
-            var hour = parseInt(time/3600, 10);
-            musicProgress.width(0);
-            musicSeeker.css('left',-6);
+    if(parseInt(hour, 10)){
+      musicCurrentTime.text('00:00:00');
+    }else{
+      musicCurrentTime.text('00:00');
+    }
 
-            if(parseInt(hour, 10)){
-                musicCurrentTime.text('00:00:00');
-            }else{
-                musicCurrentTime.text('00:00');
-            }
+    this.currentTime = 0;
 
-            this.currentTime = 0;
+    loadItem();
 
-            if( win.hasClass('repeat') ){
-                this.play();
-            }
-
-            if( indexPlaying !== playlist.length -1 ){
-              loadItem( indexPlaying + 1 );
-            }
-
-            /*if( pointer === list.length ){
-
-                pointer = 0;
-
-                if( loop.hasClass('active') ){
-
-                    if( randomize.hasClass('active') ){
-                        pointers.sort(randomly);
-                    }
-
-                    loadItem();
-
-                }
-
-            }else{
-                loadItem();
-            }*/
-
-        }
-
-    });
+  }
 
 });
+
+// Start app
+console.clear();
+startApp();
