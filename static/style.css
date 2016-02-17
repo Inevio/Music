@@ -75,26 +75,6 @@
     margin: 17px 20px 17px 13px;
 }
 
-.weemusic-controls-repeat{
-    float: right;
-    margin-top: 10px;
-    padding: 5px 6px;
-}
-
-.weemusic-controls-repeat i{
-    width: 12px;
-    height: 15px;
-    float: left;
-    background: url('@static/sprite.png') -88px -16px no-repeat;
-    background-size: 102px 31px;
-    opacity: 0.5;
-}
-
-.weemusic-controls-repeat:hover i,
-.wz-view.repeat .weemusic-controls-repeat i{
-    opacity: 1;
-}
-
 .song-info{
   float: left;
   width: 350px;
@@ -120,6 +100,11 @@
   float: left;
   height: 350px;
   width: 360px;
+}
+
+.playlist{
+  height: 300px;
+  width: 360px;
 
   .song{
     float: left;
@@ -132,8 +117,8 @@
       width: 45px;
       height: 45px;
       border-radius: 3px;
-      background-color: #f78534;
       margin: 9px 12px 9px 15px;
+      background-size: cover;
     }
 
     figcaption{
@@ -150,12 +135,16 @@
       font-weight: bold;
       color: #d2dce2;
       display: block;
+      float:left;
+      width:100%;
     }
 
     .artist{
       font-family: Lato;
       font-size: 13px;
       color: #98a2a5;
+      float:left;
+      width:100%;
     }
 
     .time{
@@ -375,6 +364,7 @@
 }
 
 .wz-view.muted .volume .volume-icon i{
+  width: 13px;
   background-position-x: -111px;
 }
 
@@ -382,8 +372,8 @@
   width: 60px;
   height: 6px;
   float: left;
-  margin-left: 3px;
-  margin-top: 11px;
+  margin-left: 7px;
+  margin-top: 7px;
   background: #FFF;
   position: relative;
 }
@@ -393,4 +383,44 @@
   height: 6px;
   float: left;
   background: #60b25e;
+}
+
+.more-options{
+  margin-left: 15px;
+  margin-top: 11px;
+  float: left;
+}
+
+.more-options .random{
+  width: 15px;
+  height: 13px;
+  float: left;
+  padding: 6px 5px;
+  border: 1px solid transparent;
+}
+
+.more-options .random i{
+  width: 15px;
+  height: 13px;
+  float: left;
+  background: url('@static/new/sprite.png') no-repeat;
+  background-size: 182px 24px;
+  background-position-x: -124px;
+}
+
+.more-options .repeat{
+  width: 14px;
+  height: 16px;
+  float: left;
+  padding: 4px 5px;
+  border: 1px solid transparent;
+}
+
+.more-options .repeat i{
+  width: 14px;
+  height: 16px;
+  float: left;
+  background: url('@static/new/sprite.png') no-repeat;
+  background-size: 182px 24px;
+  background-position-x: -154px;
 }

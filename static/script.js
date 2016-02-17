@@ -14,6 +14,10 @@ var musicVolume            = $( '.music-volume-current', win );
 var musicMaxVolume         = $( '.music-volume-max', win );
 var musicVolumeSeeker      = $( '.music-volume-seeker', win );
 var songThumbnail          = $( '.song-thumbnail', win );
+var playListDom            = $( '.playlist', win );
+var songPrototype          = $( '.playlist .song.wz-prototype', win );
+var playlist               = [];
+var indexPlaying           = -1;
 var list                   = [];
 var pointers               = [];
 var pointer                = 0;
@@ -37,44 +41,119 @@ var randomly = function(){
     return ( Math.round( Math.random() ) - 0.5 );
 };
 
-var loadItem = function( structureId ){
+var startApp = function( list ){
 
-    wz.fs( structureId, function( error, structure ){
+  if( params && params.command === 'openFile' ){
 
-      console.log(structure);
-        audio.empty();
-        audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-        audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+    params.list.forEach( function(item, index){
 
-        weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
+      wz.fs( item, function( error, structure ){
 
-        songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
-        weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+        if( !error ){
+          if( structure.mime.indexOf('audio/mp4"') !== -1 || structure.mime.indexOf('audio/mpeg') !== -1
+              || structure.mime.indexOf('audio/x-wav') !== -1 || structure.mime.indexOf('audio/x-vorbis+ogg') !== -1 ){
 
-        audio.load();
+            if( structure.id === params.data ){
+              indexPlaying = playlist.length;
+            }
 
-        pointer++;
+            playlist.push(structure);
+
+          }
+
+          if( index === params.list.length - 1 ){
+            loadPlaylist();
+            loadItem( playlist[indexPlaying] );
+          }
+
+        }
+
+      });
 
     });
+
+  }
+
+}
+
+var loadPlaylist = function(){
+
+  var toInsert = [];
+
+  playlist.forEach( function(item, index){
+
+    var songItem = songPrototype.clone().removeClass('wz-prototype');
+		songItem.addClass('song-' + playlist[index].id);
+		songItem.find('.title')
+      .text( ( playlist[index].metadata && playlist[index].metadata.id3 && playlist[index].metadata.id3.title )? playlist[index].metadata.id3.title : playlist[index].name );
+    songItem.find('.artist')
+      .text( ( playlist[index].metadata && playlist[index].metadata.id3 && playlist[index].metadata.id3.artist && playlist[index].metadata.id3.artist[0] )? playlist[index].metadata.id3.artist[0] : lang.unknown );
+    songItem.children('figure')
+      .css( 'background-image', 'url(' + ( playlist[index].thumbnails['64'] ? playlist[index].thumbnails['64'] : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
+    songItem.data( playlist[index] );
+
+    var time  = playlist[index].metadata.media.duration.seconds;
+    var hour  = parseInt(time/3600, 10);
+    var rem   = (time%3600);
+    var min   = parseInt(rem/60, 10);
+    var sec   = parseInt(rem%60, 10);
+
+    if( hour > 0 && min < 10 ){ min = '0' + min; }
+    if( sec < 10 ){ sec  = '0' + sec; }
+
+    if( 9 < hour ){
+        songItem.find('.time').text(hour+':'+min+':'+sec);
+    }else if( 0 < hour && hour < 10 ){
+        songItem.find('.time').text(hour+':'+min+':'+sec);
+    }else if( 9 < min ){
+        songItem.find('.time').text(min+':'+sec);
+    }else{
+        songItem.find('.time').text(min+':'+sec);
+    }
+
+    if( index === indexPlaying ){
+      songItem.addClass( 'active' );
+    }
+
+		toInsert.push( songItem );
+
+  });
+
+  console.log( toInsert );
+  playListDom.append( toInsert );
+
+}
+
+var loadItem = function( structure ){
+
+  console.log(structure);
+  audio.empty();
+  audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
+  audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+
+  weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
+
+  songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
+  weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+
+  audio.load();
+
+  pointer++;
 
 };
 
 win.on( 'app-param', function( e, params ){
 
-  console.log(params);
+  startApp();
 
-    if( params && params.command === 'openFile' ){
-        loadItem( params.data );
-    }
+  /*if( params && params.length ){
 
-    /*if( params && params.length ){
+      list.push( params[ 0 ] );
+      pointers.push( pointers.length );
 
-        list.push( params[ 0 ] );
-        pointers.push( pointers.length );
+      loadItem();
 
-        loadItem();
-
-    }*/
+  }*/
 
 });
 
@@ -188,7 +267,7 @@ audio.on('durationchange', function(){
 
     })
 
-    .on( 'mousedown', '.weemusic-volume-icon', function(){
+    .on( 'mousedown', '.volume-icon', function(){
 
         if( win.hasClass('muted') ){
             audio[ 0 ].muted = false;
