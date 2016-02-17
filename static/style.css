@@ -111,6 +111,8 @@
     width: 360px;
     height: 63px;
     margin-bottom: 1px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 
     figure{
       float: left;
@@ -160,8 +162,16 @@
 
   }
 
+  .song:hover{
+    background-color: #3e544b;
+    border-top: 1px solid #45674f;
+    border-bottom: 1px solid #45674f;
+  }
+
   .song.active{
     background-color: #60b25e;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 
     .title{
       color: #fff;

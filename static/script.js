@@ -126,7 +126,6 @@ var loadPlaylist = function(){
 
 var loadItem = function( structure ){
 
-  console.log(structure);
   audio.empty();
   audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
@@ -198,6 +197,14 @@ audio.on('durationchange', function(){
     audio[ 0 ].play();
 
     $( win )
+
+    .on( 'click', '.song', function(){
+
+      loadItem( $(this).data() );
+      $('.song.active').removeClass('active');
+      $(this).addClass('active');
+
+    })
 
     .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
 
