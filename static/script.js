@@ -4,6 +4,7 @@ var Playlist = function(){
 
   this._list          = [];
   this._toPlay        = [];
+  this._played        = [];
   this._lastId        = -1;
   this._repeatEnabled = false;
   this._randomEnabled = false;
@@ -105,6 +106,8 @@ Playlist.prototype.get = function( index ){
 
 Playlist.prototype.next = function(){
 
+  console.log('next');
+
   if( this._toPlay.length === 0 && !this._repeatEnabled ){
     return null;
   }else if( this._toPlay.length === 0 ){
@@ -114,6 +117,24 @@ Playlist.prototype.next = function(){
   this._lastId = this._toPlay.shift();
 
   return this._list[ this._lastId ];
+
+};
+
+Playlist.prototype.prev = function(){
+
+  console.log('prev');
+
+  /*
+  if( this._played.length === 0 && !this._repeatEnabled ){
+    return null;
+  }else if( this._toPlay.length === 0 ){
+    this._rebuild();
+  }
+
+  this._lastId = this._toPlay.shift();
+
+  return this._list[ this._lastId ];
+  */
 
 };
 
@@ -253,12 +274,13 @@ var loadItem = function( index ){
 
   if( typeof index === 'undefined' ){
     structure = playlist.next();
+  }else if( index === -1 ){
+    structure = playlist.prev();
   }else{
     structure = playlist.get( index );
   }
 
   if( !structure ){
-    playlist._rebuild();
     return;
   }
 
@@ -276,7 +298,6 @@ var loadItem = function( index ){
   $('.song.active').removeClass('active');
 
   var song = $('.song-id-' + structure.id).addClass('active');
-  var pos  = [ 0 ].offsetTop;
 
   if( song[ 0 ].offsetTop + song.outerHeight( true ) > playListDom.height() ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
@@ -409,17 +430,11 @@ win
 .on( 'mouseup', '.play-button.rewind', function(e){
 
   if( !longClick ){
-
-    /*
-    if( win.hasClass('random') ){
-      loadItem( generateRandom() );
-    }else if( indexPlaying !== 0 && !win.hasClass('random') ){
-      loadItem( indexPlaying - 1 );
-    }
-    */
-
+    loadItem( -1 );
   }
+
   longClick = false;
+
   clearInterval( clickInterval );
 
 
