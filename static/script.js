@@ -142,8 +142,8 @@ Playlist.prototype.prev = function(){
 var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg' ];
 var win                 = $( this );
 var audio               = $('audio');
-var weemusicTitle       = $('.weemusic-name');
-var weemusicArtist      = $('.weemusic-artist');
+var musicTitle          = $('.song-title');
+var musicArtist         = $('.song-artist');
 var weemusicCover       = $('.weemusic-info-cover');
 var musicCurrentTime    = $('.currentTime');
 var weemusicTotalTime   = $('.totalTime');
@@ -288,10 +288,10 @@ var loadItem = function( index ){
   audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
 
-  weemusicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
+  musicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
 
   songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/5/cover.jpg' ) + ')' );
-  weemusicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+  musicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
 
   audio.load();
 
