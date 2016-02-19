@@ -130,7 +130,7 @@ Playlist.prototype.prev = function(){
     return null;
   }
 
-  this._played.pop();
+  this_toPlay.push( this._played.pop() );
   this._lastId = this._played[ this._played.length - 1 ];
 
   console.log( this._played );
