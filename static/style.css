@@ -14,6 +14,16 @@
 
 }
 
+.wz-scroll-bar-vertical{
+    width: 5px;
+    background: transparent;
+}
+
+.wz-scroll-bar-vertical .wz-scroll-slider{
+    width: 5px;
+    background: rgba( 0, 0, 0, 0.2 );
+}
+
 .weemusic-title{
     width: 164px;
     height: 49px;
