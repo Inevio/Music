@@ -109,7 +109,6 @@ Playlist.prototype.next = function(){
 
   console.log('next');
 
-
   if( this._toPlay.length === 0 && !this._repeatEnabled ){
     return null;
   }else if( this._toPlay.length === 0 ){
@@ -119,9 +118,6 @@ Playlist.prototype.next = function(){
   this._lastId = this._toPlay.shift();
   this._played.push( this._lastId );
 
-  console.log( this._played );
-  console.log( this._list[ this._lastId ] );
-
   return this._list[ this._lastId ];
 
 };
@@ -130,7 +126,7 @@ Playlist.prototype.prev = function(){
 
   console.log('prev');
 
-  if( (this._played.length === 0 && !this._repeatEnabled) || this._played.length === 0 || this._played.length === 1){
+  if( ( this._played.length === 0 && !this._repeatEnabled ) || this._played.length === 0 || this._played.length === 1){
     return null;
   }
 
@@ -141,7 +137,6 @@ Playlist.prototype.prev = function(){
   console.log( this._list[ this._lastId ] );
 
   return this._list[ this._lastId ];
-
 
 };
 
