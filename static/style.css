@@ -218,18 +218,6 @@
 
 }
 
-.btn:active{
-  background-color: #363c43;
-  border: solid 1px rgba(0, 0, 0, 0.1);
-  background-image: -webkit-linear-gradient(top, #323a40, #3d444b);
-  background-image: -moz-linear-gradient(top, #323a40, #3d444b);
-  background-image: -o-linear-gradient(top, #323a40, #3d444b);
-  background-image: -ms-linear-gradient(top, #323a40, #3d444b);
-  background-image: linear-gradient(to bottom, #323a40, #3d444b);
-  box-shadow: none;
-  background-clip: padding-box;
-}
-
 .control-panel{
   width: 100%;
   height: 50px;
@@ -265,6 +253,19 @@
   background-image: -o-linear-gradient(bottom, #49535c, #535f6a);
   background-image: -ms-linear-gradient(bottom, #49535c, #535f6a);
   background-image: linear-gradient(to top, #49535c, #535f6a);
+  background-clip: padding-box;
+}
+
+.btn:active{
+  background-color: #363c43;
+  border: solid 1px rgba(0,0,0,.1);
+  background-image: -webkit-linear-gradient(top, #323a40, #3d444b);
+  background-image: -moz-linear-gradient(top, #323a40, #3d444b);
+  background-image: -o-linear-gradient(top, #323a40, #3d444b);
+  background-image: -ms-linear-gradient(top, #323a40, #3d444b);
+  background-image: linear-gradient(to bottom, #323a40, #3d444b);
+  box-shadow: none;
+  background-clip: padding-box;
 }
 
 .play-button i{
@@ -427,7 +428,7 @@
 }
 
 .more-options{
-  margin-left: 15px;
+  margin-left: 13px;
   margin-top: 11px;
   float: left;
 }
@@ -438,6 +439,7 @@
   float: left;
   padding: 7px 5px 6px 6px;
   border: 1px solid transparent;
+  margin-right: 9px;
 }
 
 .more-options .random i{
