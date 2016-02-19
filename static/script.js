@@ -99,6 +99,7 @@ Playlist.prototype.get = function( index ){
   this._rebuild( this._randomEnabled ? 0 : index + 1 );
 
   this._lastId = index;
+  this._played.push( this._lastId );
 
   return this._list[ index ];
 
@@ -108,6 +109,7 @@ Playlist.prototype.next = function(){
 
   console.log('next');
 
+
   if( this._toPlay.length === 0 && !this._repeatEnabled ){
     return null;
   }else if( this._toPlay.length === 0 ){
@@ -115,6 +117,10 @@ Playlist.prototype.next = function(){
   }
 
   this._lastId = this._toPlay.shift();
+  this._played.push( this._lastId );
+
+  console.log( this._played );
+  console.log( this._list[ this._lastId ] );
 
   return this._list[ this._lastId ];
 
@@ -124,17 +130,18 @@ Playlist.prototype.prev = function(){
 
   console.log('prev');
 
-  /*
-  if( this._played.length === 0 && !this._repeatEnabled ){
+  if( (this._played.length === 0 && !this._repeatEnabled) || this._played.length === 0 || this._played.length === 1){
     return null;
-  }else if( this._toPlay.length === 0 ){
-    this._rebuild();
   }
 
-  this._lastId = this._toPlay.shift();
+  this._played.pop();
+  this._lastId = this._played[ this._played.length - 1 ];
+
+  console.log( this._played );
+  console.log( this._list[ this._lastId ] );
 
   return this._list[ this._lastId ];
-  */
+
 
 };
 
@@ -215,7 +222,7 @@ var startApp = function(){
         if( index === params.list.length - 1 ){
 
           displayPlaylist();
-          loadItem();
+          loadItem( indexPlaying );
 
         }
 
