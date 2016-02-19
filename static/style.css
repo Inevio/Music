@@ -4,7 +4,7 @@
 }
 
 .ui-header{
-  height: 51px;
+  height: 50px;
   background: none;
   border-bottom: none;
 
@@ -127,8 +127,9 @@
   .song{
     float: left;
     width: 360px;
-    height: 63px;
+    height: 61px;
     margin-bottom: 1px;
+    margin-top: 2px;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
 
@@ -149,7 +150,7 @@
     }
 
     .title{
-      margin: 6px 0 5px;
+      margin: 4px 0 7px;
       font-family: Lato;
       font-size: 15px;
       font-weight: bold;
@@ -341,7 +342,7 @@
   width: 238px;
   height: 6px;
   margin-top: 3px;
-  background: #889399;
+  background: #d2dce2;
   position: relative;
   border-radius: 3px;
   float: left;
@@ -350,7 +351,7 @@
 .time .music-buffer{
   width: 0;
   height: 6px;
-  background: rgba( 96, 178, 94, 0.5 );
+  background: #889399;
   position: absolute;
   top: 0;
   left: 0;
@@ -419,7 +420,7 @@
   float: left;
   margin-left: 7px;
   margin-top: 11px;
-  background: #FFF;
+  background: #d2dce2;
   position: relative;
   border-radius: 3px;
 }
