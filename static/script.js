@@ -488,7 +488,7 @@ win
 })
 */
 
-.on( 'mousedown', '.weemusic-controls-repeat', function(){
+.on( 'mousedown', '.more-options .repeat', function(){
 
   if( win.hasClass('repeat') ){
 

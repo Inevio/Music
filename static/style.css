@@ -489,3 +489,7 @@
   background-size: 182px 24px;
   background-position-x: -154px;
 }
+
+.wz-view.repeat .more-options .repeat i{
+  background-position-x: -168px;
+}
