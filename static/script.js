@@ -141,7 +141,7 @@ Playlist.prototype.prev = function(){
 };
 
 // Variables
-var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg' ];
+var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg', 'audio/flac' ];
 var win                 = $( this );
 var audio               = $('audio');
 var musicTitle          = $('.song-title');
