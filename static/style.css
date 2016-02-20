@@ -120,6 +120,7 @@
 
 .song-info .song-artist, .song-info .song-title{
   margin-left:20px;
+  margin-right: 20px;
   font-family: Lato;
   color: white;
 }
