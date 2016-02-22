@@ -217,6 +217,55 @@ var startApp = function( paramsAux ){
 
 }
 
+var addSong = function( id ){
+
+  wz.fs( id, function( error, song ){
+
+    if( error ){
+      return;
+    }
+
+    if( VALID_MIMES.indexOf( song.mime ) !== -1 ){
+
+      playlist.push( song );
+
+    }
+
+    var songItem = songPrototype.clone().removeClass('wz-prototype');
+
+    songItem.addClass('song-id-' + song.id);
+    songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
+    songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
+    songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+    songItem.data( 'index' , playlist._list.length - 1 );
+
+    var time = song.metadata.media.duration.seconds;
+    var hour = parseInt(time / 3600, 10);
+    var rem  = time % 3600;
+    var min  = parseInt(rem / 60, 10);
+    var sec  = parseInt(rem % 60, 10);
+
+    if( hour > 0 && min < 10 ){ min = '0' + min; }
+    if( sec < 10 ){ sec  = '0' + sec; }
+
+    if( 9 < hour ){
+      songItem.find('.time').text( hour + ':' + min + ':' + sec );
+    }else if( 0 < hour && hour < 10 ){
+      songItem.find('.time').text( hour + ':' + min + ':' + sec );
+    }else if( 9 < min ){
+      songItem.find('.time').text( min + ':' + sec );
+    }else{
+      songItem.find('.time').text( min + ':' + sec );
+    }
+
+    appStarted = true;
+    $('.playlist-count').text( playlist._list.length );
+    playListDom.append( songItem );
+
+  });
+
+}
+
 var displayPlaylist = function(){
 
   var toInsert = [];
@@ -729,5 +778,5 @@ win.on( 'app-param', function( e, params ){
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
-  console.log(item);
+  addSong( item.data()['file-id'] );
 });
