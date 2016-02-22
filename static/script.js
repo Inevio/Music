@@ -164,8 +164,6 @@ var playlist            = new Playlist();
 var indexPlaying        = -1;
 var list                = [];
 var clickInterval;
-//var loop                   = $( '.weemusic-info-repeat', win );
-//var randomize              = $( '.weemusic-info-random', win );
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -179,18 +177,6 @@ var clickInterval;
  win.addClass( 'wz-dragger' );
  musicVolume.width( musicMaxVolume.width() );
  musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
-
-/*
-var randomly = function(){
-    return ( Math.round( Math.random() ) - 0.5 );
-};
-*/
-
-/*
-var generateRandom = function(){
-  return Math.round( Math.random() * ( playlist._list.length - 1 ) );
-}
-*/
 
 var startApp = function(){
 
@@ -463,31 +449,6 @@ win
 
 })
 
-/*
-.on('mousedown', '.weemusic-info-random', function(){
-
-    if( randomize.hasClass('active') ){
-
-        randomize.removeClass('active');
-
-        for( var i = 0; i < pointers.length; i++ ){
-            pointers[ i ] = i;
-        }
-
-    }else{
-
-        randomize.addClass('active');
-
-        var a = pointers.slice(0, pointer);
-        var b = pointers.slice(pointer, pointers.length);
-        b.sort(randomly);
-        pointers = a.concat(b);
-
-    }
-
-})
-*/
-
 .on( 'mousedown', '.more-options .repeat', function(){
 
   if( win.hasClass('repeat') ){
@@ -520,7 +481,7 @@ win
     function(){ audio[ 0 ].currentTime += 10; }, // To Do -> Comprobar exceso
     function(){ audio[ 0 ].currentTime += 10; }  // To Do -> Comprobar exceso
 
-    )
+)
 
 .key(
 
@@ -528,7 +489,7 @@ win
   function(){ audio[ 0 ].currentTime -= 10; },
   function(){ audio[ 0 ].currentTime -= 10; }
 
-  )
+)
 
 .key(
 
@@ -732,6 +693,10 @@ audio
   }
 
 });
+
+/*wz.app.on('params', function(){
+  console.log(arguments);
+});*/
 
 // Start app
 startApp();
