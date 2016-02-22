@@ -14,75 +14,93 @@
 
 }
 
+.ui-header .playlist-title{
+  font-size: 15px;
+  font-family: Lato;
+  float: left;
+  color: #d2dce2;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.ui-header .playlist-count{
+  font-size: 15px;
+  font-family: Lato;
+  float: left;
+  color: #d2dce2;
+  margin-left: 5px;
+  margin-top: 20px;
+}
+
 .wz-scroll-bar-vertical{
-    width: 5px;
-    background: transparent;
+  width: 5px;
+  background: transparent;
 }
 
 .wz-scroll-bar-vertical .wz-scroll-slider{
-    width: 5px;
-    background: rgba( 0, 0, 0, 0.2 );
+  width: 5px;
+  background: rgba( 0, 0, 0, 0.2 );
 }
 
 .weemusic-title{
-    width: 164px;
-    height: 49px;
-    float: left;
+  width: 164px;
+  height: 49px;
+  float: left;
 }
 
 .weemusic-name{
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    height: 15px;
-    color: #FFF;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-    float: left;
-    margin-top: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  height: 15px;
+  color: #FFF;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  float: left;
+  margin-top: 8px;
 }
 
 .weemusic-artist{
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    height: 15px;
-    color: rgba( 255, 255, 255, 0.5 );
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-    float: left;
-    margin-top: 6px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  height: 15px;
+  color: rgba( 255, 255, 255, 0.5 );
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  float: left;
+  margin-top: 6px;
 }
 
 .weemusic-bottom{
-    width: 100%;
-    height: 55px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+  width: 100%;
+  height: 55px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .weemusic-info{
-    width: 100%;
-    height: 49px;
-    float: left;
-    text-align: center;
-    background-image: -webkit-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: -moz-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: -o-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-    background-image: linear-gradient( to top, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
+  width: 100%;
+  height: 49px;
+  float: left;
+  text-align: center;
+  background-image: -webkit-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
+  background-image: -moz-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
+  background-image: -o-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
+  background-image: linear-gradient( to top, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
 }
 
 .weemusic-info-data{
-    font-size: 14px;
-    color: #FFF;
-    text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.3 );
-    float: left;
-    margin: 17px 13px 17px 20px;
+  font-size: 14px;
+  color: #FFF;
+  text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.3 );
+  float: left;
+  margin: 17px 13px 17px 20px;
 }
 
 .weemusic-info-data.right{
-    float: right;
-    margin: 17px 20px 17px 13px;
+  float: right;
+  margin: 17px 20px 17px 13px;
 }
 
 .song-info{
@@ -419,12 +437,12 @@
   float: left;
   background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
-  background-position-x: -96px;
+  background-position: -96px 0px;
 }
 
 .wz-view.muted .volume .volume-icon i{
   width: 13px;
-  background-position-x: -111px;
+  background-position: -111px 0px;
 }
 
 .volume .music-volume-max{
@@ -467,11 +485,11 @@
   float: left;
   background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
-  background-position-x: -124px;
+  background-position: -124px 0px;
 }
 
 .wz-view.random .more-options .random i{
-  background-position-x: -139px;
+  background-position: -139px 0px;
 }
 
 .more-options .repeat{
@@ -488,9 +506,9 @@
   float: left;
   background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
-  background-position-x: -154px;
+  background-position: -154px 0px;
 }
 
 .wz-view.repeat .more-options .repeat i{
-  background-position-x: -168px;
+  background-position: -168px 0px;
 }

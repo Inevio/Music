@@ -1,6 +1,7 @@
 
 {
-    
-    "unknown" : "Desconocido"
+
+    "unknown" : "Desconocido",
+    "playlist": "Lista de reproducción"
 
 }

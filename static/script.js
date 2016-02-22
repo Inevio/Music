@@ -160,10 +160,11 @@ var songThumbnail       = $('.song-thumbnail');
 var playListDom         = $('.playlist');
 var songPrototype       = $('.playlist .song.wz-prototype');
 var longClick           = false;
-var playlist            = new Playlist();
+var playlist;
 var indexPlaying        = -1;
 var list                = [];
 var clickInterval;
+var appStarted          = false;
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -178,46 +179,49 @@ var clickInterval;
  musicVolume.width( musicMaxVolume.width() );
  musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
 
-var startApp = function(){
+var startApp = function( paramsAux ){
 
-  if( params && params.command === 'openFile' ){
+  playlist = new Playlist();
+  $('.playlist-title').text( lang.playlist );
 
-    params.list.forEach( function( item, index ){
+  paramsAux.list.forEach( function( item, index ){
 
-      wz.fs( item, function( error, structure ){
+    wz.fs( item, function( error, structure ){
 
-        if( error ){
-          return;
+      if( error ){
+        return;
+      }
+
+      if( VALID_MIMES.indexOf( structure.mime ) !== -1 ){
+
+        if( structure.id === paramsAux.data ){
+          indexPlaying = playlist._list.length;
         }
 
-        if( VALID_MIMES.indexOf( structure.mime ) !== -1 ){
+        playlist.push( structure );
 
-          if( structure.id === params.data ){
-            indexPlaying = playlist._list.length;
-          }
+      }
 
-          playlist.push( structure );
+      if( index === paramsAux.list.length - 1 ){
 
-        }
+        displayPlaylist();
+        appStarted = true;
+        loadItem( indexPlaying );
+        $('.playlist-count').text( playlist._list.length );
 
-        if( index === params.list.length - 1 ){
-
-          displayPlaylist();
-          loadItem( indexPlaying );
-
-        }
-
-      });
+      }
 
     });
 
-  }
+  });
 
 }
 
 var displayPlaylist = function(){
 
   var toInsert = [];
+
+  $('.playlist').children().not('.wz-prototype').remove();
 
   playlist._list.forEach( function( song, index ){
 
@@ -278,7 +282,7 @@ var loadItem = function( index ){
 
   musicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
 
-  songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails.big ? structure.thumbnails.big : 'https://static.inevio.com/app/228/cover_big.png' ) + ')' );
+  songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails['512'] ? structure.thumbnails['512'] : 'https://static.inevio.com/app/228/cover_big.png' ) + ')' );
   musicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
 
   audio.load();
@@ -694,9 +698,36 @@ audio
 
 });
 
-/*wz.app.on('params', function(){
-  console.log(arguments);
-});*/
+win.on( 'app-param', function( e, params ){
 
-// Start app
-startApp();
+  if( params && params.command === 'openFile' && !appStarted ){
+    startApp( params );
+  }else if( params && params.command === 'openFile' && appStarted ){
+
+    console.log(params);
+
+    var found, index;
+    for( var i = 0; i < playlist._list.length; i++ ){
+
+
+      if( params.data === playlist._list[i].id ){
+        found = true;
+        index = i;
+        break;
+      }
+
+    }
+
+    if( found ){
+      loadItem( i );
+    }else{
+      startApp( params );
+    }
+
+  }
+
+})
+
+.on( 'wz-drop', '.wz-drop-area', function( e,item ){
+  console.log(item);
+});

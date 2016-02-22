@@ -1,6 +1,7 @@
 
 {
 
-    "unknown" : "Unknown"
-    
+    "unknown" : "Unknown",
+    "playlist": "Playlist"
+
 }
