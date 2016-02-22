@@ -283,7 +283,7 @@
 .play-button i{
   display: inline-block;
   background-size: 182px 24px;
-  background-image: url('@static/new/sprite.png');
+  background-image: url('@static/sprite.png');
 }
 
 .play-button.rewind{
@@ -417,7 +417,7 @@
   width: 14px;
   height: 12px;
   float: left;
-  background: url('@static/new/sprite.png') no-repeat;
+  background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
   background-position-x: -96px;
 }
@@ -465,7 +465,7 @@
   width: 15px;
   height: 13px;
   float: left;
-  background: url('@static/new/sprite.png') no-repeat;
+  background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
   background-position-x: -124px;
 }
@@ -486,7 +486,7 @@
   width: 14px;
   height: 16px;
   float: left;
-  background: url('@static/new/sprite.png') no-repeat;
+  background: url('@static/sprite.png') no-repeat;
   background-size: 182px 24px;
   background-position-x: -154px;
 }
