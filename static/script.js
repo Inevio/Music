@@ -229,8 +229,6 @@ var addSong = function( id ){
 
       playlist.push( song );
 
-    }else{
-
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
       songItem.addClass('song-id-' + song.id);
