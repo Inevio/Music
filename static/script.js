@@ -183,8 +183,14 @@ var startApp = function( paramsAux ){
 
   playlist = new Playlist();
   $('.playlist-title').text( lang.playlist );
+  audio.empty();
+
+  console.log( paramsAux.list.length );
+
+  var counter = 0;
 
   paramsAux.list.forEach( function( item, index ){
+
 
     wz.fs( item, function( error, structure ){
 
@@ -202,10 +208,12 @@ var startApp = function( paramsAux ){
 
       }
 
-      if( index === paramsAux.list.length - 1 ){
+      counter++;
 
-        displayPlaylist();
+      if( counter === paramsAux.list.length ){
+
         appStarted = true;
+        displayPlaylist();
         loadItem( indexPlaying );
         $('.playlist-count').text( playlist._list.length );
 
@@ -268,8 +276,6 @@ var addSong = function( id ){
 
 var findSong = function( songId ){
 
-  console.log(songId);
-
   var index = -1;
   for( var i = 0; i < playlist._list.length; i++ ){
 
@@ -280,7 +286,6 @@ var findSong = function( songId ){
 
   }
 
-  console.log(index);
   return index;
 
 }
