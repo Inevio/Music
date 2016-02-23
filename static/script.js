@@ -364,9 +364,11 @@ var loadItem = function( index ){
 
   var song = $('.song-id-' + structure.id).addClass('active');
 
-  if( song[ 0 ].offsetTop + song.outerHeight( true ) > playListDom.height() ){
+  /*if( song[ 0 ].offsetTop + song.outerHeight( true ) > playListDom.height() ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
-  }
+  }*/
+
+  playListDom.scrollTop( song[0].offsetTop );
 
   indexPlaying = index;
 
