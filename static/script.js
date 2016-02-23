@@ -266,6 +266,25 @@ var addSong = function( id ){
 
 }
 
+var findSong = function( songId ){
+
+  console.log(songId);
+
+  var index = -1;
+  for( var i = 0; i < playlist._list.length; i++ ){
+
+    if( songId === playlist._list[i].id ){
+      index = i;
+      break;
+    }
+
+  }
+
+  console.log(index);
+  return index;
+
+}
+
 var displayPlaylist = function(){
 
   var toInsert = [];
@@ -750,25 +769,14 @@ audio
 win.on( 'app-param', function( e, params ){
 
   if( params && params.command === 'openFile' && !appStarted ){
+
     startApp( params );
+
   }else if( params && params.command === 'openFile' && appStarted ){
 
-    console.log(params);
-
-    var found, index;
-    for( var i = 0; i < playlist._list.length; i++ ){
-
-
-      if( params.data === playlist._list[i].id ){
-        found = true;
-        index = i;
-        break;
-      }
-
-    }
-
-    if( found ){
-      loadItem( i );
+    var index = findSong( params.data );
+    if( index !== -1 ){
+      loadItem( index );
     }else{
       startApp( params );
     }
@@ -778,5 +786,11 @@ win.on( 'app-param', function( e, params ){
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
-  addSong( item.data()['file-id'] );
+
+  var songId = item.data()['file-id'];
+
+  if( findSong( songId ) == -1 ){
+    addSong( songId );
+  }
+
 });
