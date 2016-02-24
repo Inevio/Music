@@ -185,8 +185,6 @@ var startApp = function( paramsAux ){
   $('.playlist-title').text( lang.playlist );
   audio.empty();
 
-  console.log( paramsAux.list.length );
-
   var counter = 0;
 
   paramsAux.list.forEach( function( item, index ){
@@ -212,11 +210,10 @@ var startApp = function( paramsAux ){
 
       if( counter === paramsAux.list.length ){
 
-        console.log( playlist._list );
         appStarted = true;
         displayPlaylist();
         loadItem( indexPlaying );
-        $('.playlist-count').text( playlist._list.length );
+        $('.playlist-count').text( '(' + playlist._list.length + ')' );
 
       }
 
@@ -266,7 +263,7 @@ var addSong = function( id ){
       }
 
       appStarted = true;
-      $('.playlist-count').text( playlist._list.length );
+      $('.playlist-count').text( '(' + playlist._list.length + ')' );
       playListDom.append( songItem );
 
     }
