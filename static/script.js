@@ -307,26 +307,32 @@ var displayPlaylist = function(){
     songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
     songItem.data( 'index' , index );
 
-    var time = song.metadata.media.duration.seconds;
-    var hour = parseInt(time / 3600, 10);
-    var rem  = time % 3600;
-    var min  = parseInt(rem / 60, 10);
-    var sec  = parseInt(rem % 60, 10);
+    if( song && song.metadata && song.metadata.media && song.metadata.media.duration && song.metadata.media.duration.seconds ){
 
-    if( hour > 0 && min < 10 ){ min = '0' + min; }
-    if( sec < 10 ){ sec  = '0' + sec; }
+      var time = song.metadata.media.duration.seconds;
+      var hour = parseInt(time / 3600, 10);
+      var rem  = time % 3600;
+      var min  = parseInt(rem / 60, 10);
+      var sec  = parseInt(rem % 60, 10);
 
-    if( 9 < hour ){
-      songItem.find('.time').text( hour + ':' + min + ':' + sec );
-    }else if( 0 < hour && hour < 10 ){
-      songItem.find('.time').text( hour + ':' + min + ':' + sec );
-    }else if( 9 < min ){
-      songItem.find('.time').text( min + ':' + sec );
+      if( hour > 0 && min < 10 ){ min = '0' + min; }
+      if( sec < 10 ){ sec  = '0' + sec; }
+
+      if( 9 < hour ){
+        songItem.find('.time').text( hour + ':' + min + ':' + sec );
+      }else if( 0 < hour && hour < 10 ){
+        songItem.find('.time').text( hour + ':' + min + ':' + sec );
+      }else if( 9 < min ){
+        songItem.find('.time').text( min + ':' + sec );
+      }else{
+        songItem.find('.time').text( min + ':' + sec );
+      }
+
+      toInsert.push( songItem );
+
     }else{
-      songItem.find('.time').text( min + ':' + sec );
+      console.log(song);
     }
-
-    toInsert.push( songItem );
 
   });
 
@@ -369,7 +375,7 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.scrollTop( song[0].offsetTop );
+  //playListDom.scrollTop( song[0].offsetTop );
 
   indexPlaying = index;
 
@@ -798,7 +804,7 @@ win.on( 'app-param', function( e, params ){
 
   var songId = item.data()['file-id'];
 
-  console.log(arguments);
+  console.log( arguments );
 
   if( findSong( songId ) == -1 ){
     addSong( songId );
