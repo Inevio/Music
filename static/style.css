@@ -261,7 +261,7 @@
   height: 38px;
   margin-left: 29px;
   margin-top: 6px;
-  margin-right: 29px;
+  margin-right: 27px;
   float: left;
 }
 
@@ -350,32 +350,37 @@
 }
 
 .time{
-  width: 320px;
+  width: 322px;
   height: 12px;
-  margin-top: 19px;
-  margin-right: 20px;
+  margin-top: 17px;
+  margin-right: 18px;
   float: left;
+  text-align: center;
 }
 
 .time .currentTime, .time .totalTime{
   font-family: Lato;
   font-size: 13px;
   color: white;
-  float: left;
+  display: inline-block;
 }
 
 .time .currentTime{
-  margin-right: 14px;
+  margin-right: 12px;
+}
+
+.time .totalTime{
+  margin-left: 12px;
 }
 
 .time .music-backprogress{
-  width: 238px;
+  width: 202px;
   height: 6px;
-  margin-top: 3px;
   background: #d2dce2;
   position: relative;
   border-radius: 3px;
-  float: left;
+  display: inline-block;
+  bottom: 2px;
 }
 
 .time .music-buffer{
@@ -410,10 +415,6 @@
 	box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
   position: absolute;
   top: -3px;
-}
-
-.time .totalTime{
-  float: right;
 }
 
 .volume{

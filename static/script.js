@@ -212,6 +212,7 @@ var startApp = function( paramsAux ){
 
       if( counter === paramsAux.list.length ){
 
+        console.log( playlist._list );
         appStarted = true;
         displayPlaylist();
         loadItem( indexPlaying );
@@ -425,7 +426,7 @@ win
      var sec = parseInt( rem % 60, 10 );
 
      if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-     if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min = '0' + min; }
+     if( totalHour > 0 && ( totalMin > 10 && min < 10 ) ){   console.log(min);/*min = '0' + min;*/ }
      if( sec < 10 ){ sec  = '0' + sec; }
 
      if( totalHour ){
@@ -635,7 +636,8 @@ audio
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
 
-  if( hour > 0 && min < 10 ){ min = '0' + min; }
+
+  if( hour > 0 && min < 10 ){ /*min = '0' + min;*/   console.log(min); }
   if( sec < 10 ){ sec  = '0' + sec; }
 
     //musicBackprogress.transition({'opacity':'1'},250);
