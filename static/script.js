@@ -426,7 +426,7 @@ win
      var sec = parseInt( rem % 60, 10 );
 
      if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-     if( totalHour > 0 && ( totalMin > 10 && min < 10 ) ){   console.log(min);/*min = '0' + min;*/ }
+     if( totalHour > 0 && min < 10 ){ min = '0' + min; }
      if( sec < 10 ){ sec  = '0' + sec; }
 
      if( totalHour ){
@@ -637,7 +637,7 @@ audio
   var sec   = parseInt(rem%60, 10);
 
 
-  if( hour > 0 && min < 10 ){ /*min = '0' + min;*/   console.log(min); }
+  if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
 
     //musicBackprogress.transition({'opacity':'1'},250);
@@ -715,7 +715,7 @@ audio
   var sec  = parseInt( rem % 60, 10 );
 
   if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-  if( totalHour > 0 || ( totalMin > 10 && min < 10 ) ){ min  = '0' + min; }
+  if( totalHour > 0 && min < 10 ){ min = '0' + min; }
   if (sec < 10 ){ sec  = '0' + sec; }
 
   if( totalHour ){
@@ -797,6 +797,8 @@ win.on( 'app-param', function( e, params ){
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
   var songId = item.data()['file-id'];
+
+  console.log(arguments);
 
   if( findSong( songId ) == -1 ){
     addSong( songId );
