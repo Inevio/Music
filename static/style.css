@@ -301,7 +301,7 @@
 
 .play-button i{
   display: inline-block;
-  background-size: 182px 24px;
+  background-size: 197px 24px;
   background-image: url('@static/sprite.png');
 }
 
@@ -437,7 +437,7 @@
   height: 12px;
   float: left;
   background: url('@static/sprite.png') no-repeat;
-  background-size: 182px 24px;
+  background-size: 197px 24px;
   background-position: -96px 0px;
 }
 
@@ -485,7 +485,7 @@
   height: 13px;
   float: left;
   background: url('@static/sprite.png') no-repeat;
-  background-size: 182px 24px;
+  background-size: 197px 24px;
   background-position: -124px 0px;
 }
 
@@ -506,7 +506,7 @@
   height: 16px;
   float: left;
   background: url('@static/sprite.png') no-repeat;
-  background-size: 182px 24px;
+  background-size: 197px 24px;
   background-position: -154px 0px;
 }
 
