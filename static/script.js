@@ -160,10 +160,12 @@ var songThumbnail       = $('.song-thumbnail');
 var playListDom         = $('.playlist');
 var songPrototype       = $('.playlist .song.wz-prototype');
 var longClick           = false;
+var longKeypress        = false;
 var playlist;
 var indexPlaying        = -1;
 var list                = [];
 var clickInterval;
+var keyInterval;
 var appStarted          = false;
 
 /*
@@ -372,7 +374,7 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  //playListDom.scrollTop( song[0].offsetTop );
+  playListDom.scrollTop( song[0].offsetTop );
 
   indexPlaying = index;
 
@@ -494,7 +496,7 @@ win
   clickInterval = setInterval( function(){
     audio[0].currentTime -= 10;
     longClick = true;
-  } ,600)
+  } ,400)
 
 })
 
@@ -516,7 +518,7 @@ win
   clickInterval = setInterval( function(){
     audio[0].currentTime += 10;
     longClick = true;
-  } ,600)
+  } ,400)
 
 })
 
@@ -561,16 +563,48 @@ win
 .key(
 
   'right',
-    function(){ audio[ 0 ].currentTime += 10; }, // To Do -> Comprobar exceso
-    function(){ audio[ 0 ].currentTime += 10; }  // To Do -> Comprobar exceso
+    function(){
+      //audio[ 0 ].currentTime += 10;
+      console.log('primera pulsacion');
+      keyInterval = setInterval( function(){
+        audio[0].currentTime += 10;
+        longKeypress = true;
+      } ,300);
+
+    },
+    null,
+    function(){
+      if( !longKeypress ){
+        loadItem();
+      }
+
+      longKeypress = false;
+      clearInterval( keyInterval );
+    }
 
 )
 
 .key(
 
   'left',
-  function(){ audio[ 0 ].currentTime -= 10; },
-  function(){ audio[ 0 ].currentTime -= 10; }
+    function(){
+      //audio[ 0 ].currentTime += 10;
+      console.log('primera pulsacion');
+      keyInterval = setInterval( function(){
+        audio[0].currentTime -= 10;
+        longKeypress = true;
+      } ,300);
+
+    },
+    null,
+    function(){
+      if( !longKeypress ){
+        loadItem( -1 );
+      }
+
+      longKeypress = false;
+      clearInterval( keyInterval );
+    }
 
 )
 
