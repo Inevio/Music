@@ -107,9 +107,7 @@ Playlist.prototype.get = function( index ){
 
 Playlist.prototype.next = function(){
 
-  if( this._repeatMode === 1 ){
-    return this._list[ this._lastId ];
-  }else if( this._toPlay.length === 0 && this._repeatMode !== 2 ){
+  if( this._toPlay.length === 0 && this._repeatMode !== 2 ){
     return null;
   }else if( this._toPlay.length === 0 ){
     this._rebuild();
@@ -124,10 +122,7 @@ Playlist.prototype.next = function(){
 
 Playlist.prototype.prev = function(){
 
-  if( this._repeatMode === 1 ){
-    return this._list[ this._lastId ];
-  }
-  else if( ( this._played.length === 0 && this._repeatMode !== 2 ) || this._played.length === 0 || this._played.length === 1){
+  if( ( this._played.length === 0 && this._repeatMode !== 2 ) || this._played.length === 0 || this._played.length === 1){
     return null;
   }
 
@@ -809,7 +804,11 @@ audio
 
     this.currentTime = 0;
 
-    loadItem();
+    if( playlist._repeatMode == 1 ){
+      loadItem( playlist._lastId );
+    }else{
+      loadItem();
+    }
 
   }
 
