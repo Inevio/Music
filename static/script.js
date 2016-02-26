@@ -289,15 +289,15 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
-    var songItem = songPrototype.clone().removeClass('wz-prototype');
-
-    songItem.addClass('song-id-' + song.id);
-    songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
-    songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
-    songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
-    songItem.data( 'index' , index );
-
     if( song && song.metadata && song.metadata.media && song.metadata.media.duration && song.metadata.media.duration.seconds ){
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype');
+
+      songItem.addClass('song-id-' + song.id);
+      songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
+      songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
+      songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+      songItem.data( 'index' , index );
 
       var time = song.metadata.media.duration.seconds;
       var hour = parseInt(time / 3600, 10);
