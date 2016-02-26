@@ -833,12 +833,14 @@ win.on( 'app-param', function( e, params ){
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
-  var songId = item.data()['file-id'];
+  item.siblings('.active').add( item ).each( function(){
 
-  console.log( arguments );
+    var songId = $(this).data()['file-id'];
 
-  if( findSong( songId ) == -1 ){
-    addSong( songId );
-  }
+    if( findSong( songId ) == -1 ){
+      addSong( songId );
+    }
+
+  });
 
 });
