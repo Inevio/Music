@@ -146,7 +146,6 @@ var win                 = $( this );
 var audio               = $('audio');
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
-var weemusicCover       = $('.weemusic-info-cover');
 var musicCurrentTime    = $('.currentTime');
 var weemusicTotalTime   = $('.totalTime');
 var musicProgress       = $('.music-progress');
@@ -177,7 +176,6 @@ var appStarted          = false;
  var emulatedSeekerTimer = 0;
  var emulatedSeekerTime  = 0;
 
- win.addClass( 'wz-dragger' );
  musicVolume.width( musicMaxVolume.width() );
  musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
 
