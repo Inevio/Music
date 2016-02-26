@@ -6,7 +6,7 @@ var Playlist = function(){
   this._toPlay        = [];
   this._played        = [];
   this._lastId        = -1;
-  this._repeatEnabled = false;
+  this._repeatMode    = 0; // 0 == no repeat, 1 == repeat song, 2 == repeat playlist
   this._randomEnabled = false;
 
 };
@@ -63,10 +63,10 @@ Playlist.prototype.push = function( list ){
 Playlist.prototype.repeat = function( opt ){
 
   if( typeof opt === 'undefined' ){
-    return this._repeatEnabled;
+    return this._repeatMode;
   }
 
-  this._repeatEnabled = !!opt;
+  this._repeatMode = opt;
 
 };
 
@@ -107,7 +107,9 @@ Playlist.prototype.get = function( index ){
 
 Playlist.prototype.next = function(){
 
-  if( this._toPlay.length === 0 && !this._repeatEnabled ){
+  if( this._repeatMode === 1 ){
+    return this._list[ this._lastId ];
+  }else if( this._toPlay.length === 0 && this._repeatMode !== 2 ){
     return null;
   }else if( this._toPlay.length === 0 ){
     this._rebuild();
@@ -122,7 +124,10 @@ Playlist.prototype.next = function(){
 
 Playlist.prototype.prev = function(){
 
-  if( ( this._played.length === 0 && !this._repeatEnabled ) || this._played.length === 0 || this._played.length === 1){
+  if( this._repeatMode === 1 ){
+    return this._list[ this._lastId ];
+  }
+  else if( ( this._played.length === 0 && this._repeatMode !== 2 ) || this._played.length === 0 || this._played.length === 1){
     return null;
   }
 
@@ -530,12 +535,19 @@ win
   if( win.hasClass('repeat') ){
 
     win.removeClass('repeat');
-    playlist.repeat( false );
+    playlist.repeat( 0 );
+
+  }else if( win.hasClass('repeat-song') ){
+
+    win.removeClass('repeat-song');
+    win.addClass('repeat');
+    playlist.repeat( 2 );
 
   }else{
 
-    win.addClass('repeat');
-    playlist.repeat( true );
+    win.removeClass('repeat');
+    win.addClass('repeat-song');
+    playlist.repeat( 1 );
 
   }
 

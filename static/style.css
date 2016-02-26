@@ -452,3 +452,7 @@
 .wz-view.repeat .more-options .repeat i{
   background-position: -168px 0px;
 }
+
+.wz-view.repeat-song .more-options .repeat i{
+  background-position: -182px 0px;
+}
