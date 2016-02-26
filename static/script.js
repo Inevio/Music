@@ -107,8 +107,6 @@ Playlist.prototype.get = function( index ){
 
 Playlist.prototype.next = function(){
 
-  console.log('next');
-
   if( this._toPlay.length === 0 && !this._repeatEnabled ){
     return null;
   }else if( this._toPlay.length === 0 ){
@@ -124,17 +122,12 @@ Playlist.prototype.next = function(){
 
 Playlist.prototype.prev = function(){
 
-  console.log('prev');
-
   if( ( this._played.length === 0 && !this._repeatEnabled ) || this._played.length === 0 || this._played.length === 1){
     return null;
   }
 
   this._toPlay.push( this._played.pop() );
   this._lastId = this._played[ this._played.length - 1 ];
-
-  console.log( this._played );
-  console.log( this._list[ this._lastId ] );
 
   return this._list[ this._lastId ];
 
@@ -562,8 +555,8 @@ win
 
   'right',
     function(){
+
       //audio[ 0 ].currentTime += 10;
-      console.log('primera pulsacion');
       keyInterval = setInterval( function(){
         audio[0].currentTime += 10;
         longKeypress = true;
@@ -586,8 +579,8 @@ win
 
   'left',
     function(){
+
       //audio[ 0 ].currentTime += 10;
-      console.log('primera pulsacion');
       keyInterval = setInterval( function(){
         audio[0].currentTime -= 10;
         longKeypress = true;

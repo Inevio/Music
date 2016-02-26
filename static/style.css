@@ -42,67 +42,6 @@
   background: rgba( 0, 0, 0, 0.2 );
 }
 
-.weemusic-title{
-  width: 164px;
-  height: 49px;
-  float: left;
-}
-
-.weemusic-name{
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  height: 15px;
-  color: #FFF;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-  float: left;
-  margin-top: 8px;
-}
-
-.weemusic-artist{
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  height: 15px;
-  color: rgba( 255, 255, 255, 0.5 );
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-  float: left;
-  margin-top: 6px;
-}
-
-.weemusic-bottom{
-  width: 100%;
-  height: 55px;
-  text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.weemusic-info{
-  width: 100%;
-  height: 49px;
-  float: left;
-  text-align: center;
-  background-image: -webkit-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-  background-image: -moz-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-  background-image: -o-linear-gradient( bottom, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-  background-image: linear-gradient( to top, rgba( 36, 36, 36, 0.9 ), rgba( 51, 51, 51, 0.9 ) );
-}
-
-.weemusic-info-data{
-  font-size: 14px;
-  color: #FFF;
-  text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.3 );
-  float: left;
-  margin: 17px 13px 17px 20px;
-}
-
-.weemusic-info-data.right{
-  float: right;
-  margin: 17px 20px 17px 13px;
-}
-
 .song-info{
   float: left;
   width: 350px;
