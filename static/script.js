@@ -374,7 +374,7 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.scrollTop( song[0].offsetTop );
+  playListDom.animate( { scrollTop : song[0].offsetTop }, 500  );
 
   indexPlaying = index;
 
