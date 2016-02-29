@@ -2,6 +2,8 @@
 {
 
     "unknown" : "Desconocido",
-    "playlist": "Lista de reproducción"
+    "playlist": "Lista de reproducción",
+    "song": "canción",
+    "songs": "canciones"
 
 }

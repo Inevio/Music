@@ -206,7 +206,7 @@ var startApp = function( paramsAux ){
         appStarted = true;
         displayPlaylist();
         loadItem( indexPlaying );
-        $('.playlist-count').text( '(' + playlist._list.length + ')' );
+        $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
 
       }
 
@@ -256,8 +256,8 @@ var addSong = function( id ){
       }
 
       appStarted = true;
-      $('.playlist-count').text( '(' + playlist._list.length + ')' );
       playListDom.append( songItem );
+      $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
 
     }
 
