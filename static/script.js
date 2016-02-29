@@ -794,7 +794,7 @@ audio
     var time = this.duration;
     var hour = parseInt(time/3600, 10);
     musicProgress.width(0);
-    musicSeeker.css('left',-6);
+    musicSeeker.css('left',0);
 
     if(parseInt(hour, 10)){
       musicCurrentTime.text('00:00:00');
