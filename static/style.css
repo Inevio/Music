@@ -88,6 +88,44 @@
   float: left;
   height: 350px;
   width: 360px;
+  position: relative;
+  z-index: 1;
+}
+
+.playlist-section.drop-cover{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background-color: rgba(91, 162, 92, 0.85);
+  display: none;
+}
+
+.playlist-section.drop-cover.active{
+  display: block;
+}
+
+.playlist-section.drop-cover .drop-image{
+  width: 173px;
+  height: 175px;
+  background-size: 173px 175px;
+  background-image: url('@static/drag.png');
+  margin: 82px auto 16px auto;
+}
+
+.playlist-section.drop-cover .drop-text{
+  color: white;
+  font-family: Lato;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.playlist-section.drop-cover .drop-text-description{
+  color: white;
+  font-family: Lato;
+  font-size: 13px;
+  text-align: center;
 }
 
 .playlist{

@@ -151,6 +151,7 @@ var musicVolumeSeeker   = $('.music-volume-seeker');
 var songThumbnail       = $('.song-thumbnail');
 var playListDom         = $('.playlist');
 var songPrototype       = $('.playlist .song.wz-prototype');
+var dropCover           = $('.playlist-section.drop-cover');
 var longClick           = false;
 var longKeypress        = false;
 var playlist;
@@ -207,6 +208,8 @@ var startApp = function( paramsAux ){
         displayPlaylist();
         loadItem( indexPlaying );
         $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
+        dropCover.find('.drop-text').text( lang.dropText );
+        dropCover.find('.drop-text-description').text( lang.dropTextDescription );
 
       }
 
@@ -831,6 +834,14 @@ win.on( 'app-param', function( e, params ){
 
   }
 
+})
+
+.on( 'wz-dropenter', '.wz-drop-area', function(){
+  dropCover.addClass('active');
+})
+
+.on( 'wz-dropleave', '.wz-drop-area', function(){
+  dropCover.removeClass('active');
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){

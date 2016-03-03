@@ -4,6 +4,9 @@
     "unknown" : "Unknown",
     "playlist": "Playlist",
     "song": "song",
-    "songs": "songs"
+    "songs": "songs",
+    "dropText": "Drop your songs here",
+    "dropTextDescription": "These will be added to the playlist"
+
 
 }
