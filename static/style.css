@@ -1,6 +1,7 @@
 
 .wz-view{
     background: #3f4750;
+    border-radius: 6px;
 }
 
 .ui-header{
@@ -100,10 +101,6 @@
   background-color: rgba(91, 162, 92, 0.85);
   transform: scale(0);
   opacity: 0;
-}
-
-.playlist-section.drop-cover.active{
-  display: block;
 }
 
 .playlist-section.drop-cover .drop-image{

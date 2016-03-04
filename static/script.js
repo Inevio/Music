@@ -488,6 +488,7 @@ win
 .on( 'mousedown', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
+    console.log('fast rewind click');
     audio[0].currentTime -= 10;
     longClick = true;
   } ,400)
@@ -510,6 +511,7 @@ win
 .on( 'mousedown', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
+    console.log('fast forward click');
     audio[0].currentTime += 10;
     longClick = true;
   } ,400)
@@ -566,11 +568,12 @@ win
   'right',
     function(){
 
-      //audio[ 0 ].currentTime += 10;
+      clearInterval( keyInterval );
       keyInterval = setInterval( function(){
+        console.log('fast forward key');
         audio[0].currentTime += 10;
         longKeypress = true;
-      } ,300);
+      } ,500);
 
     },
     null,
@@ -578,7 +581,6 @@ win
       if( !longKeypress ){
         loadItem();
       }
-
       longKeypress = false;
       clearInterval( keyInterval );
     }
@@ -589,12 +591,13 @@ win
 
   'left',
     function(){
-
-      //audio[ 0 ].currentTime += 10;
+      
+      clearInterval( keyInterval );
       keyInterval = setInterval( function(){
+        console.log('fast rewind key');
         audio[0].currentTime -= 10;
         longKeypress = true;
-      } ,300);
+      } ,500);
 
     },
     null,
@@ -602,7 +605,6 @@ win
       if( !longKeypress ){
         loadItem( -1 );
       }
-
       longKeypress = false;
       clearInterval( keyInterval );
     }
@@ -837,12 +839,10 @@ win.on( 'app-param', function( e, params ){
 })
 
 .on( 'wz-dropenter', '.wz-drop-area', function(){
-  //dropCover.addClass('active');
   dropCover.stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 300 );
 })
 
 .on( 'wz-dropleave', '.wz-drop-area', function(){
-  //dropCover.removeClass('active');
   dropCover.stop().clearQueue().transition( {'transform': 'scale(0)', 'opacity':'0'}, 300 );
 })
 
