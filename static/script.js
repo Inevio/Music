@@ -839,11 +839,11 @@ win.on( 'app-param', function( e, params ){
 })
 
 .on( 'wz-dropenter', '.wz-drop-area', function(){
-  dropCover.stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 200 );
+  dropCover.addClass('active').stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 200 );
 })
 
 .on( 'wz-dropleave', '.wz-drop-area', function(){
-  dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200 );
+  dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200,function(){ dropCover.removeClass('active') } );
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
