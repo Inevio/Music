@@ -98,7 +98,8 @@
   right: 0;
   z-index: 2;
   background-color: rgba(91, 162, 92, 0.85);
-  display: none;
+  transform: scale(0);
+  opacity: 0;
 }
 
 .playlist-section.drop-cover.active{

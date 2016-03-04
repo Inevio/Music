@@ -368,7 +368,7 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.stop().animate( { scrollTop : song[0].offsetTop }, 400  );
+  playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
 
   indexPlaying = index;
 
@@ -837,11 +837,13 @@ win.on( 'app-param', function( e, params ){
 })
 
 .on( 'wz-dropenter', '.wz-drop-area', function(){
-  dropCover.addClass('active');
+  //dropCover.addClass('active');
+  dropCover.stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 300 );
 })
 
 .on( 'wz-dropleave', '.wz-drop-area', function(){
-  dropCover.removeClass('active');
+  //dropCover.removeClass('active');
+  dropCover.stop().clearQueue().transition( {'transform': 'scale(0)', 'opacity':'0'}, 300 );
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
