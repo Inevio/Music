@@ -1,9 +1,0 @@
-
-{
-
-    "insertConfig" : "INSERT INTO config SET user = @userId",
-    "getConfig"    : "SELECT * FROM config WHERE user = @userId LIMIT 1",
-    "changeVolume" : "UPDATE config SET volume = ? WHERE user = @userId LIMIT 1",
-    "changeMute"   : "UPDATE config SET mute = ? WHERE user = @userId LIMIT 1"
-
-}

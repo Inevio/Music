@@ -1,69 +1,103 @@
 
 <audio></audio>
 
-<section class="wz-ui-header wz-view-menu-radius dark wz-dragger">
+<section class="song-info wz-dragger">
 
-    <section class="wz-view-menu-group weemusic-volume wz-dragger">
-    
-        <figure class="wz-view-option weemusic-volume-icon">
-            <i></i>
-        </figure>
-        
-        <section class="weemusic-volume-max wz-drag-limit wz-dragger-x-magnet">
-            <section class="weemusic-volume-current"></section>
-            <section class="weemusic-seeker weemusic-volume-seeker wz-draggable"></section>
-        </section>
-        
-    </section>
+  <figure class="song-thumbnail wz-dragger"></figure>
 
-    <article class="weemusic-title">
-        <span class="weemusic-name ellipsis wz-dragger"></span>
-        <span class="weemusic-artist ellipsis wz-dragger"></span>
-    </article>
-
-    <section class="wz-view-menu-group right wz-dragger">
-        <figure class="wz-view-minimize">
-            <i></i>
-        </figure>
-        <figure class="wz-view-close">
-            <i></i>
-        </figure>
-    </section>
+  <section class="song-details">
+    <div class="song-title ellipsis"></div>
+    <div class="song-artist ellipsis"></div>
+  </section>
 
 </section>
 
-<section class="weemusic-bottom">
+<section class="playlist-section dark wz-drop-area">
 
-    <section class="weemusic-backprogress wz-drag-limit wz-dragger-x-magnet">
-        <section class="weemusic-buffer"></section>
-        <section class="weemusic-progress"></section>
-        <section class="weemusic-seeker weemusic-time-seeker wz-draggable"></section>
+  <section class="ui-header wz-dragger">
+    <span class="playlist-title wz-dragger"></span>
+    <span class="playlist-count ellipsis wz-dragger"></span>
+    <section class="ui-header-buttons">
+      <figure class="ui-minimize"><i></i></figure>
+      <figure class="ui-maximize inactive"><i></i></figure>
+      <figure class="ui-close"><i></i></figure>
+    </section>
+  </section>
+
+  <section class="playlist wz-scroll">
+
+    <article class="song wz-prototype">
+      <figure></figure>
+      <figcaption>
+          <span class="title ellipsis"></span>
+          <span class="artist ellipsis"></span>
+      </figcaption>
+      <i class="time"></i>
+    </article>
+
+  </section>
+
+</section>
+
+<section class="playlist-section drop-cover dark">
+  <figure class="drop-image"></figure>
+  <div class="drop-text"></div>
+  <div class="drop-text-description"></div>
+</section>
+
+<section class="control-panel">
+
+  <section class="play-buttons">
+
+    <figure class="play-button rewind btn">
+        <i></i>
+    </figure>
+    <figure class="play-button play btn">
+        <i></i>
+    </figure>
+    <figure class="play-button forward btn">
+        <i></i>
+    </figure>
+
+  </section>
+
+  <section class="time">
+
+    <span class="currentTime"></span>
+
+    <section class="music-backprogress wz-drag-limit wz-dragger-x-magnet">
+        <section class="music-buffer"></section>
+        <section class="music-progress"></section>
+        <section class="music-seeker music-time-seeker wz-draggable"></section>
     </section>
 
-    <section class="weemusic-info">
+    <span class="totalTime"></span>
 
-        <span class="weemusic-info-data currentTime"></span>
-        
-        <section class="weemusic-controls">
-        
-            <figure class="wz-view-option weemusic-controls-rewind">
-                <i></i>
-            </figure>
-            <figure class="wz-view-option weemusic-controls-play">
-                <i></i>
-            </figure>
-            <figure class="wz-view-option weemusic-controls-forward">
-                <i></i>
-            </figure>
-            
-        </section>
-        
-        <span class="weemusic-info-data right totalTime"></span>
+  </section>
 
-        <figure class="wz-view-option weemusic-controls-repeat">
-            <i></i>
-        </figure>
+  <section class="volume">
 
+    <figure class="volume-icon btn">
+        <i></i>
+    </figure>
+
+    <section class="music-volume-max wz-drag-limit wz-dragger-x-magnet">
+        <section class="music-volume-current"></section>
+        <section class="music-seeker music-volume-seeker wz-draggable"></section>
     </section>
+
+  </section>
+
+  <section class="more-options">
+
+    <figure class="random btn">
+        <i></i>
+    </figure>
+
+    <figure class="repeat btn">
+        <i></i>
+    </figure>
+
+  </section>
 
 </section>

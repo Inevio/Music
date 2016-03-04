@@ -1,6 +1,11 @@
 
 {
-    
-    "unknown" : "Desconocido"
+
+    "unknown" : "Desconocido",
+    "playlist": "Lista de reproducción",
+    "song": "canción",
+    "songs": "canciones",
+    "dropText": "Suelta tus canciones aquí",
+    "dropTextDescription": "Estas se añadiran a la lista de reproducción"
 
 }
