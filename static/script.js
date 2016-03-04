@@ -591,7 +591,7 @@ win
 
   'left',
     function(){
-      
+
       clearInterval( keyInterval );
       keyInterval = setInterval( function(){
         console.log('fast rewind key');
@@ -694,7 +694,7 @@ audio
 
     }else if( 9 < min ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00');
+      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
       weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
 
     }else{
@@ -802,9 +802,9 @@ audio
     musicSeeker.css('left',0);
 
     if(parseInt(hour, 10)){
-      musicCurrentTime.text('00:00:00');
+      musicCurrentTime.text('0:00:00');
     }else{
-      musicCurrentTime.text('00:00');
+      musicCurrentTime.text('0:00');
     }
 
     this.currentTime = 0;
