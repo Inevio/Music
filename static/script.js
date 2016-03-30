@@ -377,7 +377,11 @@ var loadItem = function( index ){
 // Events
 win
 .on( 'click', '.song', function(){
-  loadItem( $(this).data('index') );
+
+  if( !$(this).hasClass('active') ){
+    loadItem( $(this).data('index') );
+  }
+  
 })
 
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
