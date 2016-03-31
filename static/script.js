@@ -160,6 +160,7 @@ var list                = [];
 var clickInterval;
 var keyInterval;
 var appStarted          = false;
+var linkMode            = false;
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -179,12 +180,22 @@ var startApp = function( paramsAux ){
   $('.playlist-title').text( lang.playlist );
   audio.empty();
 
+  linkMode = false;
+  if( location.host.indexOf('file') !== -1 ){
+
+    linkMode=true;
+    console.log( paramsAux );
+    paramsAux.list = [paramsAux.data];
+    $('.wz-dragger').removeClass('wz-dragger');
+    $('.ui-close, .ui-minimize').addClass('inactive');
+
+  }
+
   var counter = 0;
 
   paramsAux.list.forEach( function( item, index ){
 
-
-    wz.fs( item, function( error, structure ){
+    api.fs( item, function( error, structure ){
 
       if( error ){
         return;
@@ -194,6 +205,8 @@ var startApp = function( paramsAux ){
 
         if( structure.id === paramsAux.data ){
           indexPlaying = playlist._list.length;
+        }else if( linkMode ){
+          indexPlaying = 0;
         }
 
         playlist.push( structure );
@@ -221,7 +234,7 @@ var startApp = function( paramsAux ){
 
 var addSong = function( id ){
 
-  wz.fs( id, function( error, song ){
+  api.fs( id, function( error, song ){
 
     if( error ){
       return;
@@ -381,7 +394,7 @@ win
   if( !$(this).hasClass('active') ){
     loadItem( $(this).data('index') );
   }
-  
+
 })
 
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
