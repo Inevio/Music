@@ -201,6 +201,7 @@ var list                = [];
 var clickInterval;
 var keyInterval;
 var appStarted          = false;
+var linkMode            = false;
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -220,9 +221,21 @@ var startApp = function( paramsAux ){
   $('.playlist-title').text( lang.playlist );
   audio.empty();
 
+  linkMode = false;
+
+  if( location.host.indexOf('file') !== -1 ){
+
+    linkMode = true;
+    console.log( paramsAux );
+    paramsAux.list = [paramsAux.data];
+    $('.wz-dragger').removeClass('wz-dragger');
+    $('.ui-header-buttons').remove();
+
+  }
+
   asyncEach( paramsAux.list, function( item, callback ){
 
-    wz.fs( item, function( error, structure ){
+    api.fs( item, function( error, structure ){
 
       if( error || VALID_MIMES.indexOf( structure.mime ) === -1 ){
         return callback();
@@ -230,6 +243,8 @@ var startApp = function( paramsAux ){
 
       if( structure.id === paramsAux.data ){
         indexPlaying = playlist._list.length;
+      }else if( linkMode ){
+        indexPlaying = 0;
       }
 
       structure.getFormats( function( error, formats ){
@@ -259,7 +274,7 @@ var startApp = function( paramsAux ){
 
 var addSong = function( id ){
 
-  wz.fs( id, function( error, song ){console.log(262);
+  api.fs( id, function( error, song ){
 
     if( error ){
       return;
@@ -419,7 +434,11 @@ var loadItem = function( index ){
 // Events
 win
 .on( 'click', '.song', function(){
-  loadItem( $(this).data('index') );
+
+  if( !$(this).hasClass('active') ){
+    loadItem( $(this).data('index') );
+  }
+
 })
 
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
