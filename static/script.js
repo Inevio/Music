@@ -97,7 +97,6 @@ Playlist.prototype.get = function( index ){
   }
 
   this._rebuild( this._randomEnabled ? 0 : index + 1 );
-
   this._lastId = index;
   this._played.push( this._lastId );
 
@@ -115,7 +114,7 @@ Playlist.prototype.next = function(){
 
   this._lastId = this._toPlay.shift();
   this._played.push( this._lastId );
-
+  
   return this._list[ this._lastId ];
 
 };
@@ -494,10 +493,8 @@ win
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
   clearInterval( emulatedSeekerTimer );
-
   emulatedSeekerTimer    = 0;
   audio[ 0 ].currentTime = emulatedSeekerTime;
-
   audio[ 0 ].play();
 
 })
@@ -518,9 +515,7 @@ win
   }
 
   longClick = false;
-
   clearInterval( clickInterval );
-
 
 })
 
@@ -540,7 +535,6 @@ win
   }
 
   longClick = false;
-
   clearInterval( clickInterval );
 
 })
@@ -646,7 +640,7 @@ win
 
   }
 
-  )
+)
 
 .key(
 
@@ -783,7 +777,6 @@ audio
     }
 
     var backWidth = musicBackprogress.width();
-
     musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
 
     if( !musicSeeker.hasClass('wz-drag-active') ){
