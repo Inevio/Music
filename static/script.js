@@ -505,7 +505,6 @@ win
 .on( 'mousedown', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
-    console.log('fast rewind click');
     audio[0].currentTime -= 10;
     longClick = true;
   } ,400)
@@ -528,7 +527,6 @@ win
 .on( 'mousedown', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
-    console.log('fast forward click');
     audio[0].currentTime += 10;
     longClick = true;
   } ,400)
@@ -587,7 +585,6 @@ win
 
       clearInterval( keyInterval );
       keyInterval = setInterval( function(){
-        console.log('fast forward key');
         audio[0].currentTime += 10;
         longKeypress = true;
       } ,500);
@@ -611,7 +608,6 @@ win
 
       clearInterval( keyInterval );
       keyInterval = setInterval( function(){
-        console.log('fast rewind key');
         audio[0].currentTime -= 10;
         longKeypress = true;
       } ,500);
@@ -692,7 +688,7 @@ audio
   var rem   = (time%3600);
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
-
+  console.log(this.duration);
 
   if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
@@ -701,23 +697,23 @@ audio
 
     if( 9 < hour ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+      musicCurrentTime.text('00:00:00');
+      weemusicTotalTime.text(hour+':'+min+':'+sec);
 
     }else if( 0 < hour && hour < 10 ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+      musicCurrentTime.text('0:00:00');
+      weemusicTotalTime.text(hour+':'+min+':'+sec);
 
     }else if( 9 < min ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+      musicCurrentTime.text('0:00');
+      weemusicTotalTime.text(min+':'+sec);
 
     }else{
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+      musicCurrentTime.text('0:00');
+      weemusicTotalTime.text(min+':'+sec);
 
     }
 
@@ -760,35 +756,42 @@ audio
 .on( 'timeupdate', function( e ){
 
   var time      = this.duration;
-  var totalHour = parseInt( time / 3600, 10 );
-  var rem       = time % 3600;
-  var totalMin  = parseInt( rem / 60, 10 );
+  if( !isNaN(time) ){
 
-  time     = this.currentTime;
-  var hour = parseInt( time / 3600, 10 );
+    var totalHour = parseInt( time / 3600, 10 );
+    var rem       = time % 3600;
+    var totalMin  = parseInt( rem / 60, 10 );
 
-  rem      = time % 3600;
-  var min  = parseInt( rem / 60, 10 );
-  var sec  = parseInt( rem % 60, 10 );
+    time     = this.currentTime;
+    console.log(time);
+    var hour = parseInt( time / 3600, 10 );
 
-  if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-  if( totalHour > 0 && min < 10 ){ min = '0' + min; }
-  if (sec < 10 ){ sec  = '0' + sec; }
+    rem      = time % 3600;
+    var min  = parseInt( rem / 60, 10 );
+    var sec  = parseInt( rem % 60, 10 );
 
-  if( totalHour ){
-    musicCurrentTime.text( hour + ':' + min + ':' + sec );
-  }else if( totalMin ){
-    musicCurrentTime.text( min + ':' + sec );
+    if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+    if( totalHour > 0 && min < 10 ){ min = '0' + min; }
+    if (sec < 10 ){ sec  = '0' + sec; }
+
+    if( totalHour ){
+      musicCurrentTime.text( hour + ':' + min + ':' + sec );
+    }else if( totalMin ){
+      musicCurrentTime.text( min + ':' + sec );
+    }else{
+      musicCurrentTime.text( '0:' + sec );
+    }
+
+    var backWidth = musicBackprogress.width();
+
+    musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
+
+    if( !musicSeeker.hasClass('wz-drag-active') ){
+      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
+    }
+
   }else{
-    musicCurrentTime.text( '0:' + sec );
-  }
-
-  var backWidth = musicBackprogress.width();
-
-  musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
-
-  if( !musicSeeker.hasClass('wz-drag-active') ){
-    musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
+    console.log(time);
   }
 
 })
