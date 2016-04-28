@@ -187,7 +187,7 @@ var startApp = function( paramsAux ){
     console.log( paramsAux );
     paramsAux.list = [paramsAux.data];
     $('.wz-dragger').removeClass('wz-dragger');
-    $('.ui-close, .ui-minimize').addClass('inactive');
+    $('.ui-header-buttons').remove();
 
   }
 
