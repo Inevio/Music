@@ -114,7 +114,7 @@ Playlist.prototype.next = function(){
 
   this._lastId = this._toPlay.shift();
   this._played.push( this._lastId );
-  
+
   return this._list[ this._lastId ];
 
 };
@@ -183,7 +183,6 @@ var startApp = function( paramsAux ){
   if( location.host.indexOf('file') !== -1 ){
 
     linkMode=true;
-    console.log( paramsAux );
     paramsAux.list = [paramsAux.data];
     $('.wz-dragger').removeClass('wz-dragger');
     $('.ui-header-buttons').remove();
@@ -251,7 +250,12 @@ var addSong = function( id ){
       songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
       songItem.data( 'index' , playlist._list.length - 1 );
 
-      var time = song.metadata.media.duration.seconds;
+      var time;
+      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
+        time = song.metadata.media.duration.seconds;
+      }else{
+        time = song.metadata.media.audio.duration.seconds;
+      }
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -304,7 +308,7 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
-    if( song && song.metadata && song.metadata.media && song.metadata.media.duration && song.metadata.media.duration.seconds ){
+    if( song && song.metadata && song.metadata.media  ){
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
@@ -314,7 +318,13 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
       songItem.data( 'index' , index );
 
-      var time = song.metadata.media.duration.seconds;
+      var time;
+      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
+        time = song.metadata.media.duration.seconds;
+      }else{
+        time = song.metadata.media.audio.duration.seconds;
+      }
+
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -362,8 +372,12 @@ var loadItem = function( index ){
   }
 
   audio.empty();
-  audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-  audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+  if( structure.formats.mpeg ){
+    audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
+  }
+  if( structure.formats.ogg ){
+    audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+  }
 
   musicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
 
@@ -682,7 +696,6 @@ audio
   var rem   = (time%3600);
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
-  console.log(this.duration);
 
   if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
@@ -757,7 +770,6 @@ audio
     var totalMin  = parseInt( rem / 60, 10 );
 
     time     = this.currentTime;
-    console.log(time);
     var hour = parseInt( time / 3600, 10 );
 
     rem      = time % 3600;
