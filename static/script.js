@@ -135,6 +135,7 @@ Playlist.prototype.prev = function(){
 // Variables
 var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg', 'audio/flac' ];
 var win                 = $( this );
+win.addClass('mobile');
 var audio               = $('audio');
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
