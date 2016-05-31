@@ -913,4 +913,57 @@ win.on( 'app-param', function( e, params ){
 
   });
 
+})
+
+.on('click', '.show-playlist , .show-playlist-down', function(){
+
+  $('.playlist-section').show();
+
+  $('.show-playlist , .show-playlist-down').transition({
+    'opacity' : 0
+  }, 500);
+
+  $('.song-thumbnail').transition({
+    'border-radius' : '0px'
+  }, 1000);
+
+  $('.song-info').transition({
+    'width' : '60px',
+    'height' : '60px',
+    'y' :  parseInt( win.css('height') ) - 60 + 'px'
+  }, 1000);
+
+  $('.control-panel-mobile').transition({
+    'height' : '60px'
+  }, 1000, function(){
+    $('.playlist-mode').addClass('active');
+  });
+
+
+})
+
+.on('click', '.playlist-mode .song-details', function(){
+
+  $('.playlist-mode').removeClass('active');
+
+  $('.show-playlist , .show-playlist-down').transition({
+    'opacity' : 1
+  }, 500);
+
+  $('.song-thumbnail').transition({
+    'border-radius' : '6px 6px 0 0'
+  }, 1000);
+
+  $('.song-info').transition({
+    'width' : '100%',
+    'height' : 'calc(100% - 226px)',
+    'y' :  '0px'
+  }, 1000);
+
+  $('.control-panel-mobile').transition({
+    'height' : '226px'
+  }, 1000, function(){
+    $('.playlist-section').hide();
+  });
+
 });
