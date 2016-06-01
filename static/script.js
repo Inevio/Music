@@ -926,14 +926,19 @@ win.on( 'app-param', function( e, params ){
   var scaleX = 60 / parseInt( $('.song-thumbnail').css('width') );
   var scaleY = 60 / parseInt( $('.song-thumbnail').css('height') );
   var newY = parseInt( win.css('height') ) - 60;
+  var newBorderRadius = '0px 0px 0px ' + parseInt(6 / scaleX) + 'px';
 
   $('.song-info').transition({
-    'border-radius' : '0px',
+    'border-radius' : newBorderRadius,
     'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
   }, 1000);
 
+  $('.song-thumbnail').transition({
+    'border-radius' : newBorderRadius
+  },1000);
+
   $('.control-panel-mobile').transition({
-    'opacity' : '0'
+    'height' : '60px'
   }, 1000, function(){
     $('.playlist-mode').addClass('active');
   });
@@ -948,6 +953,10 @@ win.on( 'app-param', function( e, params ){
   $('.show-playlist , .show-playlist-down').transition({
     'opacity' : 1
   }, 500);
+
+  $('.song-thumbnail').transition({
+    'border-radius' : '6px 6px 0px 0px'
+  },1000);
 
   $('.song-info').transition({
     'transform' : 'translate3d(0, 0, 0) scale(1)'
