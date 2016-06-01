@@ -923,18 +923,17 @@ win.on( 'app-param', function( e, params ){
     'opacity' : 0
   }, 500);
 
-  $('.song-thumbnail').transition({
-    'border-radius' : '0px'
-  }, 1000);
+  var scaleX = 60 / parseInt( $('.song-thumbnail').css('width') );
+  var scaleY = 60 / parseInt( $('.song-thumbnail').css('height') );
+  var newY = parseInt( win.css('height') ) - 60;
 
   $('.song-info').transition({
-    'width' : '60px',
-    'height' : '60px',
-    'y' :  parseInt( win.css('height') ) - 60 + 'px'
+    'border-radius' : '0px',
+    'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
   }, 1000);
 
   $('.control-panel-mobile').transition({
-    'height' : '60px'
+    'opacity' : '0'
   }, 1000, function(){
     $('.playlist-mode').addClass('active');
   });
@@ -950,14 +949,8 @@ win.on( 'app-param', function( e, params ){
     'opacity' : 1
   }, 500);
 
-  $('.song-thumbnail').transition({
-    'border-radius' : '6px 6px 0 0'
-  }, 1000);
-
   $('.song-info').transition({
-    'width' : '100%',
-    'height' : 'calc(100% - 226px)',
-    'y' :  '0px'
+    'transform' : 'translate3d(0, 0, 0) scale(1)'
   }, 1000);
 
   $('.control-panel-mobile').transition({

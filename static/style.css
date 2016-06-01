@@ -751,6 +751,7 @@
     position: absolute;
     transform: translate3d(0px, 0px, 0px);
     z-index: 1;
+    transform-origin: top left;
   }
 
   .song-info .song-details{
