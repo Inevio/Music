@@ -835,7 +835,6 @@
       float: left;
       margin-left: 60px;
       padding-left: 20px;
-      border-bottom: 2px solid #60b25e;
     }
 
     .play-button.play{
@@ -843,6 +842,20 @@
       padding: 0px;
       margin-right: 22px;
       margin-top: 16px;
+    }
+
+    .music-backprogress-mobile{
+      position: absolute;
+      width: ~'calc(100% - 130px)';
+      bottom: 0;
+      height: 2px;
+      margin-left: 60px;
+    }
+
+    .music-progress-mobile{
+      width: 0px;
+      height: 2px;
+      background-color: #60b25e;
     }
 
   }

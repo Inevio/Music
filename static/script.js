@@ -825,6 +825,11 @@ audio
     var backWidth = musicBackprogress.width();
     musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
 
+    if( mobile ){
+      var backWidth2 = $('.music-backprogress-mobile').width();
+      $('.music-progress-mobile').width( backWidth2 * ( this.currentTime / this.duration ) );
+    }
+
     if( !musicSeeker.hasClass('wz-drag-active') ){
       musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
     }
