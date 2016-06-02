@@ -135,17 +135,19 @@ Playlist.prototype.prev = function(){
 // Variables
 var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg', 'audio/flac' ];
 var win                 = $( this );
-var animationEffect  = 'cubic-bezier(.4,0,.2,1)';
-var animationEffect2 = 'cubic-bezier(.18,.48,.2,1)';
-var transition = false;
+var animationEffect     = 'cubic-bezier(.4,0,.2,1)';
+var animationEffect2    = 'cubic-bezier(.18,.48,.2,1)';
+var transition          = false;
+var musicTitle          = $('.song-title');
+var musicArtist         = $('.song-artist');
+
 
 var mobile = true;
-win.addClass('mobile');
 
 if( mobile ){
 
-  var musicTitle          = $('.control-panel-mobile .song-title');
-  var musicArtist         = $('.control-panel-mobile .song-artist');
+  win.addClass('mobile');
+
   var musicCurrentTime    = $('.control-panel-mobile .currentTime');
   var weemusicTotalTime   = $('.control-panel-mobile .totalTime');
   var musicProgress       = $('.control-panel-mobile .music-progress');
@@ -158,8 +160,6 @@ if( mobile ){
 
 }else{
 
-  var musicTitle          = $('.control-panel-desktop .song-title');
-  var musicArtist         = $('.control-panel-desktop .song-artist');
   var musicCurrentTime    = $('.control-panel-desktop .currentTime');
   var weemusicTotalTime   = $('.control-panel-desktop .totalTime');
   var musicProgress       = $('.control-panel-desktop .music-progress');
@@ -953,11 +953,11 @@ win.on( 'app-param', function( e, params ){
     },1000);
 
     $('.control-panel-mobile').transition({
-      'height' : '60px',
+      'y' : '166px',
       'background-color' : '#272d33'
     }, 1000, animationEffect);
 
-    $('.control-panel-mobile .time, .control-panel-mobile .song-details.tohide, .control-panel-mobile .play-buttons').transition({
+    $('.control-panel-mobile section').transition({
       'opacity' : 0
     }, 1000);
 
@@ -989,13 +989,13 @@ win.on( 'app-param', function( e, params ){
     }, 1000, animationEffect);
 
     $('.control-panel-mobile').transition({
-      'height' : '226px',
+      'y' : '0',
       'background-color' : '#3f4750'
     }, 1000, animationEffect, function(){
       $('.playlist-section').hide();
     });
 
-    $('.control-panel-mobile .time, .control-panel-mobile .song-details.tohide, .control-panel-mobile .play-buttons').transition({
+    $('.control-panel-mobile section').transition({
       'opacity' : 1
     }, 1000, function(){
       transition = false;
