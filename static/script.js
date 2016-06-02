@@ -135,6 +135,10 @@ Playlist.prototype.prev = function(){
 // Variables
 var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg', 'audio/flac' ];
 var win                 = $( this );
+var animationEffect  = 'cubic-bezier(.4,0,.2,1)';
+var animationEffect2 = 'cubic-bezier(.18,.48,.2,1)';
+var transition = false;
+
 var mobile = true;
 win.addClass('mobile');
 
@@ -917,55 +921,86 @@ win.on( 'app-param', function( e, params ){
 
 .on('click', '.show-playlist , .show-playlist-down', function(){
 
-  $('.playlist-section').show();
+  if( !transition ){
 
-  $('.show-playlist , .show-playlist-down').transition({
-    'opacity' : 0
-  }, 500);
+    transition = true;
+    $('.playlist-section').show();
 
-  var scaleX = 60 / parseInt( $('.song-thumbnail').css('width') );
-  var scaleY = 60 / parseInt( $('.song-thumbnail').css('height') );
-  var newY = parseInt( win.css('height') ) - 60;
-  var newBorderRadius = '0px 0px 0px ' + parseInt(6 / scaleX) + 'px';
+    $('.show-playlist , .show-playlist-down').transition({
+      'opacity' : 0
+    }, 500, function(){
 
-  $('.song-info').transition({
-    'border-radius' : newBorderRadius,
-    'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
-  }, 1000);
+      $('.playlist-mode').show().transition({
+        'opacity' : 1
+      },500);
 
-  $('.song-thumbnail').transition({
-    'border-radius' : newBorderRadius
-  },1000);
+    });
 
-  $('.control-panel-mobile').transition({
-    'height' : '60px'
-  }, 1000, function(){
-    $('.playlist-mode').addClass('active');
-  });
+    var scaleX = 60 / parseInt( $('.song-thumbnail').css('width') );
+    var scaleY = 60 / parseInt( $('.song-thumbnail').css('height') );
+    var newY = parseInt( win.css('height') ) - 60;
+    var newBorderRadius = '0px 0px 0px ' + parseInt(6 / scaleX) + 'px';
 
+    $('.song-info').transition({
+      'border-radius' : newBorderRadius,
+      'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
+    }, 1000, animationEffect, function(){
+      transition = false;
+    });
+
+    $('.song-thumbnail').transition({
+      'border-radius' : newBorderRadius
+    },1000);
+
+    $('.control-panel-mobile').transition({
+      'height' : '60px',
+      'background-color' : '#272d33'
+    }, 1000, animationEffect);
+
+    $('.control-panel-mobile .time, .control-panel-mobile .song-details.tohide, .control-panel-mobile .play-buttons').transition({
+      'opacity' : 0
+    }, 1000);
+
+  }
 
 })
 
 .on('click', '.playlist-mode .song-details', function(){
 
-  $('.playlist-mode').removeClass('active');
+  if( !transition ){
 
-  $('.show-playlist , .show-playlist-down').transition({
-    'opacity' : 1
-  }, 500);
+    transition = true;
+    $('.show-playlist , .show-playlist-down').transition({
+      'opacity' : 1
+    }, 500);
 
-  $('.song-thumbnail').transition({
-    'border-radius' : '6px 6px 0px 0px'
-  },1000);
+    $('.playlist-mode').transition({
+      'opacity' : 0
+    },500, function(){
+      $(this).hide();
+    });
 
-  $('.song-info').transition({
-    'transform' : 'translate3d(0, 0, 0) scale(1)'
-  }, 1000);
+    $('.song-thumbnail').transition({
+      'border-radius' : '6px 6px 0px 0px'
+    },1000);
 
-  $('.control-panel-mobile').transition({
-    'height' : '226px'
-  }, 1000, function(){
-    $('.playlist-section').hide();
-  });
+    $('.song-info').transition({
+      'transform' : 'translate3d(0, 0, 0) scale(1)'
+    }, 1000, animationEffect);
+
+    $('.control-panel-mobile').transition({
+      'height' : '226px',
+      'background-color' : '#3f4750'
+    }, 1000, animationEffect, function(){
+      $('.playlist-section').hide();
+    });
+
+    $('.control-panel-mobile .time, .control-panel-mobile .song-details.tohide, .control-panel-mobile .play-buttons').transition({
+      'opacity' : 1
+    }, 1000, function(){
+      transition = false;
+    });
+
+  }
 
 });
