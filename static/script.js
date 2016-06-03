@@ -142,7 +142,7 @@ var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
 
 
-var mobile = true;
+var mobile = false;
 
 if( mobile ){
 
