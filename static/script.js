@@ -885,10 +885,8 @@ audio
 
 win.on( 'app-param', function( e, params ){
 
-  /*if( params && params.command === 'openFile' && !appStarted ){
+  if( params && params.command === 'openFile' && !appStarted ){
 
-    params.data = 2318758;
-    params.list = [2318757,2318758,2318759,2318761];
     startApp( params );
 
   }else if( params && params.command === 'openFile' && appStarted ){
@@ -900,7 +898,7 @@ win.on( 'app-param', function( e, params ){
       startApp( params );
     }
 
-  }*/
+  }
 
 })
 
@@ -1011,8 +1009,3 @@ win.on( 'app-param', function( e, params ){
   }
 
 });
-
-var params = {};
-params.data = 2318758;
-params.list = [2318757,2318758,2318759,2318761];
-startApp( params );
