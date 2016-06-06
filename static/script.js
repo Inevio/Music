@@ -138,7 +138,6 @@ Playlist.prototype.get = function( index ){
   }
 
   this._rebuild( this._randomEnabled ? 0 : index + 1 );
-
   this._lastId = index;
   this._played.push( this._lastId );
 
@@ -177,18 +176,45 @@ Playlist.prototype.prev = function(){
 // Variables
 var VALID_MIMES         = [ 'audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/x-vorbis+ogg', 'audio/flac' ];
 var win                 = $( this );
-var audio               = $('audio');
+var animationEffect     = 'cubic-bezier(.4,0,.2,1)';
+var animationEffect2    = 'cubic-bezier(.18,.48,.2,1)';
+var transition          = false;
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
-var musicCurrentTime    = $('.currentTime');
-var weemusicTotalTime   = $('.totalTime');
-var musicProgress       = $('.music-progress');
-var musicBackprogress   = $('.music-backprogress');
-var musicBufferprogress = $('.music-buffer');
-var musicSeeker         = $('.music-time-seeker');
-var musicVolume         = $('.music-volume-current');
-var musicMaxVolume      = $('.music-volume-max');
-var musicVolumeSeeker   = $('.music-volume-seeker');
+
+
+var mobile = false;
+
+if( mobile ){
+
+  win.addClass('mobile');
+
+  var musicCurrentTime    = $('.control-panel-mobile .currentTime');
+  var weemusicTotalTime   = $('.control-panel-mobile .totalTime');
+  var musicProgress       = $('.control-panel-mobile .music-progress');
+  var musicBackprogress   = $('.control-panel-mobile .music-backprogress');
+  var musicBufferprogress = $('.control-panel-mobile .music-buffer');
+  var musicSeeker         = $('.control-panel-mobile .music-time-seeker');
+  var musicVolume         = $('.control-panel-mobile .music-volume-current');
+  var musicMaxVolume      = $('.control-panel-mobile .music-volume-max');
+  var musicVolumeSeeker   = $('.control-panel-mobile .music-volume-seeker');
+
+}else{
+
+  var musicCurrentTime    = $('.control-panel-desktop .currentTime');
+  var weemusicTotalTime   = $('.control-panel-desktop .totalTime');
+  var musicProgress       = $('.control-panel-desktop .music-progress');
+  var musicBackprogress   = $('.control-panel-desktop .music-backprogress');
+  var musicBufferprogress = $('.control-panel-desktop .music-buffer');
+  var musicSeeker         = $('.control-panel-desktop .music-time-seeker');
+  var musicVolume         = $('.control-panel-desktop .music-volume-current');
+  var musicMaxVolume      = $('.control-panel-desktop .music-volume-max');
+  var musicVolumeSeeker   = $('.control-panel-desktop .music-volume-seeker');
+
+}
+
+var audio               = $('audio');
+
 var songThumbnail       = $('.song-thumbnail');
 var playListDom         = $('.playlist');
 var songPrototype       = $('.playlist .song.wz-prototype');
@@ -226,7 +252,7 @@ var startApp = function( paramsAux ){
   if( location.host.indexOf('file') !== -1 ){
 
     linkMode = true;
-    console.log( paramsAux );
+
     paramsAux.list = [paramsAux.data];
     $('.wz-dragger').removeClass('wz-dragger');
     $('.ui-header-buttons').remove();
@@ -292,7 +318,12 @@ var addSong = function( id ){
       songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
       songItem.data( 'index' , playlist._list.length - 1 );
 
-      var time = song.metadata.media.duration.seconds;
+      var time;
+      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
+        time = song.metadata.media.duration.seconds;
+      }else{
+        time = song.metadata.media.audio.duration.seconds;
+      }
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -345,11 +376,15 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
+<<<<<<< HEAD
     var metadata = song.formats.original.metadata;
 
     console.log( metadata );
 
     if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
+=======
+    if( song && song.metadata && song.metadata.media  ){
+>>>>>>> master
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
@@ -359,7 +394,17 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
       songItem.data( 'index' , index );
 
+<<<<<<< HEAD
       var time = metadata.media.duration.seconds;
+=======
+      var time;
+      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
+        time = song.metadata.media.duration.seconds;
+      }else{
+        time = song.metadata.media.audio.duration.seconds;
+      }
+
+>>>>>>> master
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -407,8 +452,17 @@ var loadItem = function( index ){
   }
 
   audio.empty();
+<<<<<<< HEAD
   audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );
+=======
+  if( structure.formats.mpeg ){
+    audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
+  }
+  if( structure.formats.ogg ){
+    audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
+  }
+>>>>>>> master
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
@@ -467,37 +521,37 @@ win
 
   musicProgress.css( 'width', posX * musicBackprogress.width() );
 
-    /*
-     * Como cambiar el currentTime de un elemento es un proceso costoso
-     * para el procesador, emulamos ese proceso
-     */
-     emulatedSeekerTime = audio[ 0 ].duration * posX;
+  /*
+   * Como cambiar el currentTime de un elemento es un proceso costoso
+   * para el procesador, emulamos ese proceso
+   */
+   emulatedSeekerTime = audio[ 0 ].duration * posX;
 
-     var time      = audio[ 0 ].duration;
-     var totalHour = parseInt( time / 3600, 10 );
-     var rem       = time % 3600;
-     var totalMin  = parseInt( rem / 60, 10 );
+   var time      = audio[ 0 ].duration;
+   var totalHour = parseInt( time / 3600, 10 );
+   var rem       = time % 3600;
+   var totalMin  = parseInt( rem / 60, 10 );
 
-     time     = emulatedSeekerTime;
-     var hour = parseInt( time / 3600, 10 );
+   time     = emulatedSeekerTime;
+   var hour = parseInt( time / 3600, 10 );
 
-     rem     = ( time % 3600 );
-     var min = parseInt( rem / 60, 10 );
-     var sec = parseInt( rem % 60, 10 );
+   rem     = ( time % 3600 );
+   var min = parseInt( rem / 60, 10 );
+   var sec = parseInt( rem % 60, 10 );
 
-     if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-     if( totalHour > 0 && min < 10 ){ min = '0' + min; }
-     if( sec < 10 ){ sec  = '0' + sec; }
+   if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+   if( totalHour > 0 && min < 10 ){ min = '0' + min; }
+   if( sec < 10 ){ sec  = '0' + sec; }
 
-     if( totalHour ){
-      musicCurrentTime.text( hour + ':' + min + ':' + sec );
-    }else if( totalMin ){
-      musicCurrentTime.text( min + ':' + sec );
-    }else{
-      musicCurrentTime.text( '0:' + sec );
-    }
+   if( totalHour ){
+    musicCurrentTime.text( hour + ':' + min + ':' + sec );
+  }else if( totalMin ){
+    musicCurrentTime.text( min + ':' + sec );
+  }else{
+    musicCurrentTime.text( '0:' + sec );
+  }
 
-  })
+})
 
 .on( 'mousedown', '.play-button.play', function(){
 
@@ -519,7 +573,7 @@ win
 
 })
 
-.on( 'click', '.more-options .random', function(){
+.on( 'click', '.random', function(){
 
   if( win.hasClass('random') ){
 
@@ -538,10 +592,8 @@ win
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
   clearInterval( emulatedSeekerTimer );
-
   emulatedSeekerTimer    = 0;
   audio[ 0 ].currentTime = emulatedSeekerTime;
-
   audio[ 0 ].play();
 
 })
@@ -549,7 +601,6 @@ win
 .on( 'mousedown', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
-    console.log('fast rewind click');
     audio[0].currentTime -= 10;
     longClick = true;
   } ,400)
@@ -563,16 +614,13 @@ win
   }
 
   longClick = false;
-
   clearInterval( clickInterval );
-
 
 })
 
 .on( 'mousedown', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
-    console.log('fast forward click');
     audio[0].currentTime += 10;
     longClick = true;
   } ,400)
@@ -586,12 +634,11 @@ win
   }
 
   longClick = false;
-
   clearInterval( clickInterval );
 
 })
 
-.on( 'mousedown', '.more-options .repeat', function(){
+.on( 'mousedown', '.repeat', function(){
 
   if( win.hasClass('repeat') ){
 
@@ -631,7 +678,6 @@ win
 
       clearInterval( keyInterval );
       keyInterval = setInterval( function(){
-        console.log('fast forward key');
         audio[0].currentTime += 10;
         longKeypress = true;
       } ,500);
@@ -655,7 +701,6 @@ win
 
       clearInterval( keyInterval );
       keyInterval = setInterval( function(){
-        console.log('fast rewind key');
         audio[0].currentTime -= 10;
         longKeypress = true;
       } ,500);
@@ -694,7 +739,7 @@ win
 
   }
 
-  )
+)
 
 .key(
 
@@ -737,40 +782,46 @@ audio
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
 
-
   if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
 
-    //musicBackprogress.transition({'opacity':'1'},250);
+  //musicBackprogress.transition({'opacity':'1'},250);
 
-    if( 9 < hour ){
+  if( 9 < hour ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('00:00:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+    musicCurrentTime.text('00:00:00');
+    weemusicTotalTime.text(hour+':'+min+':'+sec);
 
-    }else if( 0 < hour && hour < 10 ){
+  }else if( 0 < hour && hour < 10 ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(hour+':'+min+':'+sec);
+    musicCurrentTime.text('0:00:00');
+    weemusicTotalTime.text(hour+':'+min+':'+sec);
 
-    }else if( 9 < min ){
+  }else if( 9 < min ){
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+    musicCurrentTime.text('0:00');
+    weemusicTotalTime.text(min+':'+sec);
 
-    }else{
+  }else{
 
-      musicCurrentTime/*.transition({'opacity':'1'},250)*/.text('0:00');
-      weemusicTotalTime/*.transition({'opacity':'1'},250)*/.text(min+':'+sec);
+    musicCurrentTime.text('0:00');
+    weemusicTotalTime.text(min+':'+sec);
 
-    }
+  }
 
-    musicVolumeSeeker.addClass('wz-dragger-x');
-    musicSeeker.addClass('wz-dragger-x');
+  musicVolumeSeeker.addClass('wz-dragger-x');
+  musicSeeker.addClass('wz-dragger-x');
 
-    audio[ 0 ].play();
+  if( mobile ){
 
-  })
+    var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
+    musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
+
+  }
+
+  audio[ 0 ].play();
+
+})
 
 .on('play',function(){
   win.addClass('playing');
@@ -804,35 +855,45 @@ audio
 .on( 'timeupdate', function( e ){
 
   var time      = this.duration;
-  var totalHour = parseInt( time / 3600, 10 );
-  var rem       = time % 3600;
-  var totalMin  = parseInt( rem / 60, 10 );
+  if( !isNaN(time) ){
 
-  time     = this.currentTime;
-  var hour = parseInt( time / 3600, 10 );
+    var totalHour = parseInt( time / 3600, 10 );
+    var rem       = time % 3600;
+    var totalMin  = parseInt( rem / 60, 10 );
 
-  rem      = time % 3600;
-  var min  = parseInt( rem / 60, 10 );
-  var sec  = parseInt( rem % 60, 10 );
+    time     = this.currentTime;
+    var hour = parseInt( time / 3600, 10 );
 
-  if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-  if( totalHour > 0 && min < 10 ){ min = '0' + min; }
-  if (sec < 10 ){ sec  = '0' + sec; }
+    rem      = time % 3600;
+    var min  = parseInt( rem / 60, 10 );
+    var sec  = parseInt( rem % 60, 10 );
 
-  if( totalHour ){
-    musicCurrentTime.text( hour + ':' + min + ':' + sec );
-  }else if( totalMin ){
-    musicCurrentTime.text( min + ':' + sec );
+    if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
+    if( totalHour > 0 && min < 10 ){ min = '0' + min; }
+    if (sec < 10 ){ sec  = '0' + sec; }
+
+    if( totalHour ){
+      musicCurrentTime.text( hour + ':' + min + ':' + sec );
+    }else if( totalMin ){
+      musicCurrentTime.text( min + ':' + sec );
+    }else{
+      musicCurrentTime.text( '0:' + sec );
+    }
+
+    var backWidth = musicBackprogress.width();
+    musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
+
+    if( mobile ){
+      var backWidth2 = $('.music-backprogress-mobile').width();
+      $('.music-progress-mobile').width( backWidth2 * ( this.currentTime / this.duration ) );
+    }
+
+    if( !musicSeeker.hasClass('wz-drag-active') ){
+      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
+    }
+
   }else{
-    musicCurrentTime.text( '0:' + sec );
-  }
-
-  var backWidth = musicBackprogress.width();
-
-  musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
-
-  if( !musicSeeker.hasClass('wz-drag-active') ){
-    musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
+    console.log(time);
   }
 
 })
@@ -918,5 +979,91 @@ win.on( 'app-param', function( e, params ){
     }
 
   });
+
+})
+
+.on('click', '.show-playlist , .show-playlist-down', function(){
+
+  if( !transition ){
+
+    transition = true;
+    $('.playlist-section').show();
+
+    $('.show-playlist , .show-playlist-down').transition({
+      'opacity' : 0
+    }, 500, function(){
+
+      $('.playlist-mode').show().transition({
+        'opacity' : 1
+      },500);
+
+    });
+
+    var scaleX = 60 / parseInt( $('.song-thumbnail').css('width') );
+    var scaleY = 60 / parseInt( $('.song-thumbnail').css('height') );
+    var newY = parseInt( win.css('height') ) - 60;
+    var newBorderRadius = '0px 0px 0px ' + parseInt(6 / scaleX) + 'px';
+
+    $('.song-info').transition({
+      'border-radius' : newBorderRadius,
+      'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
+    }, 1000, animationEffect, function(){
+      transition = false;
+    });
+
+    $('.song-thumbnail').transition({
+      'border-radius' : newBorderRadius
+    },1000);
+
+    $('.control-panel-mobile').transition({
+      'y' : '166px',
+      'background-color' : '#272d33'
+    }, 1000, animationEffect);
+
+    $('.control-panel-mobile section').transition({
+      'opacity' : 0
+    }, 1000);
+
+  }
+
+})
+
+.on('click', '.playlist-mode .song-details', function(){
+
+  if( !transition ){
+
+    transition = true;
+    $('.show-playlist , .show-playlist-down').transition({
+      'opacity' : 1
+    }, 500);
+
+    $('.playlist-mode').transition({
+      'opacity' : 0
+    },500, function(){
+      $(this).hide();
+    });
+
+    $('.song-thumbnail').transition({
+      'border-radius' : '0px'
+    },1000);
+
+    $('.song-info').transition({
+      'transform' : 'translate3d(0, 0, 0) scale(1)'
+    }, 1000, animationEffect);
+
+    $('.control-panel-mobile').transition({
+      'y' : '0',
+      'background-color' : '#3f4750'
+    }, 1000, animationEffect, function(){
+      $('.playlist-section').hide();
+    });
+
+    $('.control-panel-mobile section').transition({
+      'opacity' : 1
+    }, 1000, function(){
+      transition = false;
+    });
+
+  }
 
 });
