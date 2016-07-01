@@ -421,7 +421,9 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
+  if(song[0]){
+    playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
+  }
 
   indexPlaying = index;
 
