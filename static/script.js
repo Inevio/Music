@@ -496,7 +496,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.play', function(){
+.on( 'click', '.play-button.play', function(){
 
   if( win.hasClass('playing') ){
     audio[0].pause();
@@ -506,7 +506,7 @@ win
 
 })
 
-.on( 'mousedown', '.volume-icon', function(){
+.on( 'mousedown touchstart', '.volume-icon', function(){
 
   if( win.hasClass('muted') ){
     audio[ 0 ].muted = false;
@@ -541,7 +541,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.rewind', function(e){
+.on( 'mousedown touchstart', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime -= 10;
@@ -550,7 +550,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.rewind', function(e){
+.on( 'mouseup touchend', '.play-button.rewind', function(e){
 
   if( !longClick ){
     loadItem( -1 );
@@ -561,7 +561,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.forward', function(e){
+.on( 'mousedown touchstart', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime += 10;
@@ -570,7 +570,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.forward', function(e){
+.on( 'mouseup touchend', '.play-button.forward', function(e){
 
   if( !longClick ){
     loadItem();
@@ -581,7 +581,7 @@ win
 
 })
 
-.on( 'mousedown', '.repeat', function(){
+.on( 'click', '.repeat', function(){
 
   if( win.hasClass('repeat') ){
 
@@ -1010,6 +1010,8 @@ win.on( 'app-param', function( e, params ){
   }
 
 });
+
+console.log($.support.touch);
 
 var params = {};
 params.data = 2318758;
