@@ -141,8 +141,7 @@ var transition          = false;
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
 
-
-var mobile = false;
+var mobile = win.hasClass('mobile');
 
 if( mobile ){
 
@@ -605,7 +604,7 @@ win
 
 })
 
-.key('space', function(){
+/*.key('space', function(){
 
   if( win.hasClass('playing') ){
     audio[ 0 ].pause();
@@ -715,7 +714,7 @@ win
   function(){ audio[ 0 ].currentTime = 0; },
   function(){ audio[ 0 ].currentTime = 0; }
 
-  );
+);*/
 
 audio
 .on('durationchange', function(){
@@ -1011,3 +1010,8 @@ win.on( 'app-param', function( e, params ){
   }
 
 });
+
+var params = {};
+params.data = 2318758;
+params.list = [2318757,2318758,2318759,2318761];
+startApp( params );
