@@ -663,6 +663,7 @@
       font-weight: bold;
       color: #ffffff;
       line-height: 1.1em;
+      max-width: ~'calc(100% - 20px)';
     }
 
     .divider{

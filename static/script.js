@@ -1014,6 +1014,6 @@ win.on( 'app-param', function( e, params ){
 console.log($.support.touch);
 
 var params = {};
-params.data = 2318758;
-params.list = [2318757,2318758,2318759,2318761];
+params.data = 2288991;
+params.list = [2288991,2288996,2288994,2288995,2288989,2288998];
 startApp( params );
