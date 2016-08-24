@@ -141,7 +141,7 @@ var transition          = false;
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
 
-var mobile = win.hasClass('mobile');
+var mobile = win.hasClass('wz-mobile-view');
 
 if( mobile ){
 

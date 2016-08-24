@@ -542,7 +542,7 @@
   background-position: -222px 0px;
 }
 
-.wz-view.mobile{
+.wz-view.wz-mobile-view{
 
   border-radius: 0px;
 
@@ -664,6 +664,7 @@
       color: #ffffff;
       line-height: 1.1em;
       max-width: ~'calc(100% - 20px)';
+      margin: 0 auto;
     }
 
     .divider{
