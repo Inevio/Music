@@ -1,5 +1,7 @@
-background: #3f4750 !important;
-border-radius: 6px;
+.wz-view{
+  background: #3f4750;
+  border-radius: 6px;
+}
 
 .ui-header{
   height: 50px;
@@ -542,6 +544,7 @@ border-radius: 6px;
 .wz-view.wz-mobile-view{
 
   border-radius: 0px;
+  background: #3f4750 !important;
 
   .ui-header{
     margin-bottom: 3px;
