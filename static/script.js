@@ -376,15 +376,11 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
-<<<<<<< HEAD
     var metadata = song.formats.original.metadata;
 
     console.log( metadata );
 
     if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
-=======
-    if( song && song.metadata && song.metadata.media  ){
->>>>>>> master
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
@@ -394,17 +390,7 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
       songItem.data( 'index' , index );
 
-<<<<<<< HEAD
       var time = metadata.media.duration.seconds;
-=======
-      var time;
-      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
-        time = song.metadata.media.duration.seconds;
-      }else{
-        time = song.metadata.media.audio.duration.seconds;
-      }
-
->>>>>>> master
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -452,17 +438,8 @@ var loadItem = function( index ){
   }
 
   audio.empty();
-<<<<<<< HEAD
   audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );
-=======
-  if( structure.formats.mpeg ){
-    audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-  }
-  if( structure.formats.ogg ){
-    audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
-  }
->>>>>>> master
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
@@ -945,6 +922,9 @@ win.on( 'app-param', function( e, params ){
 
   if( params && params.command === 'openFile' && !appStarted ){
 
+    if( params.list.length == 0 ){
+      params.list = [params.data];
+    }
     startApp( params );
 
   }else if( params && params.command === 'openFile' && appStarted ){
