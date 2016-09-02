@@ -888,6 +888,9 @@ win.on( 'app-param', function( e, params ){
 
   if( params && params.command === 'openFile' && !appStarted ){
 
+    if( params.list.length == 0 ){
+      params.list = [params.data];
+    }
     startApp( params );
 
   }else if( params && params.command === 'openFile' && appStarted ){
@@ -1010,10 +1013,3 @@ win.on( 'app-param', function( e, params ){
   }
 
 });
-
-console.log($.support.touch);
-
-var params = {};
-params.data = 2288991;
-params.list = [2288991,2288996,2288994,2288995,2288989,2288998];
-startApp( params );
