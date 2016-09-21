@@ -141,8 +141,7 @@ var transition          = false;
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
 
-
-var mobile = false;
+var mobile = win.hasClass('wz-mobile-view');
 
 if( mobile ){
 
@@ -421,7 +420,9 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
+  if(song[0]){
+    playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
+  }
 
   indexPlaying = index;
 
@@ -495,7 +496,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.play', function(){
+.on( 'click', '.play-button.play', function(){
 
   if( win.hasClass('playing') ){
     audio[0].pause();
@@ -505,7 +506,7 @@ win
 
 })
 
-.on( 'mousedown', '.volume-icon', function(){
+.on( 'mousedown touchstart', '.volume-icon', function(){
 
   if( win.hasClass('muted') ){
     audio[ 0 ].muted = false;
@@ -540,7 +541,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.rewind', function(e){
+.on( 'mousedown touchstart', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime -= 10;
@@ -549,7 +550,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.rewind', function(e){
+.on( 'mouseup touchend', '.play-button.rewind', function(e){
 
   if( !longClick ){
     loadItem( -1 );
@@ -560,7 +561,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.forward', function(e){
+.on( 'mousedown touchstart', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime += 10;
@@ -569,7 +570,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.forward', function(e){
+.on( 'mouseup touchend', '.play-button.forward', function(e){
 
   if( !longClick ){
     loadItem();
@@ -580,7 +581,7 @@ win
 
 })
 
-.on( 'mousedown', '.repeat', function(){
+.on( 'click', '.repeat', function(){
 
   if( win.hasClass('repeat') ){
 
@@ -613,9 +614,7 @@ win
 
 })
 
-.key(
-
-  'right',
+.key('right',
     function(){
 
       clearInterval( keyInterval );
@@ -636,9 +635,7 @@ win
 
 )
 
-.key(
-
-  'left',
+.key('left',
     function(){
 
       clearInterval( keyInterval );
@@ -659,9 +656,7 @@ win
 
 )
 
-.key(
-
-  'up',
+.key('up',
   function(){
 
     if( ( audio[ 0 ].volume + 0.1 ) < 1){
@@ -683,9 +678,7 @@ win
 
 )
 
-.key(
-
-  'down',
+.key('down',
   function(){
 
     if( ( audio[ 0 ].volume - 0.1 ) > 0){
@@ -707,13 +700,11 @@ win
 
   )
 
-.key(
-
-  'backspace',
+.key('backspace',
   function(){ audio[ 0 ].currentTime = 0; },
   function(){ audio[ 0 ].currentTime = 0; }
 
-  );
+);
 
 audio
 .on('durationchange', function(){
@@ -887,6 +878,9 @@ win.on( 'app-param', function( e, params ){
 
   if( params && params.command === 'openFile' && !appStarted ){
 
+    if( params.list.length == 0 ){
+      params.list = [params.data];
+    }
     startApp( params );
 
   }else if( params && params.command === 'openFile' && appStarted ){
