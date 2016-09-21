@@ -604,7 +604,7 @@ win
 
 })
 
-/*.key('space', function(){
+.key('space', function(){
 
   if( win.hasClass('playing') ){
     audio[ 0 ].pause();
@@ -614,9 +614,7 @@ win
 
 })
 
-.key(
-
-  'right',
+.key('right',
     function(){
 
       clearInterval( keyInterval );
@@ -637,9 +635,7 @@ win
 
 )
 
-.key(
-
-  'left',
+.key('left',
     function(){
 
       clearInterval( keyInterval );
@@ -660,9 +656,7 @@ win
 
 )
 
-.key(
-
-  'up',
+.key('up',
   function(){
 
     if( ( audio[ 0 ].volume + 0.1 ) < 1){
@@ -684,9 +678,7 @@ win
 
 )
 
-.key(
-
-  'down',
+.key('down',
   function(){
 
     if( ( audio[ 0 ].volume - 0.1 ) > 0){
@@ -708,13 +700,11 @@ win
 
   )
 
-.key(
-
-  'backspace',
+.key('backspace',
   function(){ audio[ 0 ].currentTime = 0; },
   function(){ audio[ 0 ].currentTime = 0; }
 
-);*/
+);
 
 audio
 .on('durationchange', function(){
