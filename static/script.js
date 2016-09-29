@@ -944,6 +944,7 @@ win.on( 'app-param', function( e, params ){
       'border-radius' : newBorderRadius,
       'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
     }, 1000, animationEffect, function(){
+      $(this).addClass('in-playlist');
       transition = false;
     });
 
@@ -954,7 +955,9 @@ win.on( 'app-param', function( e, params ){
     $('.control-panel-mobile').transition({
       'y' : '166px',
       'background-color' : '#272d33'
-    }, 1000, animationEffect);
+    }, 1000, animationEffect, function(){
+      $(this).hide();
+    });
 
     $('.control-panel-mobile section').transition({
       'opacity' : 0
@@ -964,7 +967,7 @@ win.on( 'app-param', function( e, params ){
 
 })
 
-.on('click', '.playlist-mode .song-details', function(){
+.on('click', '.playlist-mode .song-details, .song-info.in-playlist', function(){
 
   if( !transition ){
 
@@ -985,9 +988,11 @@ win.on( 'app-param', function( e, params ){
 
     $('.song-info').transition({
       'transform' : 'translate3d(0, 0, 0) scale(1)'
-    }, 1000, animationEffect);
+    }, 1000, animationEffect, function(){
+      $(this).removeClass('in-playlist');
+    });
 
-    $('.control-panel-mobile').transition({
+    $('.control-panel-mobile').show().transition({
       'y' : '0',
       'background-color' : '#3f4750'
     }, 1000, animationEffect, function(){

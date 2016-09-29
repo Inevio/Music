@@ -568,7 +568,9 @@
 
   .playlist-section .playlist{
     width: 100%;
-    height: ~'calc(100% - 51px)';
+    height: ~'calc(100% - 114px)';
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .playlist-section .playlist-title{
