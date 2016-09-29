@@ -944,6 +944,7 @@ win.on( 'app-param', function( e, params ){
       'border-radius' : newBorderRadius,
       'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
     }, 1000, animationEffect, function(){
+      $(this).addClass('in-playlist');
       transition = false;
     });
 
@@ -964,7 +965,7 @@ win.on( 'app-param', function( e, params ){
 
 })
 
-.on('click', '.playlist-mode .song-details', function(){
+.on('click', '.playlist-mode .song-details, .song-info.in-playlist', function(){
 
   if( !transition ){
 
@@ -985,7 +986,9 @@ win.on( 'app-param', function( e, params ){
 
     $('.song-info').transition({
       'transform' : 'translate3d(0, 0, 0) scale(1)'
-    }, 1000, animationEffect);
+    }, 1000, animationEffect, function(){
+      $(this).removeClass('in-playlist');
+    });
 
     $('.control-panel-mobile').transition({
       'y' : '0',
