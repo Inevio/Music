@@ -1,7 +1,6 @@
-
 .wz-view{
-    background: #3f4750;
-    border-radius: 6px;
+  background: #3f4750;
+  border-radius: 6px;
 }
 
 .ui-header{
@@ -55,7 +54,7 @@
   height: 100%;
   display: inline-block;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: 50% 50%, 50% 50%;
 }
 
 .song-info .song-details{
@@ -542,9 +541,10 @@
   background-position: -222px 0px;
 }
 
-.wz-view.mobile{
+.wz-view.wz-mobile-view{
 
   border-radius: 0px;
+  background: #3f4750 !important;
 
   .ui-header{
     margin-bottom: 3px;
@@ -568,7 +568,9 @@
 
   .playlist-section .playlist{
     width: 100%;
-    height: ~'calc(100% - 51px)';
+    height: ~'calc(100% - 114px)';
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .playlist-section .playlist-title{
@@ -663,6 +665,8 @@
       font-weight: bold;
       color: #ffffff;
       line-height: 1.1em;
+      max-width: ~'calc(100% - 20px)';
+      margin: 0 auto;
     }
 
     .divider{

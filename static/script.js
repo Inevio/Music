@@ -182,8 +182,7 @@ var transition          = false;
 var musicTitle          = $('.song-title');
 var musicArtist         = $('.song-artist');
 
-
-var mobile = false;
+var mobile = win.hasClass('wz-mobile-view');
 
 if( mobile ){
 
@@ -315,7 +314,7 @@ var addSong = function( id ){
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
       songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
-      songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , playlist._list.length - 1 );
 
       var time;
@@ -378,8 +377,6 @@ var displayPlaylist = function(){
 
     var metadata = song.formats.original.metadata;
 
-    console.log( metadata );
-
     if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
@@ -387,7 +384,7 @@ var displayPlaylist = function(){
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
       songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
-      songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
       var time = metadata.media.duration.seconds;
@@ -443,7 +440,7 @@ var loadItem = function( index ){
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
-  songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails['512'] ? structure.thumbnails['512'] : 'https://static.inevio.com/app/228/cover_big.png' ) + ')' );
+  songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
   musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
 
   audio.load();
@@ -456,7 +453,9 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  playListDom.stop().clearQueue().animate( { scrollTop : song[ 0 ].offsetTop }, 400  );
+  if( song[ 0 ] ){
+    playListDom.stop().clearQueue().animate( { scrollTop : song[ 0 ].offsetTop }, 400 );
+  }
 
   indexPlaying = index;
 
@@ -530,7 +529,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.play', function(){
+.on( 'click', '.play-button.play', function(){
 
   if( win.hasClass('playing') ){
     audio[0].pause();
@@ -540,7 +539,7 @@ win
 
 })
 
-.on( 'mousedown', '.volume-icon', function(){
+.on( 'mousedown touchstart', '.volume-icon', function(){
 
   if( win.hasClass('muted') ){
     audio[ 0 ].muted = false;
@@ -575,7 +574,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.rewind', function(e){
+.on( 'mousedown touchstart', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime -= 10;
@@ -584,7 +583,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.rewind', function(e){
+.on( 'mouseup touchend', '.play-button.rewind', function(e){
 
   if( !longClick ){
     loadItem( -1 );
@@ -595,7 +594,7 @@ win
 
 })
 
-.on( 'mousedown', '.play-button.forward', function(e){
+.on( 'mousedown touchstart', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime += 10;
@@ -604,7 +603,7 @@ win
 
 })
 
-.on( 'mouseup', '.play-button.forward', function(e){
+.on( 'mouseup touchend', '.play-button.forward', function(e){
 
   if( !longClick ){
     loadItem();
@@ -615,7 +614,7 @@ win
 
 })
 
-.on( 'mousedown', '.repeat', function(){
+.on( 'click', '.repeat', function(){
 
   if( win.hasClass('repeat') ){
 
@@ -648,9 +647,7 @@ win
 
 })
 
-.key(
-
-  'right',
+.key('right',
     function(){
 
       clearInterval( keyInterval );
@@ -671,9 +668,7 @@ win
 
 )
 
-.key(
-
-  'left',
+.key('left',
     function(){
 
       clearInterval( keyInterval );
@@ -694,9 +689,7 @@ win
 
 )
 
-.key(
-
-  'up',
+.key('up',
   function(){
 
     if( ( audio[ 0 ].volume + 0.1 ) < 1){
@@ -718,9 +711,7 @@ win
 
 )
 
-.key(
-
-  'down',
+.key('down',
   function(){
 
     if( ( audio[ 0 ].volume - 0.1 ) > 0){
@@ -742,13 +733,11 @@ win
 
   )
 
-.key(
-
-  'backspace',
+.key('backspace',
   function(){ audio[ 0 ].currentTime = 0; },
   function(){ audio[ 0 ].currentTime = 0; }
 
-  );
+);
 
 audio
 .on('durationchange', function(){
@@ -988,6 +977,7 @@ win.on( 'app-param', function( e, params ){
       'border-radius' : newBorderRadius,
       'transform' : 'translate3d(0, ' + newY + 'px, 0) scale(' + scaleX + ',' + scaleY + ')'
     }, 1000, animationEffect, function(){
+      $(this).addClass('in-playlist');
       transition = false;
     });
 
@@ -998,7 +988,9 @@ win.on( 'app-param', function( e, params ){
     $('.control-panel-mobile').transition({
       'y' : '166px',
       'background-color' : '#272d33'
-    }, 1000, animationEffect);
+    }, 1000, animationEffect, function(){
+      $(this).hide();
+    });
 
     $('.control-panel-mobile section').transition({
       'opacity' : 0
@@ -1008,7 +1000,7 @@ win.on( 'app-param', function( e, params ){
 
 })
 
-.on('click', '.playlist-mode .song-details', function(){
+.on('click', '.playlist-mode .song-details, .song-info.in-playlist', function(){
 
   if( !transition ){
 
@@ -1029,9 +1021,11 @@ win.on( 'app-param', function( e, params ){
 
     $('.song-info').transition({
       'transform' : 'translate3d(0, 0, 0) scale(1)'
-    }, 1000, animationEffect);
+    }, 1000, animationEffect, function(){
+      $(this).removeClass('in-playlist');
+    });
 
-    $('.control-panel-mobile').transition({
+    $('.control-panel-mobile').show().transition({
       'y' : '0',
       'background-color' : '#3f4750'
     }, 1000, animationEffect, function(){
