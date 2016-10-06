@@ -266,15 +266,15 @@ var startApp = function( paramsAux ){
         return callback();
       }
 
-      if( structure.id === paramsAux.data ){
-        indexPlaying = playlist._list.length;
-      }else if( linkMode ){
-        indexPlaying = 0;
-      }
-
       structure.getFormats( function( error, formats ){
 
         structure.formats = formats;
+
+        if( structure.id === paramsAux.data ){
+          indexPlaying = playlist._list.length;
+        }else if( linkMode ){
+          indexPlaying = 0;
+        }
 
         playlist.push( structure );
         callback();
@@ -373,7 +373,6 @@ var displayPlaylist = function(){
 
   $('.playlist').children().not('.wz-prototype').remove();
 
-  console.log( playlist._list );
   playlist._list.forEach( function( song, index ){
 
     var metadata = song.formats.original.metadata;
@@ -410,7 +409,15 @@ var displayPlaylist = function(){
       toInsert.push( songItem );
 
     }else{
-      console.log('IGNORED',song);
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype');
+      songItem.addClass('song-id-' + song.id);
+      songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.data( 'index' , index );
+      toInsert.push( songItem );
+      //console.log('IGNORED',song);
+
     }
 
   });
@@ -860,7 +867,7 @@ audio
     }
 
   }else{
-    console.log(time);
+    //console.log(time);
   }
 
 })
@@ -910,7 +917,7 @@ audio
 
 win.on( 'app-param', function( e, params ){
 
-  console.log(params);
+  //console.log(params);
   if( params && params.command === 'openFile' && !appStarted ){
 
     if( params.list.length == 0 ){
