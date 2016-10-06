@@ -1,4 +1,45 @@
 
+// setImmediate
+var setImmediate = function( fn ){
+  fn();
+};
+
+// Async
+var asyncEach = function( list, step, callback ){
+
+  var position = 0;
+  var closed   = false;
+  var checkEnd = function( error ){
+
+    if( closed ){
+      return;
+    }
+
+    position++;
+
+    if( position === list.length || error ){
+
+      closed = true;
+
+      callback( error );
+
+      // Nullify
+      list = step = callback = position = checkEnd = closed = null;
+
+    }
+
+  };
+
+  if( !list.length ){
+    return callback();
+  }
+
+  list.forEach( function( item ){
+    step( item, checkEnd );
+  });
+
+};
+
 // Objects
 var Playlist = function(){
 
@@ -193,11 +234,11 @@ var linkMode            = false;
  * Las variables que declaramos a continuación están pensadas para ello.
  * Ponemos un timer para de vez en cuando forzar que pueda cachear
  */
- var emulatedSeekerTimer = 0;
- var emulatedSeekerTime  = 0;
+var emulatedSeekerTimer = 0;
+var emulatedSeekerTime  = 0;
 
- musicVolume.width( musicMaxVolume.width() );
- musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
+musicVolume.width( musicMaxVolume.width() );
+musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
 
 var startApp = function( paramsAux ){
 
@@ -206,51 +247,51 @@ var startApp = function( paramsAux ){
   audio.empty();
 
   linkMode = false;
+
   if( location.host.indexOf('file') !== -1 ){
 
-    linkMode=true;
+    linkMode = true;
+
     paramsAux.list = [paramsAux.data];
     $('.wz-dragger').removeClass('wz-dragger');
     $('.ui-header-buttons').remove();
 
   }
 
-  var counter = 0;
-
-  paramsAux.list.forEach( function( item, index ){
+  asyncEach( paramsAux.list, function( item, callback ){
 
     api.fs( item, function( error, structure ){
 
-      if( error ){
-        return;
+      if( error || VALID_MIMES.indexOf( structure.mime ) === -1 ){
+        return callback();
       }
 
-      if( VALID_MIMES.indexOf( structure.mime ) !== -1 ){
+      if( structure.id === paramsAux.data ){
+        indexPlaying = playlist._list.length;
+      }else if( linkMode ){
+        indexPlaying = 0;
+      }
 
-        if( structure.id === paramsAux.data ){
-          indexPlaying = playlist._list.length;
-        }else if( linkMode ){
-          indexPlaying = 0;
-        }
+      structure.getFormats( function( error, formats ){
+
+        structure.formats = formats;
 
         playlist.push( structure );
+        callback();
 
-      }
-
-      counter++;
-
-      if( counter === paramsAux.list.length ){
-
-        appStarted = true;
-        displayPlaylist();
-        loadItem( indexPlaying );
-        $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
-        dropCover.find('.drop-text').text( lang.dropText );
-        dropCover.find('.drop-text-description').text( lang.dropTextDescription );
-
-      }
+      });
 
     });
+
+  }, function( error ){
+
+    appStarted = true;
+
+    displayPlaylist();
+    loadItem( indexPlaying );
+    $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
+    dropCover.find('.drop-text').text( lang.dropText );
+    dropCover.find('.drop-text-description').text( lang.dropTextDescription );
 
   });
 
@@ -273,7 +314,7 @@ var addSong = function( id ){
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
       songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
-      songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , playlist._list.length - 1 );
 
       var time;
@@ -334,23 +375,19 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
-    if( song && song.metadata && song.metadata.media  ){
+    var metadata = song.formats.original.metadata;
+
+    if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
       songItem.addClass('song-id-' + song.id);
-      songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
-      songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
-      songItem.children('figure').css( 'background-image', 'url(' + ( song.thumbnails['64'] ? song.thumbnails['64'] : 'https://static.inevio.com/app/228/cover_small.png' ) + ')' );
+      songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
+      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      var time;
-      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
-        time = song.metadata.media.duration.seconds;
-      }else{
-        time = song.metadata.media.audio.duration.seconds;
-      }
-
+      var time = metadata.media.duration.seconds;
       var hour = parseInt(time / 3600, 10);
       var rem  = time % 3600;
       var min  = parseInt(rem / 60, 10);
@@ -372,7 +409,7 @@ var displayPlaylist = function(){
       toInsert.push( songItem );
 
     }else{
-      console.log(song);
+      console.log('IGNORED',song);
     }
 
   });
@@ -398,17 +435,13 @@ var loadItem = function( index ){
   }
 
   audio.empty();
-  if( structure.formats.mpeg ){
-    audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats.mpeg.url) );
-  }
-  if( structure.formats.ogg ){
-    audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats.ogg.url) );
-  }
+  audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
+  audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );
 
-  musicTitle.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.title )? structure.metadata.id3.title : structure.name );
+  musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
-  songThumbnail.css( 'background-image', 'url(' + ( structure.thumbnails['512'] ? structure.thumbnails['512'] : 'https://static.inevio.com/app/228/cover_big.png' ) + ')' );
-  musicArtist.text( ( structure.metadata && structure.metadata.id3 && structure.metadata.id3.artist && structure.metadata.id3.artist[0] )? structure.metadata.id3.artist[0] : lang.unknown );
+  songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
+  musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
 
   audio.load();
 
@@ -420,8 +453,8 @@ var loadItem = function( index ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
   }*/
 
-  if(song[0]){
-    playListDom.stop().clearQueue().animate( { scrollTop : song[0].offsetTop }, 400  );
+  if( song[ 0 ] ){
+    playListDom.stop().clearQueue().animate( { scrollTop : song[ 0 ].offsetTop }, 400 );
   }
 
   indexPlaying = index;

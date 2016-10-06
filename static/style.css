@@ -54,7 +54,7 @@
   height: 100%;
   display: inline-block;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: 50% 50%, 50% 50%;
 }
 
 .song-info .song-details{
