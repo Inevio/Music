@@ -373,6 +373,7 @@ var displayPlaylist = function(){
 
   $('.playlist').children().not('.wz-prototype').remove();
 
+  console.log( playlist._list );
   playlist._list.forEach( function( song, index ){
 
     var metadata = song.formats.original.metadata;
@@ -909,6 +910,7 @@ audio
 
 win.on( 'app-param', function( e, params ){
 
+  console.log(params);
   if( params && params.command === 'openFile' && !appStarted ){
 
     if( params.list.length == 0 ){
