@@ -311,11 +311,17 @@ var parseDate = function( currentTime , duration ){
       sec = '0' + sec;
     }
 
+    var result;
+
     if( timeFormat == 2 || timeFormat == 3 ){
+      result = hour + ':' + min + ':' + sec;
       musicCurrentTime.text( hour + ':' + min + ':' + sec );
     }else{
+      result = min + ':' + sec;
       musicCurrentTime.text( min + ':' + sec );
     }
+
+    return result;
 
     var backWidth = musicBackprogress.width();
     musicProgress.width( backWidth * ( currentTime / duration ) );
