@@ -227,6 +227,9 @@ var clickInterval;
 var keyInterval;
 var appStarted          = false;
 var linkMode            = false;
+var newAudio            = null;
+var currentVolume       = 1;
+var timeFormat          = 0; //0 == m:ss, 1 == mm:ss, 2 == h:mm:ss, 3 == hh:mm:ss
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -239,6 +242,97 @@ var emulatedSeekerTime  = 0;
 
 musicVolume.width( musicMaxVolume.width() );
 musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
+
+var parseDate = function( currentTime , duration ){
+
+  if( duration ){
+
+    var time  = duration;
+    var hour  = parseInt(time/3600, 10);
+    var rem   = (time%3600);
+    var min   = parseInt(rem/60, 10);
+    var sec   = parseInt(rem%60, 10);
+
+    if( hour > 0 && min < 10 ){ min = '0' + min; }
+    if( sec < 10 ){ sec  = '0' + sec; }
+
+    if( 9 < hour ){
+
+      timeFormat = 3;
+      musicCurrentTime.text('00:00:00');
+      weemusicTotalTime.text(hour+':'+min+':'+sec);
+
+    }else if( 0 < hour && hour < 10 ){
+
+      timeFormat = 2;
+      musicCurrentTime.text('0:00:00');
+      weemusicTotalTime.text(hour+':'+min+':'+sec);
+
+    }else if( min > 9 ){
+
+      timeFormat = 1;
+
+    }else{
+
+      timeFormat = 0;
+      musicCurrentTime.text('0:00');
+      weemusicTotalTime.text(min+':'+sec);
+
+    }
+
+    if( mobile ){
+
+      var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
+      musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
+
+    }
+
+
+  }else{
+
+    var time = currentTime;
+    var hour = parseInt( time / 3600, 10 );
+
+    var rem  = time % 3600;
+    var min  = parseInt( rem / 60, 10 );
+    var sec  = parseInt( rem % 60, 10 );
+
+    if( hour > 0 && hour < 10 ){
+      if( timeFormat == 3 ){
+        hour = '0' + hour;
+      }
+    }
+    if( min < 10 ){
+      if( timeFormat > 0 ){
+        min = '0' + min;
+      }
+    }
+    if( sec < 10 ){
+      sec = '0' + sec;
+    }
+
+    if( timeFormat == 2 || timeFormat == 3 ){
+      musicCurrentTime.text( hour + ':' + min + ':' + sec );
+    }else{
+      musicCurrentTime.text( min + ':' + sec );
+    }
+
+    var backWidth = musicBackprogress.width();
+    musicProgress.width( backWidth * ( currentTime / duration ) );
+
+    if( mobile ){
+      var backWidth2 = $('.music-backprogress-mobile').width();
+      $('.music-progress-mobile').width( backWidth2 * ( currentTime / duration ) );
+    }
+
+    if( !musicSeeker.hasClass('wz-drag-active') ){
+      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( currentTime / duration ) );
+    }
+
+  }
+
+
+}
 
 var startApp = function( paramsAux ){
 
@@ -443,15 +537,17 @@ var loadItem = function( index ){
   }
 
   audio.empty();
-  audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
-  audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );
+  /*audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
+  audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );*/
+
+  newAudio = new AudioWrapper( structure.formats['audio/mpeg'].url );
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
   songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
   musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
 
-  audio.load();
+  //audio.load();
 
   $('.song.active').removeClass('active');
 
@@ -466,6 +562,63 @@ var loadItem = function( index ){
   }
 
   indexPlaying = index;
+
+
+  newAudio.on( 'ready' , function( duration ){
+
+    console.log('ready',arguments);
+    parseDate(null,duration);
+
+    newAudio.play();
+
+  });
+
+  newAudio.on( 'play' , function( duration ){
+    console.log('playing',arguments);
+    win.addClass('playing');
+  });
+
+  newAudio.on( 'pause' , function( duration ){
+    console.log('paused',arguments);
+    win.removeClass('playing');
+  });
+
+  newAudio.on( 'stop' , function( duration ){
+    console.log('stopped',arguments);
+    win.removeClass('playing');
+  });
+
+  newAudio.on( 'ended' , function( duration ){
+
+    console.log('ended',arguments);
+    if( !musicSeeker.hasClass('wz-drag-active') ){
+
+      //var time = this.duration;
+      //var hour = parseInt(time/3600, 10);
+      musicProgress.width(0);
+      musicSeeker.css('left',0);
+
+      /*if(parseInt(hour, 10)){
+        musicCurrentTime.text('0:00:00');
+      }else{
+        musicCurrentTime.text('0:00');
+      }*/
+
+      //this.currentTime = 0;
+
+      if( playlist._repeatMode == 1 ){
+        loadItem( playlist._lastId );
+      }else{
+        loadItem();
+      }
+
+    }
+
+  });
+
+  newAudio.on( 'timeupdate' , function( currentTime, duration ){
+    parseDate(currentTime,null);
+  });
 
 };
 
@@ -540,9 +693,11 @@ win
 .on( 'click', '.play-button.play', function(){
 
   if( win.hasClass('playing') ){
-    audio[0].pause();
+    //audio[0].pause();
+    newAudio.pause();
   }else{
-    audio[0].play();
+    //audio[0].play();
+    newAudio.play();
   }
 
 })
@@ -648,9 +803,9 @@ win
 .key('space', function(){
 
   if( win.hasClass('playing') ){
-    audio[ 0 ].pause();
+    newAudio.pause();
   }else{
-    audio[ 0 ].play();
+    newAudio.play();
   }
 
 })
@@ -742,15 +897,15 @@ win
   )
 
 .key('backspace',
-  function(){ audio[ 0 ].currentTime = 0; },
-  function(){ audio[ 0 ].currentTime = 0; }
+  function(){ newAudio.seekTo(0) },
+  function(){ newAudio.seekTo(0) }
 
 );
 
 audio
 .on('durationchange', function(){
 
-  var time  = this.duration;
+  /*var time  = this.duration;
   var hour  = parseInt(time/3600, 10);
   var rem   = (time%3600);
   var min   = parseInt(rem/60, 10);
@@ -793,25 +948,25 @@ audio
 
   }
 
-  audio[ 0 ].play();
+  audio[ 0 ].play();*/
 
 })
 
 .on('play',function(){
-  win.addClass('playing');
+  //win.addClass('playing');
 })
 
 .on('pause',function(){
-  win.removeClass('playing');
+  //win.removeClass('playing');
 })
 
 .on('loop',function(){
-  win.addClass('playing');
+  //win.addClass('playing');
 })
 
 .on( 'volumechange', function(){
 
-  if( this.muted ){
+  /*if( this.muted ){
     win.addClass('muted');
   }else{
     win.removeClass('muted');
@@ -822,59 +977,19 @@ audio
     musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
     musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
 
-  }
+  }*/
 
 })
 
 .on( 'timeupdate', function( e ){
 
-  var time      = this.duration;
-  if( !isNaN(time) ){
 
-    var totalHour = parseInt( time / 3600, 10 );
-    var rem       = time % 3600;
-    var totalMin  = parseInt( rem / 60, 10 );
-
-    time     = this.currentTime;
-    var hour = parseInt( time / 3600, 10 );
-
-    rem      = time % 3600;
-    var min  = parseInt( rem / 60, 10 );
-    var sec  = parseInt( rem % 60, 10 );
-
-    if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-    if( totalHour > 0 && min < 10 ){ min = '0' + min; }
-    if (sec < 10 ){ sec  = '0' + sec; }
-
-    if( totalHour ){
-      musicCurrentTime.text( hour + ':' + min + ':' + sec );
-    }else if( totalMin ){
-      musicCurrentTime.text( min + ':' + sec );
-    }else{
-      musicCurrentTime.text( '0:' + sec );
-    }
-
-    var backWidth = musicBackprogress.width();
-    musicProgress.width( backWidth * ( this.currentTime / this.duration ) );
-
-    if( mobile ){
-      var backWidth2 = $('.music-backprogress-mobile').width();
-      $('.music-progress-mobile').width( backWidth2 * ( this.currentTime / this.duration ) );
-    }
-
-    if( !musicSeeker.hasClass('wz-drag-active') ){
-      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( this.currentTime / this.duration ) );
-    }
-
-  }else{
-    //console.log(time);
-  }
 
 })
 
 .on('progress',function(){
 
-  var buffer = 0;
+  /*var buffer = 0;
 
   try{
     buffer = this.buffered.end( 0 );
@@ -884,13 +999,13 @@ audio
 
   if( width > 0 ){
     musicBufferprogress.stop().clearQueue().transition( { width : width }, 100 );
-  }
+  }*/
 
 })
 
 .on('ended', function(){
 
-  if( !musicSeeker.hasClass('wz-drag-active') ){
+  /*if( !musicSeeker.hasClass('wz-drag-active') ){
 
     var time = this.duration;
     var hour = parseInt(time/3600, 10);
@@ -911,7 +1026,7 @@ audio
       loadItem();
     }
 
-  }
+  }*/
 
 });
 
