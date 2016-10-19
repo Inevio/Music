@@ -243,100 +243,53 @@ var emulatedSeekerTime  = 0;
 musicVolume.width( musicMaxVolume.width() );
 musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
 
-var parseDate = function( currentTime , duration ){
+var parseDate = function( currentTime , loadingItem ){
 
-  if( duration ){
+  var time  = currentTime;
+  var hour  = parseInt(time/3600, 10);
+  var rem   = (time%3600);
+  var min   = parseInt(rem/60, 10);
+  var sec   = parseInt(rem%60, 10);
 
-    var time  = duration;
-    var hour  = parseInt(time/3600, 10);
-    var rem   = (time%3600);
-    var min   = parseInt(rem/60, 10);
-    var sec   = parseInt(rem%60, 10);
+  if( hour > 0 && min < 10 ){ min = '0' + min; }
+  if( sec < 10 ){ sec  = '0' + sec; }
 
-    if( hour > 0 && min < 10 ){ min = '0' + min; }
-    if( sec < 10 ){ sec  = '0' + sec; }
+  var result;
 
-    if( 9 < hour ){
+  if( 9 < hour ){
 
+    if( loadingItem ){
       timeFormat = 3;
       musicCurrentTime.text('00:00:00');
-      weemusicTotalTime.text(hour+':'+min+':'+sec);
+    }
 
-    }else if( 0 < hour && hour < 10 ){
+    result = hour+':'+min+':'+sec;
 
+  }else if( 0 < hour && hour < 10 ){
+
+    if( loadingItem ){
       timeFormat = 2;
       musicCurrentTime.text('0:00:00');
-      weemusicTotalTime.text(hour+':'+min+':'+sec);
-
-    }else if( min > 9 ){
-
-      timeFormat = 1;
-
-    }else{
-
-      timeFormat = 0;
-      musicCurrentTime.text('0:00');
-      weemusicTotalTime.text(min+':'+sec);
-
     }
 
-    if( mobile ){
+    result = hour+':'+min+':'+sec;
 
-      var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
-      musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
+  }else if( min > 9 ){
 
-    }
-
+    if( loadingItem ){timeFormat = 1;}
 
   }else{
 
-    var time = currentTime;
-    var hour = parseInt( time / 3600, 10 );
-
-    var rem  = time % 3600;
-    var min  = parseInt( rem / 60, 10 );
-    var sec  = parseInt( rem % 60, 10 );
-
-    if( hour > 0 && hour < 10 ){
-      if( timeFormat == 3 ){
-        hour = '0' + hour;
-      }
-    }
-    if( min < 10 ){
-      if( timeFormat > 0 ){
-        min = '0' + min;
-      }
-    }
-    if( sec < 10 ){
-      sec = '0' + sec;
+    if( loadingItem ){
+      timeFormat = 0;
+      musicCurrentTime.text('0:00');
     }
 
-    var result;
-
-    if( timeFormat == 2 || timeFormat == 3 ){
-      result = hour + ':' + min + ':' + sec;
-      musicCurrentTime.text( hour + ':' + min + ':' + sec );
-    }else{
-      result = min + ':' + sec;
-      musicCurrentTime.text( min + ':' + sec );
-    }
-
-    return result;
-
-    var backWidth = musicBackprogress.width();
-    musicProgress.width( backWidth * ( currentTime / duration ) );
-
-    if( mobile ){
-      var backWidth2 = $('.music-backprogress-mobile').width();
-      $('.music-progress-mobile').width( backWidth2 * ( currentTime / duration ) );
-    }
-
-    if( !musicSeeker.hasClass('wz-drag-active') ){
-      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( currentTime / duration ) );
-    }
+    result = min+':'+sec;
 
   }
 
+  return result;
 
 }
 
@@ -423,23 +376,8 @@ var addSong = function( id ){
       }else{
         time = song.metadata.media.audio.duration.seconds;
       }
-      var hour = parseInt(time / 3600, 10);
-      var rem  = time % 3600;
-      var min  = parseInt(rem / 60, 10);
-      var sec  = parseInt(rem % 60, 10);
 
-      if( hour > 0 && min < 10 ){ min = '0' + min; }
-      if( sec < 10 ){ sec  = '0' + sec; }
-
-      if( 9 < hour ){
-        songItem.find('.time').text( hour + ':' + min + ':' + sec );
-      }else if( 0 < hour && hour < 10 ){
-        songItem.find('.time').text( hour + ':' + min + ':' + sec );
-      }else if( 9 < min ){
-        songItem.find('.time').text( min + ':' + sec );
-      }else{
-        songItem.find('.time').text( min + ':' + sec );
-      }
+      songItem.find('.time').text( parseDate( time , false ) );
 
       appStarted = true;
       playListDom.append( songItem );
@@ -487,25 +425,14 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      var time = metadata.media.duration.seconds;
-      var hour = parseInt(time / 3600, 10);
-      var rem  = time % 3600;
-      var min  = parseInt(rem / 60, 10);
-      var sec  = parseInt(rem % 60, 10);
-
-      if( hour > 0 && min < 10 ){ min = '0' + min; }
-      if( sec < 10 ){ sec  = '0' + sec; }
-
-      if( 9 < hour ){
-        songItem.find('.time').text( hour + ':' + min + ':' + sec );
-      }else if( 0 < hour && hour < 10 ){
-        songItem.find('.time').text( hour + ':' + min + ':' + sec );
-      }else if( 9 < min ){
-        songItem.find('.time').text( min + ':' + sec );
+      var time;
+      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
+        time = song.metadata.media.duration.seconds;
       }else{
-        songItem.find('.time').text( min + ':' + sec );
+        time = song.metadata.media.audio.duration.seconds;
       }
 
+      songItem.find('.time').text( parseDate( time , false ) );
       toInsert.push( songItem );
 
     }else{
@@ -569,11 +496,17 @@ var loadItem = function( index ){
 
   indexPlaying = index;
 
-
   newAudio.on( 'ready' , function( duration ){
 
     console.log('ready',arguments);
-    parseDate(null,duration);
+    weemusicTotalTime.text( parseDate(duration,true) );
+
+    if( mobile ){
+
+      var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
+      musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
+
+    }
 
     newAudio.play();
 
@@ -599,18 +532,8 @@ var loadItem = function( index ){
     console.log('ended',arguments);
     if( !musicSeeker.hasClass('wz-drag-active') ){
 
-      //var time = this.duration;
-      //var hour = parseInt(time/3600, 10);
       musicProgress.width(0);
       musicSeeker.css('left',0);
-
-      /*if(parseInt(hour, 10)){
-        musicCurrentTime.text('0:00:00');
-      }else{
-        musicCurrentTime.text('0:00');
-      }*/
-
-      //this.currentTime = 0;
 
       if( playlist._repeatMode == 1 ){
         loadItem( playlist._lastId );
@@ -623,7 +546,20 @@ var loadItem = function( index ){
   });
 
   newAudio.on( 'timeupdate' , function( currentTime, duration ){
-    parseDate(currentTime,null);
+
+    musicCurrentTime.text( parseDate(currentTime,false) );
+    var backWidth = musicBackprogress.width();
+    musicProgress.width( backWidth * ( currentTime / duration ) );
+
+    if( mobile ){
+      var backWidth2 = $('.music-backprogress-mobile').width();
+      $('.music-progress-mobile').width( backWidth2 * ( currentTime / duration ) );
+    }
+
+    if( !musicSeeker.hasClass('wz-drag-active') ){
+      musicSeeker.css( 'x', ( backWidth - musicSeeker.width() ) * ( currentTime / duration ) );
+    }
+
   });
 
 };
