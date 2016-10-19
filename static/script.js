@@ -842,137 +842,7 @@ win
   function(){ newAudio.seekTo(0) },
   function(){ newAudio.seekTo(0) }
 
-);
-
-audio
-.on('durationchange', function(){
-
-  /*var time  = this.duration;
-  var hour  = parseInt(time/3600, 10);
-  var rem   = (time%3600);
-  var min   = parseInt(rem/60, 10);
-  var sec   = parseInt(rem%60, 10);
-
-  if( hour > 0 && min < 10 ){ min = '0' + min; }
-  if( sec < 10 ){ sec  = '0' + sec; }
-
-  //musicBackprogress.transition({'opacity':'1'},250);
-
-  if( 9 < hour ){
-
-    musicCurrentTime.text('00:00:00');
-    weemusicTotalTime.text(hour+':'+min+':'+sec);
-
-  }else if( 0 < hour && hour < 10 ){
-
-    musicCurrentTime.text('0:00:00');
-    weemusicTotalTime.text(hour+':'+min+':'+sec);
-
-  }else if( 9 < min ){
-
-    musicCurrentTime.text('0:00');
-    weemusicTotalTime.text(min+':'+sec);
-
-  }else{
-
-    musicCurrentTime.text('0:00');
-    weemusicTotalTime.text(min+':'+sec);
-
-  }
-
-  musicVolumeSeeker.addClass('wz-dragger-x');
-  musicSeeker.addClass('wz-dragger-x');
-
-  if( mobile ){
-
-    var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
-    musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
-
-  }
-
-  audio[ 0 ].play();*/
-
-})
-
-.on('play',function(){
-  //win.addClass('playing');
-})
-
-.on('pause',function(){
-  //win.removeClass('playing');
-})
-
-.on('loop',function(){
-  //win.addClass('playing');
-})
-
-.on( 'volumechange', function(){
-
-  /*if( this.muted ){
-    win.addClass('muted');
-  }else{
-    win.removeClass('muted');
-  }
-
-  if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
-
-    musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
-    musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
-
-  }*/
-
-})
-
-.on( 'timeupdate', function( e ){
-
-
-
-})
-
-.on('progress',function(){
-
-  /*var buffer = 0;
-
-  try{
-    buffer = this.buffered.end( 0 );
-  }catch(e){}
-
-  var width = ( musicBackprogress.width() * ( buffer/this.duration ) );
-
-  if( width > 0 ){
-    musicBufferprogress.stop().clearQueue().transition( { width : width }, 100 );
-  }*/
-
-})
-
-.on('ended', function(){
-
-  /*if( !musicSeeker.hasClass('wz-drag-active') ){
-
-    var time = this.duration;
-    var hour = parseInt(time/3600, 10);
-    musicProgress.width(0);
-    musicSeeker.css('left',0);
-
-    if(parseInt(hour, 10)){
-      musicCurrentTime.text('0:00:00');
-    }else{
-      musicCurrentTime.text('0:00');
-    }
-
-    this.currentTime = 0;
-
-    if( playlist._repeatMode == 1 ){
-      loadItem( playlist._lastId );
-    }else{
-      loadItem();
-    }
-
-  }*/
-
-});
-
-win.on( 'app-param', function( e, params ){
+).on( 'app-param', function( e, params ){
 
   //console.log(params);
   if( params && params.command === 'openFile' && !appStarted ){
@@ -1105,5 +975,85 @@ win.on( 'app-param', function( e, params ){
     });
 
   }
+
+});
+
+
+audio
+.on('durationchange', function(){
+
+  /*var time  = this.duration;
+  var hour  = parseInt(time/3600, 10);
+  var rem   = (time%3600);
+  var min   = parseInt(rem/60, 10);
+  var sec   = parseInt(rem%60, 10);
+
+  if( hour > 0 && min < 10 ){ min = '0' + min; }
+  if( sec < 10 ){ sec  = '0' + sec; }
+
+  //musicBackprogress.transition({'opacity':'1'},250);
+
+  if( 9 < hour ){
+
+    musicCurrentTime.text('00:00:00');
+    weemusicTotalTime.text(hour+':'+min+':'+sec);
+
+  }else if( 0 < hour && hour < 10 ){
+
+    musicCurrentTime.text('0:00:00');
+    weemusicTotalTime.text(hour+':'+min+':'+sec);
+
+  }else if( 9 < min ){
+
+    musicCurrentTime.text('0:00');
+    weemusicTotalTime.text(min+':'+sec);
+
+  }else{
+
+    musicCurrentTime.text('0:00');
+    weemusicTotalTime.text(min+':'+sec);
+
+  }
+
+  musicVolumeSeeker.addClass('wz-dragger-x');
+  musicSeeker.addClass('wz-dragger-x');
+
+  if( mobile ){
+
+    var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
+    musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
+
+  }
+
+  audio[ 0 ].play();*/
+
+})
+
+.on('play',function(){
+  //win.addClass('playing');
+})
+
+.on('pause',function(){
+  //win.removeClass('playing');
+})
+
+.on('loop',function(){
+  //win.addClass('playing');
+})
+
+.on( 'volumechange', function(){
+
+  /*if( this.muted ){
+    win.addClass('muted');
+  }else{
+    win.removeClass('muted');
+  }
+
+  if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
+
+    musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
+    musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
+
+  }*/
 
 });
