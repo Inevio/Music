@@ -657,6 +657,7 @@
 
     .time .music-backprogress{
       width: ~'calc(100% - 124px)';
+      max-width: ~'calc(100% - 82px)';
     }
 
     .song-title{

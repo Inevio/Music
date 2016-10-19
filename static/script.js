@@ -425,12 +425,7 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      var time;
-      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
-        time = song.metadata.media.duration.seconds;
-      }else{
-        time = song.metadata.media.audio.duration.seconds;
-      }
+      var time = metadata.media.duration.seconds;
 
       songItem.find('.time').text( parseDate( time , false ) );
       toInsert.push( songItem );
@@ -574,6 +569,7 @@ win
 
 })
 
+//TODO
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
 
   if( win.hasClass('muted') ){
@@ -586,6 +582,7 @@ win
 
 })
 
+//TODO
 .on( 'wz-dragmove', '.music-time-seeker', function( e, posX, posY ){
 
   audio[ 0 ].pause();
@@ -635,15 +632,14 @@ win
 .on( 'click', '.play-button.play', function(){
 
   if( win.hasClass('playing') ){
-    //audio[0].pause();
     newAudio.pause();
   }else{
-    //audio[0].play();
     newAudio.play();
   }
 
 })
 
+//TODO
 .on( 'mousedown touchstart', '.volume-icon', function(){
 
   if( win.hasClass('muted') ){
@@ -670,6 +666,7 @@ win
 
 })
 
+//TODO
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
   clearInterval( emulatedSeekerTimer );
@@ -679,6 +676,7 @@ win
 
 })
 
+//TODO
 .on( 'mousedown touchstart', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
@@ -699,6 +697,7 @@ win
 
 })
 
+//TODO
 .on( 'mousedown touchstart', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
@@ -752,6 +751,7 @@ win
 
 })
 
+//TODO
 .key('right',
     function(){
 
@@ -773,6 +773,7 @@ win
 
 )
 
+//TODO
 .key('left',
     function(){
 
@@ -797,21 +798,22 @@ win
 .key('up',
   function(){
 
-    if( ( audio[ 0 ].volume + 0.1 ) < 1){
-      audio[ 0 ].volume += 0.1;
+    if( ( currentVolume + 0.1 ) < 1){
+      currentVolume += 0.1;
+      newAudio.setVolume( currentVolume );
     }else{
-      audio[ 0 ].volume = 1;
+      newAudio.setVolume( 1 );
     }
 
   },
   function(){
 
-    if( ( audio[ 0 ].volume + 0.1 ) < 1){
-      audio[ 0 ].volume += 0.1;
+    if( ( currentVolume + 0.1 ) < 1){
+      currentVolume += 0.1;
+      newAudio.setVolume( currentVolume );
     }else{
-      audio[ 0 ].volume = 1;
+      newAudio.setVolume( 1 );
     }
-
   }
 
 )
@@ -819,19 +821,23 @@ win
 .key('down',
   function(){
 
-    if( ( audio[ 0 ].volume - 0.1 ) > 0){
-      audio[ 0 ].volume -= 0.1;
+    if( ( currentVolume - 0.1 ) > 0){
+      currentVolume -= 0.1;
+      newAudio.setVolume( currentVolume );
     }else{
-      audio[ 0 ].volume = 0;
+      currentVolume = 0;
+      newAudio.setVolume( 0 );
     }
 
   },
   function(){
 
-    if( ( audio[ 0 ].volume - 0.1 ) > 0){
-      audio[ 0 ].volume -= 0.1;
+    if( ( currentVolume - 0.1 ) > 0){
+      currentVolume -= 0.1;
+      newAudio.setVolume( currentVolume );
     }else{
-      audio[ 0 ].volume = 0;
+      currentVolume = 0;
+      newAudio.setVolume( 0 );
     }
 
   }
@@ -873,6 +879,7 @@ win
   dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200,function(){ dropCover.removeClass('active') } );
 })
 
+//TODO
 .on( 'wz-drop', '.wz-drop-area', function( e,item ){
 
   item.siblings('.active').add( item ).each( function(){
@@ -978,70 +985,7 @@ win
 
 });
 
-
-audio
-.on('durationchange', function(){
-
-  /*var time  = this.duration;
-  var hour  = parseInt(time/3600, 10);
-  var rem   = (time%3600);
-  var min   = parseInt(rem/60, 10);
-  var sec   = parseInt(rem%60, 10);
-
-  if( hour > 0 && min < 10 ){ min = '0' + min; }
-  if( sec < 10 ){ sec  = '0' + sec; }
-
-  //musicBackprogress.transition({'opacity':'1'},250);
-
-  if( 9 < hour ){
-
-    musicCurrentTime.text('00:00:00');
-    weemusicTotalTime.text(hour+':'+min+':'+sec);
-
-  }else if( 0 < hour && hour < 10 ){
-
-    musicCurrentTime.text('0:00:00');
-    weemusicTotalTime.text(hour+':'+min+':'+sec);
-
-  }else if( 9 < min ){
-
-    musicCurrentTime.text('0:00');
-    weemusicTotalTime.text(min+':'+sec);
-
-  }else{
-
-    musicCurrentTime.text('0:00');
-    weemusicTotalTime.text(min+':'+sec);
-
-  }
-
-  musicVolumeSeeker.addClass('wz-dragger-x');
-  musicSeeker.addClass('wz-dragger-x');
-
-  if( mobile ){
-
-    var uiProgressBackWidth = 2 * parseInt( weemusicTotalTime.css('margin-left') ) + 2 * ( parseInt( musicCurrentTime.outerWidth(true) ) + 1 );
-    musicBackprogress.css('width', 'calc(100% - ' + uiProgressBackWidth +'px)');
-
-  }
-
-  audio[ 0 ].play();*/
-
-})
-
-.on('play',function(){
-  //win.addClass('playing');
-})
-
-.on('pause',function(){
-  //win.removeClass('playing');
-})
-
-.on('loop',function(){
-  //win.addClass('playing');
-})
-
-.on( 'volumechange', function(){
+audio.on( 'volumechange', function(){
 
   /*if( this.muted ){
     win.addClass('muted');
