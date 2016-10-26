@@ -507,7 +507,7 @@ var loadItem = function( index ){
 
     }
 
-    newAudio.play();
+    newAudio.play( true );
 
   });
 
@@ -638,7 +638,7 @@ win
   if( win.hasClass('playing') ){
     newAudio.pause();
   }else{
-    newAudio.play();
+    newAudio.play( true );
   }
 
 })
@@ -750,7 +750,7 @@ win
   if( win.hasClass('playing') ){
     newAudio.pause();
   }else{
-    newAudio.play();
+    newAudio.play( true );
   }
 
 })
