@@ -499,6 +499,9 @@ var loadItem = function( index ){
 
     console.log('ready',arguments);
     weemusicTotalTime.text( parseDate(duration,true) );
+    musicVolumeSeeker.addClass('wz-dragger-x');
+    musicSeeker.addClass('wz-dragger-x');
+    newAudio.duration = duration;
 
     if( mobile ){
 
@@ -576,25 +579,23 @@ win
 //TODO
 .on( 'wz-dragmove', '.music-volume-seeker', function( e, posX, posY ){
 
-  if( win.hasClass('muted') ){
+  /*if( win.hasClass('muted') ){
     audio[ 0 ].muted = false;
-  }
+  }*/
 
   musicVolume.css( 'width', posX * musicMaxVolume.width() );
-
-  audio[ 0 ].volume = 1 * posX;
+  newAudio.volume( 1 * posX );
 
 })
 
-//TODO
 .on( 'wz-dragmove', '.music-time-seeker', function( e, posX, posY ){
 
-  audio[ 0 ].pause();
+  newAudio.pause();
 
   if( !emulatedSeekerTimer ){
 
     emulatedSeekerTimer = setInterval( function(){
-      audio[ 0 ].currentTime = emulatedSeekerTime;
+      newAudio.seek( emulatedSeekerTime );
     }, 100 );
 
   }
@@ -605,31 +606,8 @@ win
    * Como cambiar el currentTime de un elemento es un proceso costoso
    * para el procesador, emulamos ese proceso
    */
-   emulatedSeekerTime = audio[ 0 ].duration * posX;
-
-   var time      = audio[ 0 ].duration;
-   var totalHour = parseInt( time / 3600, 10 );
-   var rem       = time % 3600;
-   var totalMin  = parseInt( rem / 60, 10 );
-
-   time     = emulatedSeekerTime;
-   var hour = parseInt( time / 3600, 10 );
-
-   rem     = ( time % 3600 );
-   var min = parseInt( rem / 60, 10 );
-   var sec = parseInt( rem % 60, 10 );
-
-   if( totalHour > 9 && hour < 10 ){ hour = '0' + hour; }
-   if( totalHour > 0 && min < 10 ){ min = '0' + min; }
-   if( sec < 10 ){ sec  = '0' + sec; }
-
-   if( totalHour ){
-    musicCurrentTime.text( hour + ':' + min + ':' + sec );
-  }else if( totalMin ){
-    musicCurrentTime.text( min + ':' + sec );
-  }else{
-    musicCurrentTime.text( '0:' + sec );
-  }
+  emulatedSeekerTime = newAudio.duration * posX;
+  parseDate( emulatedSeekerTime , false );
 
 })
 
@@ -670,13 +648,12 @@ win
 
 })
 
-//TODO
 .on( 'wz-dragend', '.music-time-seeker', function(){
 
   clearInterval( emulatedSeekerTimer );
   emulatedSeekerTimer    = 0;
-  audio[ 0 ].currentTime = emulatedSeekerTime;
-  audio[ 0 ].play();
+  newAudio.seek( emulatedSeekerTime );
+  newAudio.play();
 
 })
 
@@ -849,8 +826,8 @@ win
   )
 
 .key('backspace',
-  function(){ newAudio.seekTo(0) },
-  function(){ newAudio.seekTo(0) }
+  function(){ newAudio.seek(0) },
+  function(){ newAudio.seek(0) }
 
 ).on( 'app-param', function( e, params ){
 
