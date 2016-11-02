@@ -490,7 +490,17 @@ var loadItem = function( index ){
   }*/
 
   if( song[ 0 ] ){
-    playListDom.stop().clearQueue().animate( { scrollTop : song[ 0 ].offsetTop }, 400 );
+
+    var offset = 0;
+    if( mobile ){
+
+      offset = parseInt( $('.playlist-section .ui-header').outerHeight() , 10 );
+
+    }
+
+    playListDom.stop().clearQueue().animate( { scrollTop : song[ 0 ].offsetTop - offset }, 400 );
+  }else{
+    console.log('error');
   }
 
   indexPlaying = index;
@@ -971,6 +981,7 @@ win
   console.log('cierro');
   if( newAudio ){
     newAudio.stop();
+    newAudio.remove();
   }
 
 });
