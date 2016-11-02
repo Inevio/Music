@@ -622,7 +622,7 @@ win
 })
 
 //TODO
-.on( 'mousedown touchstart', '.volume-icon', function(){
+.on( typeof cordova === 'undefined' ? 'mousedown' : 'touchstart', '.volume-icon', function(){
 
   if( win.hasClass('muted') ){
     audio[ 0 ].muted = false;
@@ -658,7 +658,7 @@ win
 })
 
 //TODO
-.on( 'mousedown touchstart', '.play-button.rewind', function(e){
+.on( typeof cordova === 'undefined' ? 'mousedown' : 'touchstart', '.play-button.rewind', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime -= 10;
@@ -667,7 +667,7 @@ win
 
 })
 
-.on( 'mouseup touchend', '.play-button.rewind', function(e){
+.on( typeof cordova === 'undefined' ? 'mouseup' : 'touchend', '.play-button.rewind', function(e){
 
   if( !longClick ){
     loadItem( -1 );
@@ -679,7 +679,7 @@ win
 })
 
 //TODO
-.on( 'mousedown touchstart', '.play-button.forward', function(e){
+.on( typeof cordova === 'undefined' ? 'mousedown' : 'touchstart', '.play-button.forward', function(e){
 
   clickInterval = setInterval( function(){
     audio[0].currentTime += 10;
@@ -688,7 +688,7 @@ win
 
 })
 
-.on( 'mouseup touchend', '.play-button.forward', function(e){
+.on( typeof cordova === 'undefined' ? 'mouseup' : 'touchend', '.play-button.forward', function(e){
 
   if( !longClick ){
     loadItem();
