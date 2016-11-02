@@ -464,12 +464,12 @@ var loadItem = function( index ){
     return;
   }
 
-  audio.empty();
+  //audio.empty();
   /*audio.append( $('<source></source>').attr('type','audio/mpeg').attr('src', structure.formats['audio/mpeg'].url) );
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );*/
 
   if( newAudio ){
-    newAudio.stop();
+    newAudio.remove();
   }
 
   newAudio = new AudioWrapper( structure.formats['audio/mpeg'].url );
