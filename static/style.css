@@ -54,7 +54,8 @@
   height: 100%;
   display: inline-block;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: 50% 50%, 50% 50%;
+  background-image: url('@static/cover_big.png');
 }
 
 .song-info .song-details{
@@ -201,6 +202,7 @@
       border-radius: 3px;
       margin: 9px 12px 9px 15px;
       background-size: cover;
+      background-image: url('@static/cover_small.png');
     }
 
     figcaption{
@@ -657,6 +659,7 @@
 
     .time .music-backprogress{
       width: ~'calc(100% - 124px)';
+      max-width: ~'calc(100% - 82px)';
     }
 
     .song-title{
