@@ -256,7 +256,7 @@ var parseDate = function( currentTime , loadingItem ){
 
   var result;
 
-  if( 9 < hour ){
+  if( hour > 9 ){
 
     if( loadingItem ){
       timeFormat = 3;
@@ -265,7 +265,7 @@ var parseDate = function( currentTime , loadingItem ){
 
     result = hour+':'+min+':'+sec;
 
-  }else if( 0 < hour && hour < 10 ){
+  }else if( hour > 0 ){
 
     if( loadingItem ){
       timeFormat = 2;
@@ -277,6 +277,8 @@ var parseDate = function( currentTime , loadingItem ){
   }else if( min > 9 ){
 
     if( loadingItem ){timeFormat = 1;}
+
+    result = min+':'+sec;
 
   }else{
 
