@@ -352,42 +352,43 @@ var startApp = function( paramsAux ){
 
 }
 
-var addSong = function( id ){
+var addSong = function( song ){
 
-  api.fs( id, function( error, song ){
+  if( VALID_MIMES.indexOf( song.mime ) !== -1 ){
 
-    if( error ){
-      return;
-    }
+    console.log(song);
+    var metadata = song.formats.original.metadata;
 
-    if( VALID_MIMES.indexOf( song.mime ) !== -1 ){
-
-      playlist.push( song );
+    if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
 
       var songItem = songPrototype.clone().removeClass('wz-prototype');
 
+      playlist.push( song );
       songItem.addClass('song-id-' + song.id);
-      songItem.find('.title').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.title ) ? song.metadata.id3.title : song.name );
-      songItem.find('.artist').text( ( song.metadata && song.metadata.id3 && song.metadata.id3.artist && song.metadata.id3.artist[0] )? song.metadata.id3.artist[0] : lang.unknown );
+      songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
+      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
       songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , playlist._list.length - 1 );
-
-      var time;
-      if( song.metadata.media.duration && song.metadata.media.duration.seconds ){
-        time = song.metadata.media.duration.seconds;
-      }else{
-        time = song.metadata.media.audio.duration.seconds;
-      }
-
+      var time = metadata.media.duration.seconds;
       songItem.find('.time').text( parseDate( time , false ) );
+      playListDom.append( songItem );
+      $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
 
-      appStarted = true;
+    }else{
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype');
+
+      playlist.push( song );
+      songItem.addClass('song-id-' + song.id);
+      songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.data( 'index' , playlist._list.length - 1 );
       playListDom.append( songItem );
       $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
 
     }
-
-  });
+    
+  }
 
 }
 
@@ -873,17 +874,27 @@ win
 })
 
 //TODO
-.on( 'wz-drop', '.wz-drop-area', function( e,item ){
+.on( 'wz-drop', '.wz-drop-area', function( e,item, list ){
 
-  item.siblings('.active').add( item ).each( function(){
+  if( list.length ){
 
-    var songId = $(this).data()['file-id'];
+    list.forEach( function(song){
 
-    if( findSong( songId ) == -1 ){
-      addSong( songId );
-    }
+      var songApi = song.fsnode;
 
-  });
+      songApi.getFormats( function( error, formats ){
+
+        songApi.formats = formats;
+
+        if( findSong( songApi.id ) == -1 ){
+          addSong( songApi );
+        }
+
+      });
+
+    });
+
+  }
 
 })
 
