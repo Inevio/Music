@@ -387,7 +387,7 @@ var addSong = function( song ){
       $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
 
     }
-    
+
   }
 
 }
@@ -866,14 +866,15 @@ win
 })
 
 .on( 'wz-dropenter', '.wz-drop-area', function(){
-  dropCover.addClass('active').stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 200 );
+  //dropCover.addClass('active').stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 200 );
+  dropCover.stop().clearQueue().transition( {'transform': 'scale(1)', 'opacity':'1'}, 200 );
 })
 
 .on( 'wz-dropleave', '.wz-drop-area', function(){
-  dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200,function(){ dropCover.removeClass('active') } );
+  dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200 );
+  //dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200,function(){ dropCover.removeClass('active') } );
 })
 
-//TODO
 .on( 'wz-drop', '.wz-drop-area', function( e,item, list ){
 
   if( list.length ){
