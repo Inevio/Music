@@ -152,6 +152,15 @@
   background-color: rgba(91, 162, 92, 0.85);
   transform: scale(0.8);
   opacity: 0;
+  -webkit-transition: transform 0.2s, opacity 0.2s, visibility 0s;
+  transition: transform 0.2s, opacity 0.2s, visibility 0s;
+  visibility: hidden;
+}
+
+.playlist-section.drop-cover.active{
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
 }
 
 .playlist-section.drop-cover .drop-image{
