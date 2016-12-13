@@ -624,6 +624,10 @@
     color: #d2dce2
   }
 
+  .playlist .song:hover{
+    background-color: ;
+  }
+
   .control-panel-mobile{
     position: absolute;
     bottom: 0;
