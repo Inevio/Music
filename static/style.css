@@ -256,7 +256,7 @@
   }
 
   .song.active{
-    background-color: #60b25e;
+    background-color: #60b25e !important;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
 
@@ -622,6 +622,10 @@
 
   .playlist .song .artist{
     color: #d2dce2
+  }
+
+  .playlist .song:hover{
+    background-color: initial;
   }
 
   .control-panel-mobile{
