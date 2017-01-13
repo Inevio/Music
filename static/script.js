@@ -298,6 +298,16 @@ var parseDate = function( currentTime , loadingItem ){
 var startApp = function( paramsAux ){
 
   playlist = new Playlist();
+
+  if( win.hasClass('random') ){
+    playlist.random( true );
+  }
+  if( win.hasClass('repeat') ){
+    playlist.repeat( 2 );
+  }else if( win.hasClass('repeat-song') ){
+    playlist.repeat( 1 );
+  }
+
   $('.playlist-title').text( lang.playlist );
   audio.empty();
 
@@ -848,7 +858,9 @@ win
   function(){ newAudio.seek(0) },
   function(){ newAudio.seek(0) }
 
-).on( 'app-param', function( e, params ){
+)
+
+.on( 'app-param', function( e, params ){
 
   //console.log(params);
   if( params && params.command === 'openFile' && !appStarted ){
@@ -1010,18 +1022,18 @@ win
 
 });
 
-newaudio.on( 'volumechange', function(){
+/*newaudio.on( 'volumechange', function(){
 
-  /*if( this.muted ){
+  if( this.muted ){
     win.addClass('muted');
   }else{
     win.removeClass('muted');
-  }*/
+  }
 
-  /*if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
+  if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
 
     musicVolume.css( 'width', currentVolume * musicMaxVolume.width() );
     musicVolumeSeeker.css( 'x', Math.floor( currentVolume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
 
-  }*/
-});
+  }
+});*/
