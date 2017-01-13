@@ -298,6 +298,16 @@ var parseDate = function( currentTime , loadingItem ){
 var startApp = function( paramsAux ){
 
   playlist = new Playlist();
+
+  if( win.hasClass('random') ){
+    playlist.random( true );
+  }
+  if( win.hasClass('repeat') ){
+    playlist.repeat( 2 );
+  }else if( win.hasClass('repeat-song') ){
+    playlist.repeat( 1 );
+  }
+
   $('.playlist-title').text( lang.playlist );
   audio.empty();
 
@@ -511,6 +521,11 @@ var loadItem = function( index ){
   newAudio.on( 'ready' , function( duration ){
 
     console.log('ready',arguments);
+    console.log(currentVolume);
+    if( currentVolume < 1 ){
+      newAudio.volume( currentVolume );
+    }
+
     weemusicTotalTime.text( parseDate(duration,true) );
     musicVolumeSeeker.addClass('wz-dragger-x');
     musicSeeker.addClass('wz-dragger-x');
@@ -597,6 +612,7 @@ win
   }*/
 
   musicVolume.css( 'width', posX * musicMaxVolume.width() );
+  currentVolume = 1 * posX;
   newAudio.volume( 1 * posX );
 
 })
@@ -794,9 +810,9 @@ win
 
     if( ( currentVolume + 0.1 ) < 1){
       currentVolume += 0.1;
-      newAudio.setVolume( currentVolume );
+      newAudio.volume( currentVolume );
     }else{
-      newAudio.setVolume( 1 );
+      newAudio.volume( 1 );
     }
 
   },
@@ -804,9 +820,9 @@ win
 
     if( ( currentVolume + 0.1 ) < 1){
       currentVolume += 0.1;
-      newAudio.setVolume( currentVolume );
+      newAudio.volume( currentVolume );
     }else{
-      newAudio.setVolume( 1 );
+      newAudio.volume( 1 );
     }
   }
 
@@ -817,10 +833,10 @@ win
 
     if( ( currentVolume - 0.1 ) > 0){
       currentVolume -= 0.1;
-      newAudio.setVolume( currentVolume );
+      newAudio.volume( currentVolume );
     }else{
       currentVolume = 0;
-      newAudio.setVolume( 0 );
+      newAudio.volume( 0 );
     }
 
   },
@@ -828,10 +844,10 @@ win
 
     if( ( currentVolume - 0.1 ) > 0){
       currentVolume -= 0.1;
-      newAudio.setVolume( currentVolume );
+      newAudio.volume( currentVolume );
     }else{
       currentVolume = 0;
-      newAudio.setVolume( 0 );
+      newAudio.volume( 0 );
     }
 
   }
@@ -842,7 +858,9 @@ win
   function(){ newAudio.seek(0) },
   function(){ newAudio.seek(0) }
 
-).on( 'app-param', function( e, params ){
+)
+
+.on( 'app-param', function( e, params ){
 
   //console.log(params);
   if( params && params.command === 'openFile' && !appStarted ){
@@ -876,7 +894,7 @@ win
 
   dropCover.removeClass('active')
   //dropCover.stop().clearQueue().transition( {'transform': 'scale(0.8)', 'opacity':'0'}, 200,function(){ dropCover.removeClass('active') } );
-  
+
 })
 
 .on( 'wz-drop', '.wz-drop-area', function( e,item, list ){
@@ -1004,9 +1022,9 @@ win
 
 });
 
-audio.on( 'volumechange', function(){
+/*newaudio.on( 'volumechange', function(){
 
-  /*if( this.muted ){
+  if( this.muted ){
     win.addClass('muted');
   }else{
     win.removeClass('muted');
@@ -1014,9 +1032,8 @@ audio.on( 'volumechange', function(){
 
   if( !musicVolumeSeeker.hasClass('wz-drag-active') ){
 
-    musicVolume.css( 'width', this.volume * musicMaxVolume.width() );
-    musicVolumeSeeker.css( 'x', Math.floor( this.volume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
+    musicVolume.css( 'width', currentVolume * musicMaxVolume.width() );
+    musicVolumeSeeker.css( 'x', Math.floor( currentVolume * ( musicMaxVolume.width() - musicVolumeSeeker.width() ) ) );
 
-  }*/
-
-});
+  }
+});*/
