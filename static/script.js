@@ -366,9 +366,6 @@ var startApp = function( paramsAux ){
 
     displayPlaylist();
     loadItem( indexPlaying );
-    $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
-    dropCover.find('.drop-text').text( lang.dropText );
-    dropCover.find('.drop-text-description').text( lang.dropTextDescription );
 
   });
 
@@ -431,6 +428,10 @@ var findSong = function( songId ){
 }
 
 var displayPlaylist = function(){
+
+  $('.playlist-count').text( '(' + playlist._list.length + ' ' + ( (playlist._list.length === 1) ? lang.song : lang.songs ) + ')'  );
+  dropCover.find('.drop-text').text( lang.dropText );
+  dropCover.find('.drop-text-description').text( lang.dropTextDescription );
 
   var toInsert = [];
 
