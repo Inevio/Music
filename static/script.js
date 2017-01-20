@@ -239,6 +239,7 @@ var timeFormat          = 0; //0 == m:ss, 1 == mm:ss, 2 == h:mm:ss, 3 == hh:mm:s
  */
 var emulatedSeekerTimer = 0;
 var emulatedSeekerTime  = 0;
+var songList = [];
 
 musicVolume.width( musicMaxVolume.width() );
 musicVolumeSeeker.css( 'x', musicMaxVolume.width() - musicVolumeSeeker.width() );
@@ -323,7 +324,12 @@ var startApp = function( paramsAux ){
 
   }
 
+  var newIndex = 0;
+  songList = []
+
   asyncEach( paramsAux.list, function( item, callback ){
+
+    var index = newIndex++;
 
     api.fs( item, function( error, structure ){
 
@@ -334,14 +340,14 @@ var startApp = function( paramsAux ){
       structure.getFormats( function( error, formats ){
 
         structure.formats = formats;
+        songList[ index ] = structure
 
         if( structure.id === paramsAux.data ){
-          indexPlaying = playlist._list.length;
+          indexPlaying = index;
         }else if( linkMode ){
           indexPlaying = 0;
         }
 
-        playlist.push( structure );
         callback();
 
       });
@@ -351,6 +357,12 @@ var startApp = function( paramsAux ){
   }, function( error ){
 
     appStarted = true;
+
+    var startSong = songList[indexPlaying];
+    songList = songList.filter( function(item){ return item } );
+    indexPlaying = songList.indexOf( startSong );
+
+    playlist.push( songList );
 
     displayPlaylist();
     loadItem( indexPlaying );
