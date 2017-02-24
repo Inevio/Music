@@ -103,7 +103,7 @@
 
     "stats" : {
 
-        "active-dau" : true
+        "active-dau" : "visible"
 
     }
 
