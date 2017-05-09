@@ -99,6 +99,12 @@
 
         }
 
+    },
+
+    "stats" : {
+
+        "active-dau" : "visible"
+
     }
 
 }
