@@ -251,6 +251,7 @@ var parseDate = function( currentTime , loadingItem ){
   var rem   = (time%3600);
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
+  console.log(currentTime);
 
   if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
