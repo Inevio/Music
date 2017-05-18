@@ -702,7 +702,7 @@
 
     .play-buttons{
       width: ~'calc(100% - 170px)';
-      margin: 23px 33px 23px 35px;
+      margin: 23px 28px 23px 30px;
       height: initial;
     }
 
@@ -721,8 +721,9 @@
       width: 20px;
       height: 18px;
       float: left;
-      margin-top: 49px;
-      margin-left: 30px;
+      margin-top: 44px;
+      margin-left: 25px;
+      padding: 5px;
     }
 
     .random i{
@@ -734,9 +735,9 @@
       width: 24px;
       height: 12px;
       float: right;
-      margin-top: 50px;
-      margin-right: 28px;
-      padding: 0px;
+      margin-top: 45px;
+      margin-right: 23px;
+      padding: 5px;
     }
 
     .repeat i{
