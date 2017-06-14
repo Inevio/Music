@@ -251,7 +251,6 @@ var parseDate = function( currentTime , loadingItem ){
   var rem   = (time%3600);
   var min   = parseInt(rem/60, 10);
   var sec   = parseInt(rem%60, 10);
-  console.log(currentTime);
 
   if( hour > 0 && min < 10 ){ min = '0' + min; }
   if( sec < 10 ){ sec  = '0' + sec; }
@@ -776,24 +775,24 @@ win
 })
 
 //TODO
-.key('right',
-    function(){
+.key('right',  
+  function(){
 
-      clearInterval( keyInterval );
-      keyInterval = setInterval( function(){
-        audio[0].currentTime += 10;
-        longKeypress = true;
-      } ,500);
+    clearInterval( keyInterval );
+    keyInterval = setInterval( function(){
+      audio[0].currentTime += 10;
+      longKeypress = true;
+    } ,500);
 
-    },
-    null,
-    function(){
-      if( !longKeypress ){
-        loadItem();
-      }
-      longKeypress = false;
-      clearInterval( keyInterval );
+  },
+  null,
+  function(){
+    if( !longKeypress ){
+      loadItem();
     }
+    longKeypress = false;
+    clearInterval( keyInterval );
+  }
 
 )
 
@@ -801,21 +800,21 @@ win
 .key('left',
     function(){
 
-      clearInterval( keyInterval );
-      keyInterval = setInterval( function(){
-        audio[0].currentTime -= 10;
-        longKeypress = true;
-      } ,500);
+    clearInterval( keyInterval );
+    keyInterval = setInterval( function(){
+      audio[0].currentTime -= 10;
+      longKeypress = true;
+    } ,500);
 
-    },
-    null,
-    function(){
-      if( !longKeypress ){
-        loadItem( -1 );
-      }
-      longKeypress = false;
-      clearInterval( keyInterval );
+  },
+  null,
+  function(){
+    if( !longKeypress ){
+      loadItem( -1 );
     }
+    longKeypress = false;
+    clearInterval( keyInterval );
+  }
 
 )
 
@@ -867,6 +866,7 @@ win
   }
 
   )
+
 
 .key('backspace',
   function(){ newAudio.seek(0) },
