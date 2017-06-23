@@ -495,6 +495,7 @@ var loadItem = function( index ){
   audio.append( $('<source></source>').attr('type','audio/ogg').attr('src', structure.formats['audio/ogg'].url) );*/
 
   if( newAudio ){
+    newAudio.stop();
     newAudio.remove();
   }
 
