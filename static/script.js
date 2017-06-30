@@ -1052,3 +1052,11 @@ win
 
   }
 });*/
+api.system.on( 'connect' ,function(){
+  console.log('connect');
+})
+
+api.system.on( 'disconnect' ,function(){
+  console.log('disconnect');
+});
+
