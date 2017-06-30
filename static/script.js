@@ -567,12 +567,14 @@ var loadItem = function( index ){
   });
 
   newAudio.on( 'stop' , function( duration ){
+    console.log(Date.now());
     console.log('stopped',arguments);
     win.removeClass('playing');
   });
 
   newAudio.on( 'ended' , function( duration ){
 
+    console.log(Date.now());
     console.log('ended',arguments);
     if( !musicSeeker.hasClass('wz-drag-active') ){
 
@@ -1053,10 +1055,12 @@ win
   }
 });*/
 api.system.on( 'connect' ,function(){
+  console.log(Date.now());
   console.log('connect');
 })
 
 api.system.on( 'disconnect' ,function(){
+  console.log(Date.now());
   console.log('disconnect');
 });
 
