@@ -166,7 +166,7 @@ Playlist.prototype.prev = function(){
     return null;
   }
 
-  this._toPlay.push( this._played.pop() );
+  this._toPlay.unshift( this._played.pop() );
   this._lastId = this._played[ this._played.length - 1 ];
 
   return this._list[ this._lastId ];
@@ -535,7 +535,7 @@ var loadItem = function( index ){
   newAudio.on( 'ready' , function( duration ){
 
     console.log('ready',arguments);
-    console.log(currentVolume);
+    //console.log(currentVolume);
     if( currentVolume < 1 ){
       newAudio.volume( currentVolume );
     }
@@ -567,12 +567,14 @@ var loadItem = function( index ){
   });
 
   newAudio.on( 'stop' , function( duration ){
+    console.log(Date.now());
     console.log('stopped',arguments);
     win.removeClass('playing');
   });
 
   newAudio.on( 'ended' , function( duration ){
 
+    console.log(Date.now());
     console.log('ended',arguments);
     if( !musicSeeker.hasClass('wz-drag-active') ){
 
@@ -667,10 +669,18 @@ win
 //TODO
 .on( typeof cordova === 'undefined' ? 'mousedown' : 'touchstart', '.volume-icon', function(){
 
-  if( win.hasClass('muted') ){
-    audio[ 0 ].muted = false;
+  if( !win.hasClass('muted') ){
+
+    win.addClass('muted')
+    //audio[ 0 ].muted = true
+    newAudio.volume( 0 )
+
   }else{
-    audio[ 0 ].muted = true;
+
+    //audio[ 0 ].muted = false
+    newAudio.volume( currentVolume )
+    win.removeClass('muted')
+
   }
 
 })
@@ -1052,3 +1062,4 @@ win
 
   }
 });*/
+
