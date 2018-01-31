@@ -331,6 +331,94 @@ var startApp = function( paramsAux ){
 
     var index = newIndex++;
 
+    // onedrive file/dir
+    if (paramsAux.onedrive) {
+
+      api.integration.onedrive( paramsAux.onedrive, function( err, account ){
+
+        if (err) { return callback() }
+
+        account.get( item, function( err, data ){
+
+          if( err || VALID_MIMES.indexOf( data.mime ) === -1 ){
+            return callback();
+          }
+
+          songList[ index ] = data
+
+          if( data.id === paramsAux.data ){
+            indexPlaying = index;
+          }
+
+          callback()
+
+        })
+
+      })
+
+      return
+
+    }
+
+    // dropbox file/dir
+    if (paramsAux.onedrive) {
+
+      api.integration.dropbox( paramsAux.dropbox, function( err, account ){
+
+        if (err) { return callback() }
+
+        account.get( item, function( err, data ){
+
+          if( err || VALID_MIMES.indexOf( data.mime ) === -1 ){
+            return callback();
+          }
+
+          songList[ index ] = data
+
+          if( data.id === paramsAux.data ){
+            indexPlaying = index;
+          }
+
+          callback()
+
+        })
+
+      })
+
+      return
+
+    }
+
+    // gdrive file/dir
+    if (paramsAux.gdrive) {
+
+      api.integration.gdrive( paramsAux.gdrive, function( err, account ){
+
+        if (err) { return callback() }
+
+        account.get( item, function( err, data ){
+
+          if( err || VALID_MIMES.indexOf( data.mime ) === -1 ){
+            return callback();
+          }
+
+          songList[ index ] = data
+
+          if( data.id === paramsAux.data ){
+            indexPlaying = index;
+          }
+
+          callback()
+
+        })
+
+      })
+
+      return
+
+    }
+
+    // horbito file/dir
     api.fs( item, function( error, structure ){
 
       if( error || VALID_MIMES.indexOf( structure.mime ) === -1 ){
@@ -439,11 +527,56 @@ var displayPlaylist = function(){
 
   playlist._list.forEach( function( song, index ){
 
-    var metadata = song.formats.original.metadata;
+    var metadata = '';
+    if (song.formats) {
+      metadata = song.formats.original.metadata
+    }
 
-    if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
+    // onedrive song
+    if (song.onedrive) {
 
-      var songItem = songPrototype.clone().removeClass('wz-prototype');
+      var songItem = songPrototype.clone().removeClass('wz-prototype'); 
+
+      songItem.addClass('song-id-' + song.id.replace('!', '-') );
+      songItem.find('.title').text( song.audio.title );
+      songItem.find('.artist').text( song.audio.artist );
+      songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.data( 'index' , index );
+
+      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
+      toInsert.push( songItem );
+
+    // dropbox song
+    }else if (song.dropbox) {
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype'); 
+
+      songItem.addClass('song-id-' + song.id.replace('!', '-') );
+      songItem.find('.title').text( song.audio.title );
+      songItem.find('.artist').text( song.audio.artist );
+      songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.data( 'index' , index );
+
+      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
+      toInsert.push( songItem );
+
+    // gdrive song
+    }else if (song.gdrive) {
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype'); 
+
+      songItem.addClass('song-id-' + song.id.replace('!', '-') );
+      songItem.find('.title').text( song.audio.title );
+      songItem.find('.artist').text( song.audio.artist );
+      songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.data( 'index' , index );
+
+      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
+      toInsert.push( songItem );
+
+    }else if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
+
+      var songItem = songPrototype.clone().removeClass('wz-prototype'); 
 
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
@@ -499,18 +632,48 @@ var loadItem = function( index ){
     newAudio.remove();
   }
 
-  newAudio = new AudioWrapper( structure.formats['audio/mpeg'].url );
+  var song;
+
+  // onedrive song
+  if (structure.onedrive) {
+
+    newAudio = new AudioWrapper( 'https://download.horbito.com/onedrive/' + structure.account + '/' + encodeURIComponent( structure.id ) );
+    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    song = $('.song-id-' + structure.id.replace('!', '-') )
+
+  // dropbox song
+  }else if (structure.dropbox) {
+
+    newAudio = new AudioWrapper( 'https://download.horbito.com/dropbox/' + structure.account + '/' + encodeURIComponent( structure.id ) );
+    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    song = $('.song-id-' + structure.id.replace('!', '-') )
+
+  // gdrive song
+  }else if (structure.gdrive) {
+
+    newAudio = new AudioWrapper( 'https://download.horbito.com/gdrive/' + structure.account + '/' + encodeURIComponent( structure.id ) );
+    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    song = $('.song-id-' + structure.id.replace('!', '-') )
+
+  // horbito song
+  }else{
+
+    newAudio = new AudioWrapper( structure.formats['audio/mpeg'].url );
+    songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
+    song = $('.song-id-' + structure.id);
+
+  }
+
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
-  songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
   musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
 
   //audio.load();
 
   $('.song.active').removeClass('active');
 
-  var song = $('.song-id-' + structure.id).addClass('active');
+  song.addClass('active');
 
   /*if( song[ 0 ].offsetTop + song.outerHeight( true ) > playListDom.height() ){
     playListDom.scrollTop( song[ 0 ].offsetTop + song.outerHeight( true ) - playListDom.height() );
