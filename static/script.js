@@ -361,7 +361,7 @@ var startApp = function( paramsAux ){
     }
 
     // dropbox file/dir
-    if (paramsAux.onedrive) {
+    if (paramsAux.dropbox) {
 
       api.integration.dropbox( paramsAux.dropbox, function( err, account ){
 
@@ -397,6 +397,10 @@ var startApp = function( paramsAux ){
         if (err) { return callback() }
 
         account.get( item, function( err, data ){
+
+          if (data.mimeType === 'audio/mp3') {
+            data.mime = 'audio/mp4'
+          }
 
           if( err || VALID_MIMES.indexOf( data.mime ) === -1 ){
             return callback();
@@ -543,7 +547,6 @@ var displayPlaylist = function(){
       songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
       toInsert.push( songItem );
 
     // dropbox song
@@ -551,13 +554,11 @@ var displayPlaylist = function(){
 
       var songItem = songPrototype.clone().removeClass('wz-prototype'); 
 
-      songItem.addClass('song-id-' + song.id.replace('!', '-') );
-      songItem.find('.title').text( song.audio.title );
-      songItem.find('.artist').text( song.audio.artist );
+      songItem.addClass('song-id-' + song.id.replace('id:', '') );
+      songItem.find('.title').text( song.name );
       songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
       toInsert.push( songItem );
 
     // gdrive song
@@ -566,12 +567,10 @@ var displayPlaylist = function(){
       var songItem = songPrototype.clone().removeClass('wz-prototype'); 
 
       songItem.addClass('song-id-' + song.id.replace('!', '-') );
-      songItem.find('.title').text( song.audio.title );
-      songItem.find('.artist').text( song.audio.artist );
+      songItem.find('.title').text( song.name );
       songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
-      songItem.find('.time').text( parseDate( song.audio.duration , false ) );
       toInsert.push( songItem );
 
     }else if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
@@ -646,7 +645,7 @@ var loadItem = function( index ){
 
     newAudio = new AudioWrapper( 'https://download.horbito.com/dropbox/' + structure.account + '/' + encodeURIComponent( structure.id ) );
     songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
-    song = $('.song-id-' + structure.id.replace('!', '-') )
+    song = $('.song-id-' + structure.id.replace('id:', '') )
 
   // gdrive song
   }else if (structure.gdrive) {
