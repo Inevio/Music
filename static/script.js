@@ -569,7 +569,7 @@ var displayPlaylist = function(){
 
       songItem.addClass('song-id-' + song.id.replace('!', '-') );
       songItem.find('.title').text( song.name );
-      songItem.children('figure').css( 'background-image', 'url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.children('figure').css( 'background-image', 'url(https://static.horbito.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
       toInsert.push( songItem );
@@ -582,7 +582,7 @@ var displayPlaylist = function(){
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
       songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : '' );
       //songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
-      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.horbito.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
       var time = metadata.media.duration.seconds;
@@ -595,7 +595,7 @@ var displayPlaylist = function(){
       var songItem = songPrototype.clone().removeClass('wz-prototype');
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
-      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
+      songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.horbito.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
       toInsert.push( songItem );
       //console.log('IGNORED',song);
@@ -639,28 +639,28 @@ var loadItem = function( index ){
   if (structure.onedrive) {
 
     newAudio = new AudioWrapper( 'https://download.horbito.com/onedrive/' + structure.account + '/' + encodeURIComponent( structure.id ) );
-    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    songThumbnail.css( 'background-image', 'url(https://static.horbito.com/app/5/cover_big.png)' );
     song = $('.song-id-' + structure.id.replace('!', '-') )
 
   // dropbox song
   }else if (structure.dropbox) {
 
     newAudio = new AudioWrapper( 'https://download.horbito.com/dropbox/' + structure.account + '/' + encodeURIComponent( structure.id ) );
-    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    songThumbnail.css( 'background-image', 'url(https://static.horbito.com/app/5/cover_big.png)' );
     song = $('.song-id-' + structure.id.replace('id:', '') )
 
   // gdrive song
   }else if (structure.gdrive) {
 
     newAudio = new AudioWrapper( 'https://download.horbito.com/gdrive/' + structure.account + '/' + encodeURIComponent( structure.id ) );
-    songThumbnail.css( 'background-image', 'url(https://static.inevio.com/app/5/cover_big.png)' );
+    songThumbnail.css( 'background-image', 'url(https://static.horbito.com/app/5/cover_big.png)' );
     song = $('.song-id-' + structure.id.replace('!', '-') )
 
   // horbito song
   }else{
 
     newAudio = new AudioWrapper( structure.formats['audio/mpeg'].url );
-    songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.inevio.com/app/5/cover_big.png)' );
+    songThumbnail.css( 'background-image', 'url(' + structure.thumbnails['512'] + '), url(https://static.horbito.com/app/5/cover_big.png)' );
     song = $('.song-id-' + structure.id);
 
   }
