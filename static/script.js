@@ -477,7 +477,8 @@ var addSong = function( song ){
       playlist.push( song );
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
-      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
+      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : '' );
+      //songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
       songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , playlist._list.length - 1 );
       var time = metadata.media.duration.seconds;
@@ -579,7 +580,8 @@ var displayPlaylist = function(){
 
       songItem.addClass('song-id-' + song.id);
       songItem.find('.title').text( ( metadata && metadata.id3 && metadata.id3.title ) ? metadata.id3.title : song.name );
-      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
+      songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : '' );
+      //songItem.find('.artist').text( ( metadata && metadata.id3 && metadata.id3.artist && metadata.id3.artist[0] )? metadata.id3.artist[0] : lang.unknown );
       songItem.children('figure').css( 'background-image', 'url(' + song.thumbnails['64'] + '), url(https://static.inevio.com/app/5/cover_small.png)' );
       songItem.data( 'index' , index );
 
@@ -666,7 +668,8 @@ var loadItem = function( index ){
 
   musicTitle.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.title )? structure.formats.original.metadata.id3.title : structure.name );
 
-  musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
+  //musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : lang.unknown );
+  musicArtist.text( ( structure.formats && structure.formats.original && structure.formats.original.metadata && structure.formats.original.metadata.id3 && structure.formats.original.metadata.id3.artist && structure.formats.original.metadata.id3.artist[ 0 ] )? structure.formats.original.metadata.id3.artist[ 0 ] : '' );
 
   //audio.load();
 
