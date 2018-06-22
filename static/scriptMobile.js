@@ -9,7 +9,6 @@ var musicSeeker         = $('.music-time-seeker')
 var audio               = $('audio')
 var songThumbnail       = $('.song-thumbnail')
 var newAudio            = null
-var appStarted          = false
 
 /*
  * Las operaciones de cambio de tiempos por drag son muy exigentes en cuanto a procesador,
@@ -49,8 +48,6 @@ var loadItem = function( index ){
   var structure = songList[index]
 
   if( !structure ) return
-
-  appStarted = true
 
   if( newAudio ){
     newAudio.stop()
@@ -183,22 +180,13 @@ win
 
 .on( 'app-param', function( e, params ){
 
-  //console.log(params)
-  if( params && params.command === 'openFile' && !appStarted ){
+  console.log(params)
+  if( params && params.command === 'openFile' ){
 
     if( params.list.length == 0 ){
       params.list = [params.data]
     }
     startApp( params )
-
-  }else if( params && params.command === 'openFile' && appStarted ){
-
-    var index = findSong( params.data )
-    if( index !== -1 ){
-      loadItem( index )
-    }else{
-      startApp( params )
-    }
 
   }
 
@@ -212,5 +200,9 @@ win
     newAudio.remove()
   }
 
+})
+
+.on( 'click', '.close', function(){
+  api.app2.closeApp(382)
 })
 
