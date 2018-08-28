@@ -206,3 +206,6 @@ win
   api.app2.closeApp(382)
 })
 
+if( window.params ){
+  startApp( window.params )
+}
