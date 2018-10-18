@@ -15,7 +15,7 @@
 .left-section .song-thumbnail{
   width: 100%;
   height: 100%;
-  display: inline-block;
+  /*display: inline-block;*/
   background-size: cover;
   background-position: 50% 50%, 50% 50%;
   background-image: url('@static/cover_big.png');
