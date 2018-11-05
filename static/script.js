@@ -467,7 +467,7 @@ var addSong = function( song ){
 
   if( VALID_MIMES.indexOf( song.mime ) !== -1 ){
 
-    console.log(song);
+    //console.log(song);
     var metadata = song.formats.original.metadata;
 
     if( metadata && metadata.media && metadata.media.duration && metadata.media.duration.seconds ){
@@ -699,7 +699,7 @@ var loadItem = function( index ){
 
   newAudio.on( 'ready' , function( duration ){
 
-    console.log('ready',arguments);
+    //console.log('ready',arguments);
     //console.log(currentVolume);
     if( currentVolume < 1 ){
       newAudio.volume( currentVolume );
@@ -722,25 +722,25 @@ var loadItem = function( index ){
   });
 
   newAudio.on( 'play' , function( duration ){
-    console.log('playing',arguments);
+    //console.log('playing',arguments);
     win.addClass('playing');
   });
 
   newAudio.on( 'pause' , function( duration ){
-    console.log('paused',arguments);
+    //console.log('paused',arguments);
     win.removeClass('playing');
   });
 
   newAudio.on( 'stop' , function( duration ){
-    console.log(Date.now());
-    console.log('stopped',arguments);
+    //console.log(Date.now());
+    //console.log('stopped',arguments);
     win.removeClass('playing');
   });
 
   newAudio.on( 'ended' , function( duration ){
 
-    console.log(Date.now());
-    console.log('ended',arguments);
+    //console.log(Date.now());
+    //console.log('ended',arguments);
     if( !musicSeeker.hasClass('wz-drag-active') ){
 
       musicProgress.width(0);
@@ -1204,7 +1204,7 @@ win
 
 .on('ui-view-removed', function(){
 
-  console.log('cierro');
+  //console.log('cierro');
   if( newAudio ){
     newAudio.stop();
     newAudio.remove();
