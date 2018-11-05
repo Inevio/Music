@@ -32,7 +32,7 @@ var startApp = function( paramsAux ){
 
     structure.getFormats( function( error, formats ){
 
-      console.log(formats)
+      //console.log(formats)
       structure.formats = formats
       songList[0] = structure
       loadItem(0)
@@ -54,7 +54,7 @@ var loadItem = function( index ){
     newAudio.remove()
   }
 
-  console.log(structure)
+  //console.log(structure)
 
   // onedrive song
   if (structure.onedrive) {
@@ -83,7 +83,7 @@ var loadItem = function( index ){
 
   newAudio.on( 'ready' , function( duration ){
 
-    console.log('ready',arguments)
+    //console.log('ready',arguments)
     //console.log(currentVolume)
     musicSeeker.addClass('wz-dragger-x')
     newAudio.duration = duration
@@ -94,23 +94,23 @@ var loadItem = function( index ){
   })
 
   newAudio.on( 'play' , function( duration ){
-    console.log('playing',arguments)
+    //console.log('playing',arguments)
     win.addClass('playing')
   })
 
   newAudio.on( 'pause' , function( duration ){
-    console.log('paused',arguments)
+    //console.log('paused',arguments)
     win.removeClass('playing')
   })
 
   newAudio.on( 'stop' , function( duration ){
-    console.log('stopped',arguments)
+    //console.log('stopped',arguments)
     win.removeClass('playing')
   })
 
   newAudio.on( 'ended' , function( duration ){
 
-    console.log('ended',arguments)
+    //console.log('ended',arguments)
     if( !musicSeeker.hasClass('wz-drag-active') ){
       musicProgress.width(0)
       musicSeeker.css('left',0)
@@ -180,7 +180,7 @@ win
 
 .on( 'app-param', function( e, params ){
 
-  console.log(params)
+  //console.log(params)
   if( params && params.command === 'openFile' ){
 
     if( params.list.length == 0 ){
@@ -194,7 +194,7 @@ win
 
 .on('ui-view-removed', function(){
 
-  console.log('cierro')
+  //console.log('cierro')
   if( newAudio ){
     newAudio.stop()
     newAudio.remove()
