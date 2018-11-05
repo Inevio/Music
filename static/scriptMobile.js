@@ -203,7 +203,8 @@ win
 })
 
 .on( 'click', '.close', function(){
-  api.app2.closeApp(382)
+  //console.log(appId)
+  api.app2.closeApp(appId)
 })
 
 if( window.params ){
